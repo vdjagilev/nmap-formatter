@@ -12,7 +12,7 @@ type MarkdownFormatter struct {
 	Config *Config
 }
 
-//go:embed ..\resources\templates\markdown.tmpl
+//go:embed ..\/resources\/templates\/markdown.tmpl
 var MarkdownTemplate string
 
 // Format the data and output it to appropriate io.Writer
