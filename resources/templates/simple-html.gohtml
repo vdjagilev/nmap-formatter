@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NMAP Scan result: {{ .NMAPRun.StartStr }}</title>
+		<meta charset="utf-8" />
+		<style>
+			body {
+				color: #eee;
+				background-color: #121212;
+				font-family: -apple-system,Helvetica,"Segoe UI Symbol";
+			}
+			#summary-table {
+				table-layout: fixed;
+				width: 640px;
+			}
+			#summary-table > tbody > tr > th {
+				text-align: left;
+			}
+			.data-table {
+				width: 80%;
+				border: 1px solid #404040;
+			}
+			.data-table > thead > tr > th {
+				text-align: left;
+				border-bottom: 1px solid #404040;
+				border-right: 1px solid #404040;
+			}
+			.data-table > tbody > tr > th {
+				padding-right: 40px;
+			}
+			.data-table > tbody > tr > td {
+				border-bottom: 1px solid #404040;
+			}
+			.data-table > tbody > tr > td > ul {
+				padding-left: 0;
+			}
+			.address-info-table > tbody > tr > th {
+				text-align: left;
+				padding-right: 40px;
+			}
+			.address-info-table > tbody > tr > td > ul {
+				padding-left: 0;
+			}
+			.ports-table > tbody > tr > td.port-open {
+				background-color: rgba(54, 182, 14, 0.18);
+				border-color: rgba(62, 198, 16, 0.3);
+			}
+			.ports-table > tbody > tr > td.port-closed {
+				background-color: rgba(182, 2, 5, 0.18);
+				border-color: rgba(253, 155, 157, 0.3);
+			}
+			.ports-table > tbody > tr > td.port-filtered {
+				background-color: rgba(217, 63, 11, 0.18);
+				border-color: rgba(247, 136, 100, 0.3);
+			}
+			.metrics-table > thead > tr > th {
+				text-align: left;
+			}
+			table td {
+				word-wrap: break-word;
+			}
+			a {
+				color: #539bf5;
+			}
+			hr {
+				color: #404040;
+				border-style: solid;
+			}
+			.host-address-header.host-up {
+				background-color: rgba(54, 182, 14, 0.18);
+				border-color: rgba(62, 198, 16, 0.3);
+			}
+			.host-address-header.host-down {
+				background-color: rgba(182, 2, 5, 0.18);
+				border-color: rgba(253, 155, 157, 0.3);
+			}
+		</style>
+	</head>
+	<body>
+		{{ $displayDownHosts := .OutputOptions.DisplayDownHosts }}
+		<h1>NMAP Scan Result: {{ .NMAPRun.StartStr }}</h1>
+		<hr />
+		<h2>TOC:</h2>
+		<ul>
+			<li><a href="#scan-summary">Scan Summary</a></li>
+			{{ range .NMAPRun.Host }}
+			{{ if or ($displayDownHosts) (eq .Status.State "up") }}
+			<li><a href="#{{ .HostAddress.Address }}">{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}</a> ({{ .Status.State }})</li>
+			{{ end }}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
+			{{ end }}{{/* range .Host */}}
+		</ul>
+		<hr />
+		<a name="scan-summary"></a>
+		<h2>Scan Summary:</h2>
+		<table id="summary-table">
+			<tbody>
+				<tr>
+					<th>Scanner</th>
+					<td>{{ .NMAPRun.Scanner }}</td>
+				</tr>
+				<tr>
+					<th>Start time</th>
+					<td>{{ .NMAPRun.StartStr }}</td>
+				</tr>
+				<tr>
+					<th>Finished</th>
+					<td>{{ .NMAPRun.RunStats.Finished.TimeStr }}</td>
+				</tr>
+				<tr>
+					<th>Elapsed</th>
+					<td>{{ .NMAPRun.RunStats.Finished.Elapsed }}</td>
+				</tr>
+				<tr>
+					<th>Version</th>
+					<td>{{ .NMAPRun.Version }}</td>
+				</tr>
+				<tr>
+					<th>Type of scan</th>
+					<td>{{ .NMAPRun.ScanInfo.Type }}</td>
+				</tr>
+				<tr>
+					<th>Protocol</th>
+					<td>{{ .NMAPRun.ScanInfo.Protocol }}</td>
+				</tr>
+				<tr>
+					<th>Number of services</th>
+					<td>{{ .NMAPRun.ScanInfo.NumServices }}</td>
+				</tr>
+				<tr>
+					<th>Services</th>
+					<td>
+						<details>
+							<summary>(open)</summary>
+							{{ .NMAPRun.ScanInfo.Services }}
+						</details>
+					</td>
+				</tr>
+				<tr>
+					<th>Arguments</th>
+					<td><pre>{{ .NMAPRun.Args }}</pre></td>
+				</tr>
+				<tr>
+					<th>Verbosity</th>
+					<td>{{ .NMAPRun.Verbose.Level }}</td>
+				</tr>
+				<tr>
+					<th>Debug</th>
+					<td>{{ .NMAPRun.Debugging.Level }}</td>
+				</tr>
+				<tr>
+					<th>Exit (success)</th>
+					<td>{{ .NMAPRun.RunStats.Finished.Exit }}</td>
+				</tr>
+				<tr>
+					<th>Summary</th>
+					<td>{{ .NMAPRun.RunStats.Finished.Summary }}</td>
+				</tr>
+				<tr>
+					<th>Hosts</th>
+					<td>Up: {{ .NMAPRun.RunStats.Hosts.Up }}, Down: {{ .NMAPRun.RunStats.Hosts.Down }}, Total: {{ .NMAPRun.RunStats.Hosts.Total }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<hr />
+		{{ range .NMAPRun.Host }}
+		{{ if or ($displayDownHosts) (eq .Status.State "up") }}
+		<a name="{{ .HostAddress.Address }}"></a>
+		<h2 class="host-address-header{{ if eq .Status.State "up" }} host-up{{ else }} host-down{{ end }}">
+		{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }} {{ if eq .Status.State "up" }}(up){{ else }}(down){{ end }}
+		</h2>
+		{{ if eq .Status.State "up" }}
+		<h3>Info:</h3>
+		<table class="address-info-table">
+			<tbody>
+				<tr>
+					<th>Address</th>
+					<td>{{ .HostAddress.Address }} ({{ .HostAddress.AddressType }})</td>
+				</tr>
+				<tr>
+					<th>Hostnames</th>
+					<td>
+						{{ if .HostNames.HostName }}
+						<ul>
+						{{ range .HostNames.HostName }}
+							<li>{{ .Name }} ({{ .Type }})</li>
+						{{ end }}
+						</ul>
+						{{ else }}
+						N/A
+						{{ end }}
+					</td>
+				</tr>
+				{{ if .OS }}
+				<tr>
+					<th>Remote OS Detection</th>
+					<td>
+						<ul>
+						{{ range .OS.OSPortUsed }}
+						<li>Used port: <strong>{{ .PortID }}/{{ .Protocol }} ({{ .State }})</strong></li>
+						{{ end }}
+						{{ if .OS.OSMatch.Name }}
+						<li>OS: <strong>{{ .OS.OSMatch.Name }} ({{ .OS.OSMatch.Accuracy }}%)</strong></li>
+						{{ else }}
+						<li>OS: N/A</li>
+						{{ end }}
+						</ul>
+					</td>
+				</tr>
+				{{ end }}
+			</tbody>
+		</table>
+		<h3>Ports</h3>
+		<table class="ports-table data-table" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">Port</th>
+					<th>State</th>
+					<th>Service</th>
+					<th>Reason</th>
+					<th>Product</th>
+					<th>Version</th>
+					<th>Extra info</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ range .Ports.Port }}
+				<tr>
+					<td class="port-{{ .State.State }}">{{ .PortID }}</td>
+					<td class="port-{{ .State.State }}">{{ .Protocol }}</td>
+					<td>{{ .State.State }}</td>
+					<td>{{ .Service.Name }}</td>
+					<td>{{ .State.Reason }}</td>
+					<td>{{ .Service.Product }}</td>
+					<td>{{ .Service.Version }}</td>
+					<td>{{ .Service.ExtraInfo }}</td>
+				</tr>
+				{{ if .Script }}
+				{{ range .Script }}
+				<tr>
+					<td></td>
+					<td>{{ .ID }}</td>
+					<td colspan="6"><pre>{{- .Output -}}</pre></td>
+				</tr>
+				{{ end }}{{/* range .Script */}}
+				{{ end }}{{/* if .Script */}}
+				{{ end }}{{/* range .Ports.Port */}}
+			</tbody>
+		</table>
+		{{ if .Trace }}
+		<h3>Traceroute Information</h3>
+		{{ if .Trace.Hops }}
+		<details>
+			<summary>(open) Generated traceroute data {{ if .Trace.Port }}using {{ .Trace.Port }}{{ if .Trace.Protocol }}/{{ .Trace.Protocol }}{{ end }}{{ end }}</summary>
+			<table class="trace-table data-table">
+				<thead>
+					<tr>
+						<th>Hop</th>
+						<th>Rtt</th>
+						<th>IP</th>
+						<th>Host</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{ range .Trace.Hops }}
+					<tr>
+						<td>{{ .TTL }}</td>
+						<td>{{ .RTT }}</td>
+						<td>{{ .IPAddr }}</td>
+						<td>{{ .Host }}</td>
+					</tr>
+					{{ end }}{{/* range .Trace.Hops */}}
+				</tbody>
+			</table>
+		</details>
+		{{ else }}
+		No traceroute information.
+		{{ end }}{{/* if .Trace.Hops */}}
+		{{ end }}{{/* if .Trace */}}
+		<h3>Misc Metrics</h3>
+		<details>
+			<summary>(open)</summary>
+			<table class="metrics-table">
+				<thead>
+					<tr>
+						<th>Metric</th>
+						<th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Ping Results</td>
+						<td>{{ if .Status.Reason }}{{ .Status.Reason }}{{ else }}N/A{{ end }}</td>
+					</tr>
+					<tr>
+						<td>System Uptime</td>
+						<td>{{ if .Uptime.Seconds }}{{ .Uptime.Seconds }} (last boot: {{ .Uptime.LastBoot }}){{ else }}N/A{{ end }}</td>
+					</tr>
+					<tr>
+						<td>Network Distance</td>
+						<td>{{ if .Distance.Value }}{{ .Distance.Value }}{{ else }}N/A{{ end }}</td>
+					</tr>
+					<tr>
+						<td>TCP Sequence Prediction</td>
+						<td>{{ if .TCPSequence.Difficulty }}{{ .TCPSequence.Difficulty }}<pre>{{ .TCPSequence.Values }}</pre>{{ else }}N/A{{ end }}</td>
+					</tr>
+					<tr>
+						<td>IP ID Sequence Generation</td>
+						<td>{{ if .IPIDSequence.Class }}{{ .IPIDSequence.Class }}<pre>{{ .IPIDSequence.Values }}</pre>{{ else }}N/A{{ end }}</td>
+					</tr>
+					<tr>
+						<td>TCP TS Sequence</td>
+						<td>{{ if .TCPTSSequence.Class }}{{ .TCPTSSequence.Class }}<pre>{{ .TCPTSSequence.Values }}</pre>{{ else }}N/A{{ end }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</details>
+		<hr />
+		{{ end }}{{/* if eq .Status.State "up" */}}
+		{{ end }}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
+		{{ end }}{{/* range .Host */}}
+	</body>
+</html>

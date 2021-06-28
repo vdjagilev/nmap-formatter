@@ -1,0 +1,100 @@
+NMAP Scan Result: {{ .NMAPRun.StartStr }}
+==========================================
+{{- $displayDownHosts := .OutputOptions.DisplayDownHosts }}
+
+## TOC
+
+* [Scan Summary](#scan-summary)
+{{- range .NMAPRun.Host -}}
+{{- if or ($displayDownHosts) (eq .Status.State "up") }}
+* [{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }} ({{ .Status.State }})](#{{ md_toc .HostAddress.Address }})
+{{- if eq .Status.State "up" }}
+	* [Info](#{{ md_toc .HostAddress.Address }}-info)
+	* [Ports](#{{ md_toc .HostAddress.Address }}-ports)
+	* [Scripts](#{{ md_toc .HostAddress.Address }}-scripts)
+{{ end }}
+{{- end -}}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
+{{- end -}}{{/* range .Host */}}
+
+----
+
+## Scan Summary
+
+| Name | Value |
+|----|----|
+| Scanner | {{ .NMAPRun.Scanner }} |
+| Start time | {{ .NMAPRun.StartStr }} |
+| Finished | {{ .NMAPRun.RunStats.Finished.TimeStr }} |
+| Elapsed | {{ .NMAPRun.RunStats.Finished.Elapsed }} |
+| Version | {{ .NMAPRun.Version }} |
+| Type of scan | {{ .NMAPRun.ScanInfo.Type }} |
+| Protocol | {{ .NMAPRun.ScanInfo.Protocol }} |
+| Number of services | {{ .NMAPRun.ScanInfo.NumServices }} |
+| Services | <details><summary>(open)</summary>`{{ md .NMAPRun.ScanInfo.Services }}`</details> |
+| Arguments | `{{ md .NMAPRun.Args }}` |
+| Verbosity | {{ md .NMAPRun.Verbose.Level }} |
+| Debug | {{ .NMAPRun.Debugging.Level }} |
+| Exit (success) | {{ .NMAPRun.RunStats.Finished.Exit }} |
+| Summary | {{ .NMAPRun.RunStats.Finished.Summary }} |
+| Hosts | Up: {{ .NMAPRun.RunStats.Hosts.Up }}, Down: {{ .NMAPRun.RunStats.Hosts.Down }}, Total: {{ .NMAPRun.RunStats.Hosts.Total }} |
+
+----
+
+{{ range .NMAPRun.Host -}}
+{{- if or ($displayDownHosts) (eq .Status.State "up") }}
+<a id="{{ md_toc .HostAddress.Address }}"></a>
+
+## {{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}{{ if eq .Status.State "up" }} (up){{ else }} (down){{ end }}
+
+{{- if eq .Status.State "up" }}
+<a id="{{ md_toc .HostAddress.Address }}-info"></a>
+
+### Info:
+
+| Name | Value |
+| ---- | ----- |
+| Address | {{ .HostAddress.Address }} ({{ .HostAddress.AddressType }}) |
+| Hostnames | `{{ range .HostNames.HostName }} / {{ .Name }} ({{ .Type }}){{ else }}N/A{{ end }}` |
+{{- if .OS }}
+{{- range .OS.OSPortUsed }}
+| Used port | **{{ .PortID }}/{{ .Protocol }} ({{ .State }})** |
+{{- end -}}{{/* range .OS.OSPortUsed */}}
+{{- if .OS.OSMatch.Name }}
+| OS | **{{ .OS.OSMatch.Name }} ({{ .OS.OSMatch.Accuracy }}%)** |
+{{- else }}{{/* if .OS.OSMatch.Name */}}
+| OS | N/A |
+{{- end -}}{{/* if .OS.OSMatch.Name */}}
+{{ end }}{{/* if .OS */}}
+
+<a id="{{ md_toc .HostAddress.Address }}-ports"></a>
+
+### Ports:
+
+| Port | State | Service | Reason | Product | Version | Extra Info |
+| ---- | ----- | ------- | ------ | ------- | ------- | ---------- |
+{{ range .Ports.Port -}}
+| {{ .PortID }} | {{ .Protocol }} | {{ .State.State }} | {{ .Service.Name }} | {{ .State.Reason }} | {{ .Service.Product }} | {{ .Service.Version }} | {{ .Service.ExtraInfo }} |
+{{ end }}{{/* range .Ports.Port */}}
+<a id="{{ md_toc .HostAddress.Address }}-scripts"></a>
+
+### Scripts:
+{{ range .Ports.Port -}}
+{{- if .Script -}}
+#### PORT {{ .PortID }}
+{{ range .Script }}
+**Script ID:** `{{ md .ID }}`
+
+```
+{{ noesc .Output }}
+```
+
+{{- end -}}{{/* range .Script */}}
+{{- end -}}{{/* if .Script */}}
+{{ end -}}{{/* range .Ports.Port */}}
+{{- end -}}{{/* if eq .Status.State "up" */}}
+
+----
+
+{{- end -}}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
+
+{{- end -}}{{/* range .NMAPRun.Host */}}
