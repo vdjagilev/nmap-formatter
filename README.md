@@ -39,7 +39,7 @@ go install github.com/vjdagilev/nmap-formatter@latest
 Choose version from Release page and download it:
 
 ```
-curl https://github.com/vdjagilev/nmap-formatter/releases/download/v0.0.2-alpha/nmap-formatter-linux-amd64.tar.gz --output nmap-formatter.tar.gz -L
+curl https://github.com/vdjagilev/nmap-formatter/releases/download/v0.0.2/nmap-formatter-linux-amd64.tar.gz --output nmap-formatter.tar.gz -L
 tar -xzvf nmap-formatter.tar.gz
 ./nmap-formatter --help
 ```
