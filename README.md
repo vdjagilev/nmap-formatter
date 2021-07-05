@@ -1,5 +1,9 @@
 # NMAP-Formatter
 
+![build status](https://github.com/vdjagilev/nmap-formatter/actions/workflows/go.yml/badge.svg)
+
+---
+
 A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
 
 ## Usage
