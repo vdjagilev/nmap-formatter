@@ -55,7 +55,7 @@ var rootCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		err := validate(config, args)
+		err := validate(config)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -89,7 +89,7 @@ func init() {
 }
 
 // validate is checking input from the command line
-func validate(config formatter.Config, args []string) error {
+func validate(config formatter.Config) error {
 	// Validating the format
 	if !config.OutputFormat.IsValid() {
 		return fmt.Errorf("not valid format: %s, please choose html/json/md/csv", config.OutputFormat)
