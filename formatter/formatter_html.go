@@ -3,8 +3,6 @@ package formatter
 import (
 	_ "embed"
 	"html/template"
-
-	"github.com/vdjagilev/nmap-formatter/types"
 )
 
 type HTMLFormatter struct {
@@ -15,7 +13,7 @@ type HTMLFormatter struct {
 var HTMLSimpleTemplate string
 
 // Format the data and output it to appropriate io.Writer
-func (f *HTMLFormatter) Format(td *types.TemplateData) error {
+func (f *HTMLFormatter) Format(td *TemplateData) error {
 	tmpl, err := template.New("html").Parse(HTMLSimpleTemplate)
 	if err != nil {
 		return err

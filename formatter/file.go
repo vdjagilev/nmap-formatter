@@ -1,4 +1,4 @@
-package types
+package formatter
 
 // OutputFile describes output file name (full path)
 type OutputFile string

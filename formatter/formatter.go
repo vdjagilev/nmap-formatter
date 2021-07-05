@@ -4,27 +4,25 @@ import (
 	"encoding/xml"
 	"fmt"
 	"os"
-
-	"github.com/vdjagilev/nmap-formatter/types"
 )
 
 // New returns new instance of formatter the exact struct
 // of formatter would depend on provided config
 func New(config *Config) Formatter {
 	switch config.OutputFormat {
-	case types.JSONOutput:
+	case JSONOutput:
 		return &JSONFormatter{
 			config,
 		}
-	case types.HTMLOutput:
+	case HTMLOutput:
 		return &HTMLFormatter{
 			config,
 		}
-	case types.MarkdownOutput:
+	case MarkdownOutput:
 		return &MarkdownFormatter{
 			config,
 		}
-	case types.CSVOutput:
+	case CSVOutput:
 		return &CSVFormatter{
 			config,
 		}
@@ -61,7 +59,7 @@ func (w *Workflow) Execute() (err error) {
 	}
 
 	// Build template data with NMAPRun entry & various output options
-	templateData := types.TemplateData{
+	templateData := TemplateData{
 		NMAPRun:       NMAPRun,
 		OutputOptions: w.Config.OutputOptions,
 	}
@@ -79,7 +77,7 @@ func (w *Workflow) Execute() (err error) {
 }
 
 // parse reads & unmarshalles the input file into NMAPRun struct
-func (w *Workflow) parse() (NMAPRun types.NMAPRun, err error) {
+func (w *Workflow) parse() (NMAPRun NMAPRun, err error) {
 	input, err := os.ReadFile(string(w.Config.InputFile))
 	if err != nil {
 		return
@@ -92,5 +90,5 @@ func (w *Workflow) parse() (NMAPRun types.NMAPRun, err error) {
 
 type Formatter interface {
 	// Format the data and output it to appropriate io.Writer
-	Format(td *types.TemplateData) error
+	Format(td *TemplateData) error
 }

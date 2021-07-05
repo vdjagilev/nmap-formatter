@@ -1,4 +1,4 @@
-package types
+package formatter
 
 type Host struct {
 	StartTime     string        `xml:"starttime,attr"`
