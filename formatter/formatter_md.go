@@ -4,8 +4,6 @@ import (
 	_ "embed"
 	"html/template"
 	"strings"
-
-	"github.com/vdjagilev/nmap-formatter/types"
 )
 
 type MarkdownFormatter struct {
@@ -16,7 +14,7 @@ type MarkdownFormatter struct {
 var MarkdownTemplate string
 
 // Format the data and output it to appropriate io.Writer
-func (f *MarkdownFormatter) Format(td *types.TemplateData) (err error) {
+func (f *MarkdownFormatter) Format(td *TemplateData) (err error) {
 	tmpl := template.New("markdown")
 	f.defineFunctions(tmpl)
 	tmpl, err = tmpl.Parse(MarkdownTemplate)

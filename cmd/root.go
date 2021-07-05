@@ -30,11 +30,10 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/vdjagilev/nmap-formatter/formatter"
-	"github.com/vdjagilev/nmap-formatter/types"
 )
 
 var config = formatter.Config{
-	OutputOptions: types.OutputOptions{},
+	OutputOptions: formatter.OutputOptions{},
 }
 
 // rootCmd represents the base command when called without any subcommands
@@ -50,8 +49,8 @@ var rootCmd = &cobra.Command{
 			return errors.New("requires output format argument")
 		}
 
-		config.InputFile = types.InputFile(args[0])
-		config.OutputFormat = types.OutputFormat(args[1])
+		config.InputFile = formatter.InputFile(args[0])
+		config.OutputFormat = formatter.OutputFormat(args[1])
 
 		return nil
 	},

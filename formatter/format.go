@@ -1,4 +1,4 @@
-package types
+package formatter
 
 type OutputFormat string
 
