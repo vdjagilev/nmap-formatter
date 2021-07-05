@@ -1,4 +1,4 @@
-package types
+package formatter
 
 // OutputOptions describes various output options for nmap formatter
 type OutputOptions struct {

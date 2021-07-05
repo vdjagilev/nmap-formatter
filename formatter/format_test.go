@@ -1,4 +1,4 @@
-package types
+package formatter
 
 import (
 	"reflect"

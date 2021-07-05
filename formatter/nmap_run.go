@@ -1,4 +1,4 @@
-package types
+package formatter
 
 type NMAPRun struct {
 	Scanner   string    `xml:"scanner,attr"`

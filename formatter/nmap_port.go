@@ -1,4 +1,4 @@
-package types
+package formatter
 
 type Ports struct {
 	Port []Port `xml:"port"`
