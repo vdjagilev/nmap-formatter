@@ -2,6 +2,7 @@ package formatter
 
 import (
 	"encoding/csv"
+	"fmt"
 )
 
 type CSVFormatter struct {
@@ -17,16 +18,17 @@ func (f *CSVFormatter) Format(td *TemplateData) (err error) {
 func (f *CSVFormatter) convert(td *TemplateData) (data [][]string) {
 	data = append(data, []string{"IP", "Port", "Protocol", "State", "Service", "Reason", "Product", "Version", "Extra info"})
 	for _, host := range td.NMAPRun.Host {
-		for j, port := range host.Ports.Port {
-			// Show host IP only once, to avoid repetitions
-			hostIP := " "
-			if j == 0 {
-				hostIP = host.HostAddress.Address
-			}
+		// Skipping hosts that are down
+		if !td.OutputOptions.DisplayDownHosts && host.Status.State != "up" {
+			continue
+		}
+		address := fmt.Sprintf("%s (%s)", host.HostAddress.Address, host.Status.State)
+		data = append(data, []string{address, "", "", "", "", "", "", "", ""})
+		for _, port := range host.Ports.Port {
 			data = append(
 				data,
 				[]string{
-					hostIP,
+					"",
 					port.PortID,
 					port.Protocol,
 					port.State.State,
