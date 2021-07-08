@@ -30,13 +30,22 @@ func New(config *Config) Formatter {
 	return nil
 }
 
-type Workflow struct {
+type Workflow interface {
+	Execute() (err error)
+	SetConfig(c *Config)
+}
+
+type MainWorkflow struct {
 	Config *Config
+}
+
+func (w *MainWorkflow) SetConfig(c *Config) {
+	w.Config = c
 }
 
 // Execute is the core of the application which executes required steps
 // one-by-one to achieve formatting from input -> output.
-func (w *Workflow) Execute() (err error) {
+func (w *MainWorkflow) Execute() (err error) {
 	// If no output file has been provided all content
 	// goes to the STDOUT
 	if w.Config.OutputFile == "" {
@@ -77,7 +86,7 @@ func (w *Workflow) Execute() (err error) {
 }
 
 // parse reads & unmarshalles the input file into NMAPRun struct
-func (w *Workflow) parse() (NMAPRun NMAPRun, err error) {
+func (w *MainWorkflow) parse() (NMAPRun NMAPRun, err error) {
 	input, err := os.ReadFile(string(w.Config.InputFile))
 	if err != nil {
 		return
