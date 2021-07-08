@@ -36,39 +36,15 @@ var config = formatter.Config{
 	OutputOptions: formatter.OutputOptions{},
 }
 
+var workflow formatter.Workflow
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "nmap-formatter [path-to-nmap.xml] [html|csv|md|json]",
 	Short: "Utility that can help you to convert NMAP XML application output to various other formats",
 	Long:  `This utility allows you to convert NMAP XML output to various other formats like (html, csv, markdown (md), json)`,
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 1 {
-			return errors.New("requires an xml file argument")
-		}
-		if len(args) < 2 {
-			return errors.New("requires output format argument")
-		}
-
-		config.InputFile = formatter.InputFile(args[0])
-		config.OutputFormat = formatter.OutputFormat(args[1])
-
-		return nil
-	},
-	Run: func(cmd *cobra.Command, args []string) {
-		err := validate(config)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		workflow := formatter.Workflow{
-			Config: &config,
-		}
-
-		err = workflow.Execute()
-		if err != nil {
-			log.Fatalf("failed to run: %v", err)
-		}
-	},
+	Args:  arguments,
+	RunE:  run,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -86,6 +62,38 @@ func init() {
 
 	rootCmd.Flags().StringVarP((*string)(&config.OutputFile), "file", "f", "", "-f output-file (by default \"\" will output to STDOUT)")
 	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipDownHosts, "skip-down-hosts", true, "--skip-down-hosts=false")
+
+	workflow = &formatter.MainWorkflow{}
+}
+
+// arguments function validates the arguments passed to the application
+// and sets configurations
+func arguments(cmd *cobra.Command, args []string) error {
+	if len(args) < 1 {
+		return errors.New("requires an xml file argument")
+	}
+	if len(args) < 2 {
+		return errors.New("requires output format argument")
+	}
+	config.InputFile = formatter.InputFile(args[0])
+	config.OutputFormat = formatter.OutputFormat(args[1])
+	return nil
+}
+
+// run executes the main application workflow and finishes fatally if there is some error
+func run(cmd *cobra.Command, args []string) error {
+	err := validate(config)
+	if err != nil {
+		return err
+	}
+
+	workflow.SetConfig(&config)
+
+	err = workflow.Execute()
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // validate is checking input from the command line
