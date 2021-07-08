@@ -6,6 +6,19 @@
 
 A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
 
+## Table of Contents
+
+- [NMAP-Formatter](#nmap-formatter)
+	- [Table of Contents](#table-of-contents)
+	- [Usage](#usage)
+		- [Flags](#flags)
+			- [Output Related Flags](#output-related-flags)
+	- [Installation](#installation)
+		- [Using Go](#using-go)
+		- [Download Binary](#download-binary)
+		- [Compile](#compile)
+	- [Example](#example)
+
 ## Usage
 
 ```
