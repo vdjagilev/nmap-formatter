@@ -1,6 +1,6 @@
 NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ==========================================
-{{- $displayDownHosts := .OutputOptions.DisplayDownHosts }}
+{{- $displayDownHosts := not .OutputOptions.SkipDownHosts }}
 
 ## TOC
 

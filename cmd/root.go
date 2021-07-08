@@ -85,7 +85,7 @@ func init() {
 	log.SetOutput(os.Stderr)
 
 	rootCmd.Flags().StringVarP((*string)(&config.OutputFile), "file", "f", "", "-f output-file (by default \"\" will output to STDOUT)")
-	rootCmd.Flags().BoolVar(&config.OutputOptions.DisplayDownHosts, "down-hosts", false, "--down-hosts=true")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipDownHosts, "skip-down-hosts", true, "--skip-down-hosts=false")
 }
 
 // validate is checking input from the command line
