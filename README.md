@@ -26,9 +26,14 @@ nmap-formatter [path-to-nmap.xml] md > some-markdown.md
 
 ### Flags
 
-* `--down-hosts` includes hosts that are down in the template (html, md)
 * `-f, --file [filename]` outputs result to the file (by default output goes to STDOUT)
 * `--help` display help message
+
+#### Output Related Flags
+
+* `--skip-down-hosts` skips hosts that are down
+  * Applicable in: `html`, `md`, `csv`
+  * Default: `true`
 
 ## Installation
 

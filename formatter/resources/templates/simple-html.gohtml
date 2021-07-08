@@ -77,7 +77,7 @@
 		</style>
 	</head>
 	<body>
-		{{ $displayDownHosts := .OutputOptions.DisplayDownHosts }}
+		{{ $displayDownHosts := not .OutputOptions.SkipDownHosts }}
 		<h1>NMAP Scan Result: {{ .NMAPRun.StartStr }}</h1>
 		<hr />
 		<h2>TOC:</h2>
