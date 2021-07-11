@@ -28,4 +28,4 @@ jobs:
               env:
                   CC_TEST_REPORTER_ID: ${secrets.CC_TEST_REPORTER_ID}
               with:
-                  coverageCommand: go test ./... -cover
+                  coverageCommand: go test ./... -cover -coverprofile c.out
