@@ -29,3 +29,4 @@ jobs:
                   CC_TEST_REPORTER_ID: ${secrets.CC_TEST_REPORTER_ID}
               with:
                   coverageCommand: go test ./... -cover -coverprofile c.out
+                  coverageLocations: "${{github.workspace}}/c.out"
