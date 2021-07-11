@@ -24,7 +24,7 @@ jobs:
               run: go test -v ./types/
 
             - name: Coverage
-              uses: paambaati/codeclimate-action@2.7.5
+              uses: paambaati/codeclimate-action@v2.7.5
               env:
                   CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
               with:
