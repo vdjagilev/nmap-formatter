@@ -1,25 +1,31 @@
 name: Go
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+            - name: Set up Go
+              uses: actions/setup-go@v2
+              with:
+                  go-version: 1.16
 
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.16
+            - name: Build
+              run: go build -v ./
 
-    - name: Build
-      run: go build -v ./
+            - name: Run /types/ tests
+              run: go test -v ./types/
 
-    - name: Run /types/ tests
-      run: go test -v ./types/
+            - name: Coverage
+              uses: paambaati/codeclimate-action@2.7.5
+              env:
+                  CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
+              with:
+                  coverageCommand: go test ./... -cover
