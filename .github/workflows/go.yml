@@ -20,8 +20,8 @@ jobs:
             - name: Build
               run: go build -v ./
 
-            - name: Run /types/ tests
-              run: go test -v ./types/
+            - name: Run tests
+              run: go test -v ./...
 
             - name: Coverage
               uses: paambaati/codeclimate-action@v2.7.5
