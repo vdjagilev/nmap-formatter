@@ -24,9 +24,6 @@ jobs:
               run: go test -v ./...
 
             - name: Coverage
-              uses: paambaati/codeclimate-action@v2.7.5
-              env:
-                  CC_TEST_REPORTER_ID: ${secrets.CC_TEST_REPORTER_ID}
-              with:
-                  coverageCommand: go test ./... -cover -coverprofile c.out
-                  coverageLocations: "${{github.workspace}}/c.out:gocov"
+              run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+            - name: Upload Coverage
+              run: bash <(curl -s https://codecov.io/bash)
