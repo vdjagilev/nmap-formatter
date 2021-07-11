@@ -557,3 +557,57 @@ func TestCSVFormatter_convert(t *testing.T) {
 		})
 	}
 }
+
+func TestCSVFormatter_Format(t *testing.T) {
+	writer := &csvMockedWriter{}
+	type args struct {
+		td *TemplateData
+	}
+	tests := []struct {
+		name       string
+		f          *CSVFormatter
+		args       args
+		wantErr    bool
+		wantOutput string
+	}{
+		{
+			name: "Successful header write",
+			f: &CSVFormatter{
+				Config: &Config{
+					Writer: writer,
+				},
+			},
+			args: args{
+				td: &TemplateData{
+					NMAPRun: NMAPRun{
+						Host: []Host{},
+					},
+					OutputOptions: OutputOptions{
+						SkipDownHosts: true,
+					},
+				},
+			},
+			wantErr:    false,
+			wantOutput: "IP,Port,Protocol,State,Service,Reason,Product,Version,Extra info\n",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := tt.f.Format(tt.args.td); (err != nil) != tt.wantErr {
+				t.Errorf("CSVFormatter.Format() error = %v, wantErr %v", err, tt.wantErr)
+			}
+			if tt.wantOutput != string(writer.data) {
+				t.Errorf("CSVFormatter.Format() written data = %v, wantOutput = %v", string(writer.data), tt.wantOutput)
+			}
+		})
+	}
+}
+
+type csvMockedWriter struct {
+	data []byte
+}
+
+func (w *csvMockedWriter) Write(p []byte) (n int, err error) {
+	w.data = p
+	return len(p), nil
+}
