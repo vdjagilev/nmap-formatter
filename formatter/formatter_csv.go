@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// CSVFormatter is struct defined for CSV Output use-case
 type CSVFormatter struct {
 	Config *Config
 }

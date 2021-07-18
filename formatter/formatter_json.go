@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 )
 
+// JSONFormatter is struct defined for JSON Output use-case
 type JSONFormatter struct {
 	config *Config
 }
