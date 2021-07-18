@@ -1,6 +1,7 @@
 # NMAP-Formatter
 
 ![build status](https://github.com/vdjagilev/nmap-formatter/actions/workflows/go.yml/badge.svg)
+[![codecov](https://codecov.io/gh/vdjagilev/nmap-formatter/branch/main/graph/badge.svg?token=8WSYXRKMFA)](https://codecov.io/gh/vdjagilev/nmap-formatter)
 
 ---
 
