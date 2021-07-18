@@ -2,6 +2,7 @@
 
 ![build status](https://github.com/vdjagilev/nmap-formatter/actions/workflows/go.yml/badge.svg)
 [![codecov](https://codecov.io/gh/vdjagilev/nmap-formatter/branch/main/graph/badge.svg?token=8WSYXRKMFA)](https://codecov.io/gh/vdjagilev/nmap-formatter)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7836d3a52439fb1affa0/maintainability)](https://codeclimate.com/github/vdjagilev/nmap-formatter/maintainability)
 
 ---
 
