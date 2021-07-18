@@ -6,15 +6,18 @@ import (
 	"os"
 )
 
+// Workflow interface that describes the main functions that are used in nmap-formatter
 type Workflow interface {
 	Execute() (err error)
 	SetConfig(c *Config)
 }
 
+// MainWorkflow is main workflow implementation struct
 type MainWorkflow struct {
 	Config *Config
 }
 
+// SetConfig is a simple setter-function that sets the configuration
 func (w *MainWorkflow) SetConfig(c *Config) {
 	w.Config = c
 }
