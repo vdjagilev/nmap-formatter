@@ -5,13 +5,14 @@ import (
 	"fmt"
 )
 
+// CSVFormatter is struct defined for CSV Output use-case
 type CSVFormatter struct {
-	Config *Config
+	config *Config
 }
 
 // Format the data to CSV and output it to appropriate io.Writer
 func (f *CSVFormatter) Format(td *TemplateData) (err error) {
-	return csv.NewWriter(f.Config.Writer).WriteAll(f.convert(td))
+	return csv.NewWriter(f.config.Writer).WriteAll(f.convert(td))
 }
 
 // convert uses NMAPRun struct to convert all data to [][]string type
