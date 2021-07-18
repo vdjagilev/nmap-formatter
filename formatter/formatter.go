@@ -24,6 +24,7 @@ func New(config *Config) Formatter {
 	return nil
 }
 
+// Formatter interface describes only one function `Format()` that is responsible for data "formatting"
 type Formatter interface {
 	// Format the data and output it to appropriate io.Writer
 	Format(td *TemplateData) error
