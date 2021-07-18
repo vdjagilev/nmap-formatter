@@ -573,7 +573,7 @@ func TestCSVFormatter_Format(t *testing.T) {
 		{
 			name: "Successful header write",
 			f: &CSVFormatter{
-				Config: &Config{
+				config: &Config{
 					Writer: writer,
 				},
 			},

@@ -57,7 +57,7 @@ func TestNew(t *testing.T) {
 					OutputFormat: CSVOutput,
 				},
 			},
-			want: &CSVFormatter{Config: &Config{OutputFormat: CSVOutput}},
+			want: &CSVFormatter{config: &Config{OutputFormat: CSVOutput}},
 		},
 	}
 	for _, tt := range tests {
