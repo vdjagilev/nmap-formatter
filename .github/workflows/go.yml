@@ -9,7 +9,7 @@ on:
       - dev-*
 
 jobs:
-  ci:
+  test:
     strategy:
       matrix:
         go-version: [1.16.x]
