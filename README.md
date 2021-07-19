@@ -49,6 +49,9 @@ nmap-formatter [path-to-nmap.xml] md > some-markdown.md
 * `--skip-down-hosts` skips hosts that are down
   * Applicable in: `html`, `md`, `csv`
   * Default: `true`
+* `--json-pretty` pretty-prints JSON
+  * Applicable in: `json`
+  * Default: `true`
 
 ## Installation
 
