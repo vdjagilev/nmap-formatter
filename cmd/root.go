@@ -64,6 +64,10 @@ func init() {
 
 	// Some options related to the output
 	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipDownHosts, "skip-down-hosts", true, "--skip-down-hosts=false")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipSummary, "skip-summary", false, "--skip-summary=true, skips summary in HTML/Markdown output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipTraceroute, "skip-traceroute", false, "--skip-traceroute=true, skips traceroute information in HTML/Markdown output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipMetrics, "skip-metrics", false, "--skip-metrics=true, skips metrics information in HTML/Markdown output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipPortScripts, "skip-port-scripts", false, "--skip-port-scripts=true, skips port scripts information in HTML/Markdown output")
 	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONPrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
 
 	workflow = &formatter.MainWorkflow{}
