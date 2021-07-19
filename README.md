@@ -39,6 +39,50 @@ or Markdown
 nmap-formatter [path-to-nmap.xml] md > some-markdown.md
 ```
 
+or JSON
+
+```
+nmap-formatter [path-to-nmap.xml] json
+```
+
+it can be also combined with a `jq` tool, for example, list all the found ports and count them:
+
+```
+nmap-formatter [nmap.xml] json | jq -r '.Host[]?.Ports?.Port[]?.PortID' | sort | uniq -c
+```
+
+```
+    1 "22"
+    2 "80"
+    1 "8080"
+```
+
+another example where only those hosts are selected, which have port where some http service is running:
+
+```
+nmap-formatter [nmap.xml] json | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.Service.Name== "http") | $host.HostAddress.Address' | uniq -c
+```
+
+```
+    1 "192.168.1.1"
+    1 "192.168.1.2"
+    2 "192.168.1.3"
+```
+
+In this case `192.168.1.3` has 2 http services running (for example on ports 80 and 8080)`.
+
+Another example where it is needed to display only filtered ports:
+
+```
+nmap-formatter [nmap.xml] json | jq '.Host[]?.Ports?.Port[]? | select(.State.State == "filtered") | .PortID'
+```
+
+Display host IP addresses that have filtered ports:
+
+```
+nmap-formatter [nmap.xml] json | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.State.State == "filtered") | .PortID | $host.HostAddress.Address'
+```
+
 ### Flags
 
 * `-f, --file [filename]` outputs result to the file (by default output goes to STDOUT)
