@@ -49,6 +49,18 @@ nmap-formatter [path-to-nmap.xml] md > some-markdown.md
 * `--skip-down-hosts` skips hosts that are down
   * Applicable in: `html`, `md`, `csv`
   * Default: `true`
+* `--skip-summary` skips summary table
+  * Applicable in: `html`, `md`
+  * Default: `false`
+* `--skip-traceroute` skips traceroute information
+  * Applicable in: `html`
+  * Default: `false`
+* `--skip-metrics` skips metrics information
+  * Applicable in: `html`
+  * Default: `false`
+* `--skip-port-scripts` skips port scripts information in ports table
+  * Applicable in: `html`, `md`
+  * Default: `false`
 * `--json-pretty` pretty-prints JSON
   * Applicable in: `json`
   * Default: `true`

@@ -78,11 +78,15 @@
 	</head>
 	<body>
 		{{ $displayDownHosts := not .OutputOptions.SkipDownHosts }}
+		{{ $skipSummary := .OutputOptions.SkipSummary }}
+		{{ $skipTraceroute := .OutputOptions.SkipTraceroute }}
+		{{ $skipMetrics := .OutputOptions.SkipMetrics }}
+		{{ $skipPortScripts := .OutputOptions.SkipPortScripts }}
 		<h1>NMAP Scan Result: {{ .NMAPRun.StartStr }}</h1>
 		<hr />
 		<h2>TOC:</h2>
 		<ul>
-			<li><a href="#scan-summary">Scan Summary</a></li>
+			{{ if not $skipSummary }}<li><a href="#scan-summary">Scan Summary</a></li>{{ end }}
 			{{ range .NMAPRun.Host }}
 			{{ if or ($displayDownHosts) (eq .Status.State "up") }}
 			<li><a href="#{{ .HostAddress.Address }}">{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}</a> ({{ .Status.State }})</li>
@@ -90,6 +94,7 @@
 			{{ end }}{{/* range .Host */}}
 		</ul>
 		<hr />
+		{{ if not $skipSummary }}
 		<a name="scan-summary"></a>
 		<h2>Scan Summary:</h2>
 		<table id="summary-table">
@@ -162,6 +167,7 @@
 			</tbody>
 		</table>
 		<hr />
+		{{ end }}{{/* if not $skipSummary */}}
 		{{ range .NMAPRun.Host }}
 		{{ if or ($displayDownHosts) (eq .Status.State "up") }}
 		<a name="{{ .HostAddress.Address }}"></a>
@@ -234,7 +240,7 @@
 					<td>{{ .Service.Version }}</td>
 					<td>{{ .Service.ExtraInfo }}</td>
 				</tr>
-				{{ if .Script }}
+				{{ if and (.Script) (not $skipPortScripts) }}
 				{{ range .Script }}
 				<tr>
 					<td></td>
@@ -242,11 +248,11 @@
 					<td colspan="6"><pre>{{- .Output -}}</pre></td>
 				</tr>
 				{{ end }}{{/* range .Script */}}
-				{{ end }}{{/* if .Script */}}
+				{{ end }}{{/* if and (.Script) (not $skipPortScripts) */}}
 				{{ end }}{{/* range .Ports.Port */}}
 			</tbody>
 		</table>
-		{{ if .Trace }}
+		{{ if and (.Trace) (not $skipTraceroute) }}
 		<h3>Traceroute Information</h3>
 		{{ if .Trace.Hops }}
 		<details>
@@ -275,7 +281,8 @@
 		{{ else }}
 		No traceroute information.
 		{{ end }}{{/* if .Trace.Hops */}}
-		{{ end }}{{/* if .Trace */}}
+		{{ end }}{{/* if and (.Trace) (not $skipTraceroute) */}}
+		{{ if not $skipMetrics }}
 		<h3>Misc Metrics</h3>
 		<details>
 			<summary>(open)</summary>
@@ -314,6 +321,7 @@
 				</tbody>
 			</table>
 		</details>
+		{{ end }}{{/* if not $skipMetrics */}}
 		<hr />
 		{{ end }}{{/* if eq .Status.State "up" */}}
 		{{ end }}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
