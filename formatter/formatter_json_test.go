@@ -35,6 +35,59 @@ func TestJSONFormatter_Format(t *testing.T) {
 			wantOutput: "{\"Scanner\":\"\",\"Args\":\"\",\"Start\":\"\",\"StartStr\":\"\",\"Version\":\"\",\"ScanInfo\":{\"Type\":\"\",\"Protocol\":\"\",\"NumServices\":\"\",\"Services\":\"\"},\"Host\":null,\"Verbose\":{\"Level\":\"\"},\"Debugging\":{\"Level\":\"\"},\"RunStats\":{\"Finished\":{\"Time\":\"\",\"TimeStr\":\"\",\"Elapsed\":\"\",\"Summary\":\"\",\"Exit\":\"\"},\"Hosts\":{\"Up\":\"\",\"Down\":\"\",\"Total\":\"\"}}}\n",
 		},
 		{
+			name: "Empty output (with intend)",
+			f: &JSONFormatter{
+				&Config{
+					Writer: &writer,
+				},
+			},
+			args: args{
+				td: &TemplateData{
+					NMAPRun: NMAPRun{},
+					OutputOptions: OutputOptions{
+						JSONPrettyPrint: true,
+					},
+				},
+			},
+			wantErr: false,
+			err:     nil,
+			wantOutput: `{
+  "Scanner": "",
+  "Args": "",
+  "Start": "",
+  "StartStr": "",
+  "Version": "",
+  "ScanInfo": {
+    "Type": "",
+    "Protocol": "",
+    "NumServices": "",
+    "Services": ""
+  },
+  "Host": null,
+  "Verbose": {
+    "Level": ""
+  },
+  "Debugging": {
+    "Level": ""
+  },
+  "RunStats": {
+    "Finished": {
+      "Time": "",
+      "TimeStr": "",
+      "Elapsed": "",
+      "Summary": "",
+      "Exit": ""
+    },
+    "Hosts": {
+      "Up": "",
+      "Down": "",
+      "Total": ""
+    }
+  }
+}
+`,
+		},
+		{
 			name: "Error",
 			f: &JSONFormatter{
 				&Config{

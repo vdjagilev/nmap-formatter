@@ -1,3 +1,5 @@
+package cmd
+
 /*
 Copyright © 2021 vdjagilev
 
@@ -19,10 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package cmd
 
 import (
-	_ "embed"
 	"errors"
 	"fmt"
 	"log"
@@ -61,7 +61,10 @@ func init() {
 	log.SetOutput(os.Stderr)
 
 	rootCmd.Flags().StringVarP((*string)(&config.OutputFile), "file", "f", "", "-f output-file (by default \"\" will output to STDOUT)")
+
+	// Some options related to the output
 	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipDownHosts, "skip-down-hosts", true, "--skip-down-hosts=false")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONPrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
 
 	workflow = &formatter.MainWorkflow{}
 }
