@@ -6,12 +6,12 @@ type OutputOptions struct {
 	SkipDownHosts bool
 	// JSONPrettyPrint defines if JSON output would be pretty-printed (human-readable) or not (machine readable)
 	JSONPrettyPrint bool
-	// SkipSummary skips general summary for HTML & Markdown formats
+	// SkipSummary skips general summary for HTML & Markdown
 	SkipSummary bool
-	// SkipTraceroute skips traceroute information for HTML & Markdown formats
+	// SkipTraceroute skips traceroute information for HTML & Markdown
 	SkipTraceroute bool
-	// SkipMetrics skips metrics related data for HTML & Markdown formats
+	// SkipMetrics skips metrics related data for HTML
 	SkipMetrics bool
-	// SkipPortScripts skips port scripts information for HTML & Markdown formats
+	// SkipPortScripts skips port scripts information for HTML
 	SkipPortScripts bool
 }
