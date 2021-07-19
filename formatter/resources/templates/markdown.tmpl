@@ -1,23 +1,29 @@
 NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ==========================================
 {{- $displayDownHosts := not .OutputOptions.SkipDownHosts }}
+{{- $skipSummary := .OutputOptions.SkipSummary }}
+{{- $skipPortScripts := .OutputOptions.SkipPortScripts }}
 
 ## TOC
 
+{{- if not $skipSummary }}
 * [Scan Summary](#scan-summary)
+{{- end }}{{/* if $skipSummary */}}
 {{- range .NMAPRun.Host -}}
 {{- if or ($displayDownHosts) (eq .Status.State "up") }}
 * [{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }} ({{ .Status.State }})](#{{ md_toc .HostAddress.Address }})
 {{- if eq .Status.State "up" }}
 	* [Info](#{{ md_toc .HostAddress.Address }}-info)
 	* [Ports](#{{ md_toc .HostAddress.Address }}-ports)
+	{{- if not $skipPortScripts }}
 	* [Scripts](#{{ md_toc .HostAddress.Address }}-scripts)
-{{ end }}
+	{{- end -}}{{/* if not $skipPortScripts */}}
+{{- end }}
 {{- end -}}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
 {{- end -}}{{/* range .Host */}}
 
+{{- if not $skipSummary }}
 ----
-
 ## Scan Summary
 
 | Name | Value |
@@ -37,7 +43,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 | Exit (success) | {{ .NMAPRun.RunStats.Finished.Exit }} |
 | Summary | {{ .NMAPRun.RunStats.Finished.Summary }} |
 | Hosts | Up: {{ .NMAPRun.RunStats.Hosts.Up }}, Down: {{ .NMAPRun.RunStats.Hosts.Down }}, Total: {{ .NMAPRun.RunStats.Hosts.Total }} |
-
+{{ end }}{{/* if not $skipSummary */}}
 ----
 
 {{ range .NMAPRun.Host -}}
@@ -75,6 +81,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 {{ range .Ports.Port -}}
 | {{ .PortID }} | {{ .Protocol }} | {{ .State.State }} | {{ .Service.Name }} | {{ .State.Reason }} | {{ .Service.Product }} | {{ .Service.Version }} | {{ .Service.ExtraInfo }} |
 {{ end }}{{/* range .Ports.Port */}}
+{{ if not $skipPortScripts }}
 <a id="{{ md_toc .HostAddress.Address }}-scripts"></a>
 
 ### Scripts:
@@ -90,6 +97,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 
 {{- end -}}{{/* range .Script */}}
 {{- end -}}{{/* if .Script */}}
+{{ end -}}{{/* if not $skipPortScripts */}}
 {{ end -}}{{/* range .Ports.Port */}}
 {{- end -}}{{/* if eq .Status.State "up" */}}
 
