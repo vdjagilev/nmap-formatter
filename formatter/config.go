@@ -13,4 +13,5 @@ type Config struct {
 	InputFile     InputFile
 	OutputFile    OutputFile
 	OutputOptions OutputOptions
+	ShowVersion   bool
 }

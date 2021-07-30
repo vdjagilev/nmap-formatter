@@ -114,6 +114,13 @@ func Test_arguments(t *testing.T) {
 			wantErr: true,
 		},
 		{
+			name: "Version argument provided",
+			args: args{
+				args: []string{"version"},
+			},
+			wantErr: false,
+		},
+		{
 			name: "2 arguments provided",
 			args: args{
 				args: []string{
@@ -159,8 +166,11 @@ func Test_run(t *testing.T) {
 		wantErr   bool
 	}{
 		{
-			name:    "Fails validation during the run (no settings at all, will fail)",
-			args:    args{},
+			name: "Fails validation during the run (no settings at all, will fail)",
+			args: args{},
+			config: formatter.Config{
+				ShowVersion: false,
+			},
 			wantErr: true,
 		},
 		{
@@ -172,9 +182,19 @@ func Test_run(t *testing.T) {
 			},
 			config: formatter.Config{
 				OutputFormat: "csv",
+				ShowVersion:  false,
 			},
 			args:    args{},
 			wantErr: true,
+		},
+		{
+			name:      "Shows version using flag",
+			runBefore: true,
+			config: formatter.Config{
+				ShowVersion: true,
+			},
+			args:    args{},
+			wantErr: false,
 		},
 		{
 			name:      "Successful workflow execution",
@@ -183,6 +203,7 @@ func Test_run(t *testing.T) {
 			workflow:  &testWorkflow{},
 			config: formatter.Config{
 				OutputFormat: "html",
+				ShowVersion:  false, // false by default
 			},
 			args:    args{},
 			wantErr: false,
