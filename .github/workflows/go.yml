@@ -17,16 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go-version }}
-
-      - name: Lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          skip-go-installation: true
-          version: v2.5.2
+      - name: golangci-lint
+        uses: reviewdog/action-golangci-lint@v2
   test:
     strategy:
       matrix:
