@@ -9,6 +9,16 @@ on:
       - dev-*
 
 jobs:
+  lint:
+    strategy:
+      matrix:
+        go-version: [1.16.x]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: golangci-lint
+        uses: reviewdog/action-golangci-lint@v2
   test:
     strategy:
       matrix:
