@@ -3,7 +3,7 @@ name: Release Assets
 on:
   push:
     tags:
-      - "v*.*.*"
+      - v*
 
 jobs:
   publish_assets:
