@@ -65,8 +65,8 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 {{- range .OS.OSPortUsed }}
 | Used port | **{{ .PortID }}/{{ .Protocol }} ({{ .State }})** |
 {{- end -}}{{/* range .OS.OSPortUsed */}}
-{{- if .OS.OSMatch.Name }}
-| OS | **{{ .OS.OSMatch.Name }} ({{ .OS.OSMatch.Accuracy }}%)** |
+{{- range .OS.OSMatch }}
+| OS | **{{ .Name }} ({{ .Accuracy }}%)** |
 {{- else }}{{/* if .OS.OSMatch.Name */}}
 | OS | N/A |
 {{- end -}}{{/* if .OS.OSMatch.Name */}}

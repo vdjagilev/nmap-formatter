@@ -204,8 +204,8 @@
 						{{ range .OS.OSPortUsed }}
 						<li>Used port: <strong>{{ .PortID }}/{{ .Protocol }} ({{ .State }})</strong></li>
 						{{ end }}
-						{{ if .OS.OSMatch.Name }}
-						<li>OS: <strong>{{ .OS.OSMatch.Name }} ({{ .OS.OSMatch.Accuracy }}%)</strong></li>
+						{{ range .OS.OSMatch }}
+						<li>OS: <strong>{{ .Name }} ({{ .Accuracy }}%)</strong></li>
 						{{ else }}
 						<li>OS: N/A</li>
 						{{ end }}
