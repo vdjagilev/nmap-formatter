@@ -74,7 +74,7 @@ type HostName struct {
 type OS struct {
 	OSPortUsed []OSPortUsed `xml:"portused"`
 	OSClass    OSClass      `xml:"osclass"`
-	OSMatch    OSMatch      `xml:"osmatch"`
+	OSMatch    []OSMatch    `xml:"osmatch"`
 }
 
 // OSPortUsed defines which ports were used for OS detection
