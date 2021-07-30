@@ -13,7 +13,7 @@ jobs:
         run: |
           npm install github-release-notes
           export GREN_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          npm run overrideChangelog
+          gren changelog --override
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
