@@ -34,7 +34,11 @@ import (
 
 var config = formatter.Config{
 	OutputOptions: formatter.OutputOptions{},
+	ShowVersion:   false,
 }
+
+// VERSION is describing current version of the nmap-formatter
+const VERSION string = "0.2.0"
 
 var workflow formatter.Workflow
 
@@ -61,6 +65,7 @@ func init() {
 	log.SetOutput(os.Stderr)
 
 	rootCmd.Flags().StringVarP((*string)(&config.OutputFile), "file", "f", "", "-f output-file (by default \"\" will output to STDOUT)")
+	rootCmd.Flags().BoolVar(&config.ShowVersion, "version", false, "--version, will show you the current version of the app")
 
 	// Some options related to the output
 	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipDownHosts, "skip-down-hosts", true, "--skip-down-hosts=false")
@@ -76,6 +81,9 @@ func init() {
 // arguments function validates the arguments passed to the application
 // and sets configurations
 func arguments(cmd *cobra.Command, args []string) error {
+	if config.ShowVersion || (len(args) == 1 && args[0] == "version") {
+		return nil
+	}
 	if len(args) < 1 {
 		return errors.New("requires an xml file argument")
 	}
@@ -87,8 +95,17 @@ func arguments(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+// version just prints the current version of nmap-formatter
+func version() {
+	fmt.Printf("nmap-formatter version: %s", VERSION)
+}
+
 // run executes the main application workflow and finishes fatally if there is some error
 func run(cmd *cobra.Command, args []string) error {
+	if config.ShowVersion || (len(args) == 1 && args[0] == "version") {
+		version()
+		return nil
+	}
 	err := validate(config)
 	if err != nil {
 		return err

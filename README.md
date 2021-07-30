@@ -87,6 +87,7 @@ nmap-formatter [nmap.xml] json | jq '.Host[]? | . as $host | .Ports?.Port[]? | s
 
 * `-f, --file [filename]` outputs result to the file (by default output goes to STDOUT)
 * `--help` display help message
+* `--version` display version (also can be used: `./nmap-formatter version`)
 
 #### Output Related Flags
 
