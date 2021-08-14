@@ -1,14 +1,16 @@
-name: Release Assets
+name: Upload assets to release
 
 on:
-  push:
-    tags:
-      - v*
+  release:
+    types: [published]
 
 jobs:
-  publish_assets:
+  upload_assets:
     runs-on: ubuntu-latest
     steps:
+      - name: Get version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up Go
@@ -21,11 +23,11 @@ jobs:
         run: GOOS=windows GOARCH=amd64 go build -o nmap-formatter.exe && zip nmap-formatter-windows-amd64.zip nmap-formatter.exe
       - name: Build and pack for macos-amd64
         run: GOOS=darwin GOARCH=amd64 go build -o nmap-formatter && zip nmap-formatter-darwin-amd64.zip nmap-formatter
-      - name: Release
-        uses: softprops/action-gh-release@v1
+      - name: Upload release files
         if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
-            nmap-formatter-linux-amd64.tar.gz
-            nmap-formatter-windows-amd64.zip
-            nmap-formatter-darwin-amd64.zip
+        run: |
+          gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-linux-amd64.tar.gz --clobber
+          gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-windows-amd64.zip --clobber
+          gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-darwin-amd64.zip --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
