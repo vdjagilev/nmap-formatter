@@ -16,7 +16,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16.x
+          go-version: 1.17.x
       - name: Build and pack for linux-amd64
         run: GOOS=linux GOARCH=amd64 go build -o nmap-formatter && tar -czvf nmap-formatter-linux-amd64.tar.gz nmap-formatter
       - name: Build and pack for windows-amd64
