@@ -115,7 +115,7 @@ nmap-formatter [nmap.xml] json | jq '.Host[]? | . as $host | .Ports?.Port[]? | s
 ### Using Go
 
 ```
-go install github.com/vjdagilev/nmap-formatter@latest
+go install github.com/vdjagilev/nmap-formatter@latest
 ```
 
 ### Download Binary
