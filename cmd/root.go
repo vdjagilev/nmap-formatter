@@ -81,7 +81,7 @@ func init() {
 // arguments function validates the arguments passed to the application
 // and sets configurations
 func arguments(cmd *cobra.Command, args []string) error {
-	if config.ShowVersion || (len(args) == 1 && args[0] == "version") {
+	if shouldShowVersion(&config, args) {
 		return nil
 	}
 	if len(args) < 1 {
@@ -100,9 +100,15 @@ func version() {
 	fmt.Printf("nmap-formatter version: %s", VERSION)
 }
 
+// shouldShowVersion returns boolean whether app should show current version or not
+// based on flag passed to the app or first argument
+func shouldShowVersion(c *formatter.Config, args []string) bool {
+	return c.ShowVersion || (len(args) == 1 && args[0] == "version")
+}
+
 // run executes the main application workflow and finishes fatally if there is some error
 func run(cmd *cobra.Command, args []string) error {
-	if config.ShowVersion || (len(args) == 1 && args[0] == "version") {
+	if shouldShowVersion(&config, args) {
 		version()
 		return nil
 	}
@@ -122,7 +128,6 @@ func run(cmd *cobra.Command, args []string) error {
 
 // validate is checking input from the command line
 func validate(config formatter.Config) error {
-	// Validating the format
 	if !config.OutputFormat.IsValid() {
 		return fmt.Errorf("not valid format: %s, please choose html/json/md/csv", config.OutputFormat)
 	}

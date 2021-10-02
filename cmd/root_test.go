@@ -233,3 +233,83 @@ func (w *testWorkflow) Execute() (err error) {
 func (w *testWorkflow) SetConfig(c *formatter.Config) {
 	log.Println("testWorkflow -> SetConfig")
 }
+
+func Test_shouldShowVersion(t *testing.T) {
+	type args struct {
+		c    *formatter.Config
+		args []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "Don't show version (html)",
+			args: args{
+				c: &formatter.Config{
+					ShowVersion: false,
+				},
+				args: []string{
+					"html",
+					"path/to/file.xml",
+				},
+			},
+			want: false,
+		},
+		{
+			name: "Don't show version (arguments are used incorrectly)",
+			args: args{
+				c: &formatter.Config{
+					ShowVersion: false,
+				},
+				args: []string{
+					"version",
+					"path/to/file.xml",
+				},
+			},
+			want: false,
+		},
+		{
+			name: "Show version (flag)",
+			args: args{
+				c: &formatter.Config{
+					ShowVersion: true,
+				},
+				args: []string{},
+			},
+			want: true,
+		},
+		{
+			name: "Show version (argument)",
+			args: args{
+				c: &formatter.Config{
+					ShowVersion: false,
+				},
+				args: []string{
+					"version",
+				},
+			},
+			want: true,
+		},
+		{
+			name: "Show version (both)",
+			args: args{
+				c: &formatter.Config{
+					ShowVersion: true,
+				},
+				args: []string{
+					"version",
+				},
+			},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := shouldShowVersion(tt.args.c, tt.args.args); got != tt.want {
+				t.Errorf("shouldShowVersion() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
