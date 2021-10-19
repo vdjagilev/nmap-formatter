@@ -100,6 +100,13 @@ func Test_markdownTOCEntry(t *testing.T) {
 			},
 			want: "19216822-test-host",
 		},
+		{
+			name: "IP addr with brackets and slashes",
+			args: args{
+				v: "192.168.2.2 / example.com (up)",
+			},
+			want: "19216822--examplecom-up",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -438,6 +445,98 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 				t.Errorf("MarkdownFormatter.Format() error = %v, wantErr %v", err, tt.wantErr)
 			} else if tt.validate != nil {
 				tt.validate(tt.f, string(writer.data), t)
+			}
+		})
+	}
+}
+
+func Test_markdownHostAnchorTitle(t *testing.T) {
+	type args struct {
+		h *Host
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "IP addr (up)",
+			args: args{
+				h: &Host{
+					HostAddress: HostAddress{
+						Address: "192.168.1.21",
+					},
+					Status: HostStatus{
+						State: "up",
+					},
+				},
+			},
+			want: "192.168.1.21 (up)",
+		},
+		{
+			name: "IP addr (down)",
+			args: args{
+				h: &Host{
+					HostAddress: HostAddress{
+						Address: "192.168.22.23",
+					},
+					Status: HostStatus{
+						State: "down",
+					},
+				},
+			},
+			want: "192.168.22.23 (down)",
+		},
+		{
+			name: "IP addr, 1 hostname (up)",
+			args: args{
+				h: &Host{
+					HostAddress: HostAddress{
+						Address: "192.168.22.23",
+					},
+					HostNames: HostNames{
+						[]HostName{
+							{
+								Name: "example.com",
+							},
+						},
+					},
+					Status: HostStatus{
+						State: "up",
+					},
+				},
+			},
+			want: "192.168.22.23 / example.com (up)",
+		},
+		{
+			name: "IP addr, 2 hostnames (up)",
+			args: args{
+				h: &Host{
+					HostAddress: HostAddress{
+						Address: "192.168.32.33",
+					},
+					HostNames: HostNames{
+						[]HostName{
+							{
+								Name: "example.com",
+							},
+							{
+								Name: "example2.com",
+							},
+						},
+					},
+					Status: HostStatus{
+						State: "up",
+					},
+				},
+			},
+			want: "192.168.32.33 / example.com / example2.com (up)",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := markdownHostAnchorTitle(tt.args.h); got != tt.want {
+				t.Errorf("markdownHostAnchorTitle() = %v, want %v", got, tt.want)
 			}
 		})
 	}
