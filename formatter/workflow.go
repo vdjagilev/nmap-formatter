@@ -65,13 +65,13 @@ func (w *MainWorkflow) Execute() (err error) {
 }
 
 // parse reads & unmarshalles the input file into NMAPRun struct
-func (w *MainWorkflow) parse() (NMAPRun NMAPRun, err error) {
+func (w *MainWorkflow) parse() (run NMAPRun, err error) {
 	input, err := os.ReadFile(string(w.Config.InputFile))
 	if err != nil {
 		return
 	}
-	if err = xml.Unmarshal(input, &NMAPRun); err != nil {
+	if err = xml.Unmarshal(input, &run); err != nil {
 		return
 	}
-	return NMAPRun, nil
+	return run, nil
 }
