@@ -18,14 +18,16 @@ func (f *CSVFormatter) Format(td *TemplateData) (err error) {
 // convert uses NMAPRun struct to convert all data to [][]string type
 func (f *CSVFormatter) convert(td *TemplateData) (data [][]string) {
 	data = append(data, []string{"IP", "Port", "Protocol", "State", "Service", "Reason", "Product", "Version", "Extra info"})
-	for _, host := range td.NMAPRun.Host {
+	for i := range td.NMAPRun.Host {
+		var host *Host = &td.NMAPRun.Host[i]
 		// Skipping hosts that are down
 		if td.OutputOptions.SkipDownHosts && host.Status.State != "up" {
 			continue
 		}
 		address := fmt.Sprintf("%s (%s)", host.HostAddress.Address, host.Status.State)
 		data = append(data, []string{address, "", "", "", "", "", "", "", ""})
-		for _, port := range host.Ports.Port {
+		for j := range host.Ports.Port {
+			var port *Port = &host.Ports.Port[j]
 			data = append(
 				data,
 				[]string{
