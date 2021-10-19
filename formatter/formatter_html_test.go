@@ -137,7 +137,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			wantErr: false,
 			validate: func(f *HTMLFormatter, output string, t *testing.T) {
 				expect := 2
-				re := regexp.MustCompile(`<li><a href="\#192\.168\.1\.(1|2)">`)
+				re := regexp.MustCompile(`<li><a href="#192\.168\.1\.([12])">`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
 					t.Fatalf("Expected %d addresses in TOC, got %d", expect, actual)
@@ -199,7 +199,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			wantErr: false,
 			validate: func(f *HTMLFormatter, output string, t *testing.T) {
 				expect := 1
-				re := regexp.MustCompile(`<li><a href="\#192\.168\.1\.(1|2)">`)
+				re := regexp.MustCompile(`<li><a href="#192\.168\.1\.([12])">`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
 					t.Fatalf("Expected %d addresses in TOC, got %d", expect, actual)
@@ -261,7 +261,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			wantErr: false,
 			validate: func(f *HTMLFormatter, output string, t *testing.T) {
 				expect := 2
-				re := regexp.MustCompile(`<li><a href="\#192\.168\.1\.(1|2)">`)
+				re := regexp.MustCompile(`<li><a href="#192\.168\.1\.([12])">`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
 					t.Fatalf("Expected %d addresses in TOC, got %d", expect, actual)

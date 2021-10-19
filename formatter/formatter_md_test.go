@@ -223,7 +223,7 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 			wantErr: false,
 			validate: func(f *MarkdownFormatter, output string, t *testing.T) {
 				expect := 2
-				re := regexp.MustCompile(`## 192\.168\.1\.[0-9]+`)
+				re := regexp.MustCompile(`## 192\.168\.1\.\d+`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
 					t.Fatalf("Expected %d host headers, got %d", expect, actual)
@@ -304,7 +304,7 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 			wantErr: false,
 			validate: func(f *MarkdownFormatter, output string, t *testing.T) {
 				expect := 3
-				re := regexp.MustCompile(`## 192\.168\.1\.[0-9]+`)
+				re := regexp.MustCompile(`## 192\.168\.1\.\d+`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
 					t.Fatalf("Expected %d host headers, got %d", expect, actual)
