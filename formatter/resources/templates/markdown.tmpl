@@ -11,14 +11,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 {{- end }}{{/* if $skipSummary */}}
 {{- range .NMAPRun.Host -}}
 {{- if or ($displayDownHosts) (eq .Status.State "up") }}
-* [{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }} ({{ .Status.State }})](#{{ md_toc .HostAddress.Address }})
-{{- if eq .Status.State "up" }}
-	* [Info](#{{ md_toc .HostAddress.Address }}-info)
-	* [Ports](#{{ md_toc .HostAddress.Address }}-ports)
-	{{- if not $skipPortScripts }}
-	* [Scripts](#{{ md_toc .HostAddress.Address }}-scripts)
-	{{- end -}}{{/* if not $skipPortScripts */}}
-{{- end }}
+* [{{ md_title . }}](#{{ md_link . }})
 {{- end -}}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
 {{- end -}}{{/* range .Host */}}
 
@@ -48,13 +41,10 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 
 {{ range .NMAPRun.Host -}}
 {{- if or ($displayDownHosts) (eq .Status.State "up") }}
-<a id="{{ md_toc .HostAddress.Address }}"></a>
 
-## {{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}{{ if eq .Status.State "up" }} (up){{ else }} (down){{ end }}
+## {{ md_title . }}
 
 {{- if eq .Status.State "up" }}
-<a id="{{ md_toc .HostAddress.Address }}-info"></a>
-
 ### Info:
 
 | Name | Value |
@@ -72,8 +62,6 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 {{- end -}}{{/* if .OS.OSMatch.Name */}}
 {{ end }}{{/* if .OS */}}
 
-<a id="{{ md_toc .HostAddress.Address }}-ports"></a>
-
 ### Ports:
 
 | Port | State | Service | Reason | Product | Version | Extra Info |
@@ -82,7 +70,6 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 | {{ .PortID }} | {{ .Protocol }} | {{ .State.State }} | {{ .Service.Name }} | {{ .State.Reason }} | {{ .Service.Product }} | {{ .Service.Version }} | {{ .Service.ExtraInfo }} |
 {{ end }}{{/* range .Ports.Port */}}
 {{ if not $skipPortScripts }}
-<a id="{{ md_toc .HostAddress.Address }}-scripts"></a>
 
 ### Scripts:
 {{ range .Ports.Port -}}
