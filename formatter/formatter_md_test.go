@@ -541,3 +541,104 @@ func Test_markdownHostAnchorTitle(t *testing.T) {
 		})
 	}
 }
+
+func Test_markdownOutputFilter_filter(t *testing.T) {
+	tests := []struct {
+		name string
+		m    *markdownOutputFilter
+		want []byte
+	}{
+		{
+			name: "Double new lines",
+			m: &markdownOutputFilter{
+				content: []byte("# Header\n## Header 2\n### Header 3\n\nNew sentence\n\nAnother new sentence"),
+			},
+			want: []byte("# Header\n## Header 2\n### Header 3\n\nNew sentence\n\nAnother new sentence"),
+		},
+		{
+			name: "Simple codeblock",
+			m: &markdownOutputFilter{
+				content: []byte("# Header\nSome code:\n```\n\nSome newlines should be ignored\nhere\n\n```\n\n# Test\n\nNew sentence\n"),
+			},
+			want: []byte("# Header\nSome code:\n```\n\nSome newlines should be ignored\nhere\n\n```\n\n# Test\n\nNew sentence\n"),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.m.filter(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("markdownOutputFilter.filter() = %v, want %v", string(got), string(tt.want))
+			}
+		})
+	}
+}
+
+func Test_markdownOutputFilter_split(t *testing.T) {
+	tests := []struct {
+		name string
+		m    *markdownOutputFilter
+		want [][]byte
+	}{
+		{
+			name: "Double new line",
+			m: &markdownOutputFilter{
+				content: []byte("Test double\n\ntest"),
+			},
+			want: [][]byte{
+				[]byte("Test double"),
+				{},
+				{},
+				[]byte("test"),
+			},
+		},
+		{
+			name: "Multiple lines with double new lines",
+			m: &markdownOutputFilter{
+				content: []byte("# Header\n## Header 2\n### Header 3\n\nNew sentence\n\nAnother new sentence"),
+			},
+			want: [][]byte{
+				[]byte("# Header"),
+				{},
+				[]byte("## Header 2"),
+				{},
+				[]byte("### Header 3"),
+				{},
+				{},
+				[]byte("New sentence"),
+				{},
+				{},
+				[]byte("Another new sentence"),
+			},
+		},
+		{
+			name: "New line in the beginning",
+			m: &markdownOutputFilter{
+				content: []byte("\nNew line\n\n"),
+			},
+			want: [][]byte{
+				{},
+				[]byte("New line"),
+				{},
+				{},
+			},
+		},
+		{
+			name: "Many lines in the end",
+			m: &markdownOutputFilter{
+				content: []byte("New test\n\n\n"),
+			},
+			want: [][]byte{
+				[]byte("New test"),
+				{},
+				{},
+				{},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.m.split(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("markdownOutputFilter.split() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
