@@ -38,8 +38,8 @@ func TestCSVFormatter_convert(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime:   "",
-								EndTime:     "",
+								StartTime:   0,
+								EndTime:     0,
 								Ports:       Ports{},
 								HostAddress: HostAddress{},
 								HostNames:   HostNames{},
@@ -101,8 +101,8 @@ func TestCSVFormatter_convert(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "127.0.0.1",
@@ -139,13 +139,13 @@ func TestCSVFormatter_convert(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports: Ports{
 									Port: []Port{
 										{
 											Protocol: "tcp",
-											PortID:   "80",
+											PortID:   80,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -195,13 +195,13 @@ func TestCSVFormatter_convert(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports: Ports{
 									Port: []Port{
 										{
 											Protocol: "tcp",
-											PortID:   "80",
+											PortID:   80,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -215,7 +215,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 										},
 										{
 											Protocol: "tcp",
-											PortID:   "443",
+											PortID:   443,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -266,13 +266,13 @@ func TestCSVFormatter_convert(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports: Ports{
 									Port: []Port{
 										{
 											Protocol: "tcp",
-											PortID:   "80",
+											PortID:   80,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -286,7 +286,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 										},
 										{
 											Protocol: "tcp",
-											PortID:   "443",
+											PortID:   443,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -316,8 +316,8 @@ func TestCSVFormatter_convert(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
@@ -356,13 +356,13 @@ func TestCSVFormatter_convert(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports: Ports{
 									Port: []Port{
 										{
 											Protocol: "tcp",
-											PortID:   "80",
+											PortID:   80,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -376,7 +376,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 										},
 										{
 											Protocol: "tcp",
-											PortID:   "443",
+											PortID:   443,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -406,8 +406,8 @@ func TestCSVFormatter_convert(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
@@ -447,13 +447,13 @@ func TestCSVFormatter_convert(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports: Ports{
 									Port: []Port{
 										{
 											Protocol: "tcp",
-											PortID:   "80",
+											PortID:   80,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -467,7 +467,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 										},
 										{
 											Protocol: "tcp",
-											PortID:   "443",
+											PortID:   443,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",
@@ -497,13 +497,13 @@ func TestCSVFormatter_convert(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports: Ports{
 									Port: []Port{
 										{
 											Protocol: "tcp",
-											PortID:   "22",
+											PortID:   22,
 											State: PortState{
 												State:  "open",
 												Reason: "syn-ack",

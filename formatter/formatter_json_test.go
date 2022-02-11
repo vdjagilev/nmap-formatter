@@ -32,7 +32,7 @@ func TestJSONFormatter_Format(t *testing.T) {
 			},
 			wantErr:    false,
 			err:        nil,
-			wantOutput: "{\"Scanner\":\"\",\"Args\":\"\",\"Start\":\"\",\"StartStr\":\"\",\"Version\":\"\",\"ScanInfo\":{\"Type\":\"\",\"Protocol\":\"\",\"NumServices\":\"\",\"Services\":\"\"},\"Host\":null,\"Verbose\":{\"Level\":\"\"},\"Debugging\":{\"Level\":\"\"},\"RunStats\":{\"Finished\":{\"Time\":\"\",\"TimeStr\":\"\",\"Elapsed\":\"\",\"Summary\":\"\",\"Exit\":\"\"},\"Hosts\":{\"Up\":\"\",\"Down\":\"\",\"Total\":\"\"}}}\n",
+			wantOutput: "{\"Scanner\":\"\",\"Args\":\"\",\"Start\":0,\"StartStr\":\"\",\"Version\":\"\",\"ScanInfo\":{\"Type\":\"\",\"Protocol\":\"\",\"NumServices\":0,\"Services\":\"\"},\"Host\":null,\"Verbose\":{\"Level\":0},\"Debugging\":{\"Level\":0},\"RunStats\":{\"Finished\":{\"Time\":0,\"TimeStr\":\"\",\"Elapsed\":0,\"Summary\":\"\",\"Exit\":\"\"},\"Hosts\":{\"Up\":0,\"Down\":0,\"Total\":0}}}\n",
 		},
 		{
 			name: "Empty output (with intend)",
@@ -54,34 +54,34 @@ func TestJSONFormatter_Format(t *testing.T) {
 			wantOutput: `{
   "Scanner": "",
   "Args": "",
-  "Start": "",
+  "Start": 0,
   "StartStr": "",
   "Version": "",
   "ScanInfo": {
     "Type": "",
     "Protocol": "",
-    "NumServices": "",
+    "NumServices": 0,
     "Services": ""
   },
   "Host": null,
   "Verbose": {
-    "Level": ""
+    "Level": 0
   },
   "Debugging": {
-    "Level": ""
+    "Level": 0
   },
   "RunStats": {
     "Finished": {
-      "Time": "",
+      "Time": 0,
       "TimeStr": "",
-      "Elapsed": "",
+      "Elapsed": 0,
       "Summary": "",
       "Exit": ""
     },
     "Hosts": {
-      "Up": "",
-      "Down": "",
-      "Total": ""
+      "Up": 0,
+      "Down": 0,
+      "Total": 0
     }
   }
 }

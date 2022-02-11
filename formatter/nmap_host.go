@@ -2,8 +2,8 @@ package formatter
 
 // Host describes host related entry (`host` node)
 type Host struct {
-	StartTime     string        `xml:"starttime,attr"`
-	EndTime       string        `xml:"endtime,attr"`
+	StartTime     int           `xml:"starttime,attr"`
+	EndTime       int           `xml:"endtime,attr"`
 	Ports         Ports         `xml:"ports"`
 	HostAddress   HostAddress   `xml:"address"`
 	HostNames     HostNames     `xml:"hostnames"`
@@ -38,13 +38,13 @@ type TCPSequence struct {
 
 // Uptime shows the information about host uptime
 type Uptime struct {
-	Seconds  string `xml:"seconds,attr"`
+	Seconds  int    `xml:"seconds,attr"`
 	LastBoot string `xml:"lastboot,attr"`
 }
 
 // Distance describes amount of hops to the target
 type Distance struct {
-	Value string `xml:"value,attr"`
+	Value int `xml:"value,attr"`
 }
 
 // HostStatus describes the state (up or down) of the host and the reason
@@ -81,7 +81,7 @@ type OS struct {
 type OSPortUsed struct {
 	State    string `xml:"state,attr"`
 	Protocol string `xml:"proto,attr"`
-	PortID   string `xml:"portid,attr"`
+	PortID   int    `xml:"portid,attr"`
 }
 
 // OSClass contains all information about operating system family
@@ -103,15 +103,15 @@ type OSMatch struct {
 
 // Trace struct contains trace information with hops
 type Trace struct {
-	Port     string `xml:"port,attr"`
+	Port     int    `xml:"port,attr"`
 	Protocol string `xml:"proto,attr"`
 	Hops     []Hop  `xml:"hop"`
 }
 
 // Hop struct contains information about HOP record with time to live, host name, IP
 type Hop struct {
-	TTL    string `xml:"ttl,attr"`
-	IPAddr string `xml:"ipaddr,attr"`
-	RTT    string `xml:"rtt,attr"`
-	Host   string `xml:"host,attr"`
+	TTL    int     `xml:"ttl,attr"`
+	IPAddr string  `xml:"ipaddr,attr"`
+	RTT    float64 `xml:"rtt,attr"`
+	Host   string  `xml:"host,attr"`
 }

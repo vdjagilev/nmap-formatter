@@ -32,7 +32,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 | Number of services | {{ .NMAPRun.ScanInfo.NumServices }} |
 | Services | <details><summary>(open)</summary>`{{ md .NMAPRun.ScanInfo.Services }}`</details> |
 | Arguments | `{{ md .NMAPRun.Args }}` |
-| Verbosity | {{ md .NMAPRun.Verbose.Level }} |
+| Verbosity | {{ .NMAPRun.Verbose.Level }} |
 | Debug | {{ .NMAPRun.Debugging.Level }} |
 | Exit (success) | {{ .NMAPRun.RunStats.Finished.Exit }} |
 | Summary | {{ .NMAPRun.RunStats.Finished.Summary }} |

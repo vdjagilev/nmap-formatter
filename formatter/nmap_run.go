@@ -6,7 +6,7 @@ package formatter
 type NMAPRun struct {
 	Scanner   string    `xml:"scanner,attr"`
 	Args      string    `xml:"args,attr"`
-	Start     string    `xml:"start,attr"`
+	Start     int       `xml:"start,attr"`
 	StartStr  string    `xml:"startstr,attr"`
 	Version   string    `xml:"version,attr"`
 	ScanInfo  ScanInfo  `xml:"scaninfo"`
@@ -20,18 +20,18 @@ type NMAPRun struct {
 type ScanInfo struct {
 	Type        string `xml:"type,attr"`
 	Protocol    string `xml:"protocol,attr"`
-	NumServices string `xml:"numservices,attr"`
+	NumServices int    `xml:"numservices,attr"`
 	Services    string `xml:"services,attr"`
 }
 
 // Verbose defines verbosity level that was configured during NMAP execution
 type Verbose struct {
-	Level string `xml:"level,attr"`
+	Level int `xml:"level,attr"`
 }
 
 // Debugging defines level of debug during NMAP execution
 type Debugging struct {
-	Level string `xml:"level,attr"`
+	Level int `xml:"level,attr"`
 }
 
 // RunStats contains other nodes that refer to statistics of the scan
@@ -42,16 +42,16 @@ type RunStats struct {
 
 // Finished is part of `RunStats` struct, it has all information related to the time (started, how much time it took) and summary incl. exit status code
 type Finished struct {
-	Time    string `xml:"time,attr"`
-	TimeStr string `xml:"timestr,attr"`
-	Elapsed string `xml:"elapsed,attr"`
-	Summary string `xml:"summary,attr"`
-	Exit    string `xml:"exit,attr"`
+	Time    int     `xml:"time,attr"`
+	TimeStr string  `xml:"timestr,attr"`
+	Elapsed float64 `xml:"elapsed,attr"`
+	Summary string  `xml:"summary,attr"`
+	Exit    string  `xml:"exit,attr"`
 }
 
 // StatHosts contains statistics about hosts that are up or down
 type StatHosts struct {
-	Up    string `xml:"up,attr"`
-	Down  string `xml:"down,attr"`
-	Total string `xml:"total,attr"`
+	Up    int `xml:"up,attr"`
+	Down  int `xml:"down,attr"`
+	Total int `xml:"total,attr"`
 }
