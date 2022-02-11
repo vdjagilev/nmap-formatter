@@ -32,7 +32,7 @@ func (f *CSVFormatter) convert(td *TemplateData) (data [][]string) {
 				data,
 				[]string{
 					"",
-					port.PortID,
+					fmt.Sprint(port.PortID),
 					port.Protocol,
 					port.State.State,
 					port.Service.Name,

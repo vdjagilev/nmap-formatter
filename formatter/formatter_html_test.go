@@ -90,8 +90,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
@@ -109,8 +109,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
@@ -152,8 +152,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
@@ -171,8 +171,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
@@ -214,8 +214,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
@@ -233,8 +233,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
@@ -276,13 +276,13 @@ func TestHTMLFormatter_Format(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports: Ports{
 									Port: []Port{
 										{
 											Protocol: "tcp",
-											PortID:   "80",
+											PortID:   80,
 											State: PortState{
 												State: "open",
 											},
@@ -291,7 +291,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 										},
 										{
 											Protocol: "tcp",
-											PortID:   "443",
+											PortID:   443,
 											State: PortState{
 												State: "up",
 											},
@@ -316,13 +316,13 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports: Ports{
 									Port: []Port{
 										{
 											Protocol: "tcp",
-											PortID:   "8080",
+											PortID:   8080,
 											State: PortState{
 												State: "open",
 											},
@@ -368,8 +368,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
@@ -387,8 +387,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
@@ -406,8 +406,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.3",
@@ -449,8 +449,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
@@ -468,8 +468,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
@@ -487,8 +487,8 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								TCPTSSequence: TCPTSSequence{},
 							},
 							{
-								StartTime: "",
-								EndTime:   "",
+								StartTime: 0,
+								EndTime:   0,
 								Ports:     Ports{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.3",

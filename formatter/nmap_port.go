@@ -8,7 +8,7 @@ type Ports struct {
 // Port record contains main information about port that was scanned
 type Port struct {
 	Protocol string      `xml:"protocol,attr"`
-	PortID   string      `xml:"portid,attr"`
+	PortID   int         `xml:"portid,attr"`
 	State    PortState   `xml:"state"`
 	Service  PortService `xml:"service"`
 	Script   []Script    `xml:"script"`
@@ -35,7 +35,7 @@ type PortService struct {
 // ExtraPorts contains information about certain amount of ports that were (for example) filtered
 type ExtraPorts struct {
 	State string `xml:"state,attr"`
-	Count string `xml:"count,attr"`
+	Count int    `xml:"count,attr"`
 }
 
 // Script defines a script ID and script output (result)
