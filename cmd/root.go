@@ -97,7 +97,7 @@ func arguments(cmd *cobra.Command, args []string) error {
 
 // version just prints the current version of nmap-formatter
 func version() {
-	fmt.Printf("nmap-formatter version: %s", VERSION)
+	fmt.Printf("nmap-formatter version: %s\n", VERSION)
 }
 
 // shouldShowVersion returns boolean whether app should show current version or not
