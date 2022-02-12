@@ -11,15 +11,16 @@ A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
 ## Table of Contents
 
 - [NMAP-Formatter](#nmap-formatter)
-	- [Table of Contents](#table-of-contents)
-	- [Usage](#usage)
-		- [Flags](#flags)
-			- [Output Related Flags](#output-related-flags)
+  - [Table of Contents](#table-of-contents)
+  - [Usage](#usage)
+    - [Flags](#flags)
+      - [Output Related Flags](#output-related-flags)
 	- [Installation](#installation)
 		- [Using Go](#using-go)
-		- [Download Binary](#download-binary)
-		- [Compile](#compile)
-	- [Example](#example)
+    - [Docker](#docker)
+    - [Download Binary](#download-binary)
+    - [Compile](#compile)
+  - [Example](#example)
 
 ## Usage
 
@@ -118,12 +119,20 @@ nmap-formatter [nmap.xml] json | jq '.Host[]? | . as $host | .Ports?.Port[]? | s
 go install github.com/vdjagilev/nmap-formatter@latest
 ```
 
+### Docker
+
+No installation needed, just run `docker run`:
+
+```
+docker run -v /path/to/xml/file.xml:/opt/file.xml ghcr.io/vdjagilev/nmap-formatter:latest /opt/file.xml json
+```
+
 ### Download Binary
 
 Choose version from Release page and download it:
 
 ```
-curl https://github.com/vdjagilev/nmap-formatter/releases/download/v0.1.0/nmap-formatter-linux-amd64.tar.gz --output nmap-formatter.tar.gz -L
+curl https://github.com/vdjagilev/nmap-formatter/releases/download/v0.3.0/nmap-formatter-linux-amd64.tar.gz --output nmap-formatter.tar.gz -L
 tar -xzvf nmap-formatter.tar.gz
 ./nmap-formatter --help
 ```
