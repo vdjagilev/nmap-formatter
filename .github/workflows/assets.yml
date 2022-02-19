@@ -19,15 +19,24 @@ jobs:
           go-version: 1.17.x
       - name: Build and pack for linux-amd64
         run: GOOS=linux GOARCH=amd64 go build -o nmap-formatter && tar -czvf nmap-formatter-linux-amd64.tar.gz nmap-formatter
+      - name: Build and pack for linux-arm64
+        run: GOOS=linux GOARCH=arm64 go build -o nmap-formatter && tar -czvf nmap-formatter-linux-arm64.tar.gz nmap-formatter
       - name: Build and pack for windows-amd64
         run: GOOS=windows GOARCH=amd64 go build -o nmap-formatter.exe && zip nmap-formatter-windows-amd64.zip nmap-formatter.exe
+      - name: Build and pack for windows-arm64
+        run: GOOS=windows GOARCH=arm64 go build -o nmap-formatter.exe && zip nmap-formatter-windows-arm64.zip nmap-formatter.exe
       - name: Build and pack for macos-amd64
         run: GOOS=darwin GOARCH=amd64 go build -o nmap-formatter && zip nmap-formatter-darwin-amd64.zip nmap-formatter
+      - name: Build and pack for macos-arm64
+        run: GOOS=darwin GOARCH=arm64 go build -o nmap-formatter && zip nmap-formatter-darwin-arm64.zip nmap-formatter
       - name: Upload release files
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-linux-amd64.tar.gz --clobber
           gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-windows-amd64.zip --clobber
           gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-darwin-amd64.zip --clobber
+          gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-linux-arm64.tar.gz --clobber
+          gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-windows-arm64.zip --clobber
+          gh release upload ${{ steps.get_version.outputs.VERSION }} nmap-formatter-darwin-arm64.zip --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
