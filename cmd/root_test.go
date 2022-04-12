@@ -42,15 +42,15 @@ func Test_validate(t *testing.T) {
 		name    string
 		args    args
 		wantErr bool
-		before  func()
-		after   func()
+		before  func(t *testing.T)
+		after   func(t *testing.T)
 	}{
 		{
 			name:    "Wrong output format",
 			args:    args{config: formatter.Config{OutputFormat: formatter.OutputFormat("test")}},
 			wantErr: true,
-			before:  func() {},
-			after:   func() {},
+			before:  func(t *testing.T) {},
+			after:   func(t *testing.T) {},
 		},
 		{
 			name: "Missing input file",
@@ -60,8 +60,8 @@ func Test_validate(t *testing.T) {
 				},
 			},
 			wantErr: true,
-			before:  func() {},
-			after:   func() {},
+			before:  func(t *testing.T) {},
+			after:   func(t *testing.T) {},
 		},
 		{
 			name: "Successful validation",
@@ -72,18 +72,26 @@ func Test_validate(t *testing.T) {
 				},
 			},
 			wantErr: false,
-			before: func() {
-				os.Create(path.Join(os.TempDir(), "formatter_cmd_valid_2"))
+			before: func(t *testing.T) {
+				path := path.Join(os.TempDir(), "formatter_cmd_valid_2")
+				_, err := os.Create(path)
+				if err != nil {
+					t.Errorf("could not create temporary file: %s", path)
+				}
 			},
-			after: func() {
-				os.Remove(path.Join(os.TempDir(), "formatter_cmd_valid_2"))
+			after: func(t *testing.T) {
+				path := path.Join(os.TempDir(), "formatter_cmd_valid_2")
+				err := os.Remove(path)
+				if err != nil {
+					t.Errorf("could not remove temporary file: %s", path)
+				}
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tt.before()
-			defer tt.after()
+			tt.before(t)
+			defer tt.after(t)
 			if err := validate(tt.args.config); (err != nil) != tt.wantErr {
 				t.Errorf("validate() error = %v, wantErr %v", err, tt.wantErr)
 			}
@@ -145,14 +153,26 @@ func Test_run(t *testing.T) {
 		cmd  *cobra.Command
 		args []string
 	}
-	before := func(file string, testWorkflow formatter.Workflow, testConfig formatter.Config) {
-		os.Create(file)
+	before := func(file string, testWorkflow formatter.Workflow, testConfig formatter.Config, t *testing.T) {
+		var err error
+		if len(file) != 0 {
+			_, err = os.Create(file)
+		}
+		if err != nil {
+			t.Errorf("could not create temporary file: %s", file)
+		}
 		workflow = testWorkflow
 		config = testConfig
 		config.InputFile = formatter.InputFile(file)
 	}
-	after := func(file string) {
-		os.Remove(file)
+	after := func(file string, t *testing.T) {
+		var err error
+		if len(file) != 0 {
+			err = os.Remove(file)
+		}
+		if err != nil {
+			t.Errorf("could not remove temporary file: %s", file)
+		}
 		workflow = nil
 		config = formatter.Config{}
 	}
@@ -212,8 +232,8 @@ func Test_run(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if tt.runBefore {
-				before(tt.input, tt.workflow, tt.config)
-				defer after(tt.input)
+				before(tt.input, tt.workflow, tt.config, t)
+				defer after(tt.input, t)
 			}
 			if err := run(tt.args.cmd, tt.args.args); (err != nil) != tt.wantErr {
 				t.Errorf("run() error = %v, wantErr %v", err, tt.wantErr)
