@@ -100,7 +100,7 @@ func TestMainWorkflow_Execute(t *testing.T) {
 		wantErr     bool
 		fileName    string
 		fileContent string
-		before      func(file string)
+		before      func(file string, t *testing.T)
 	}{
 		{
 			name: "Cannot open OutputFile for a write",
@@ -119,9 +119,13 @@ func TestMainWorkflow_Execute(t *testing.T) {
 			wantErr:     true,
 			fileName:    "main_workflow_Execute_2_test",
 			fileContent: "",
-			before: func(file string) {
+			before: func(file string, t *testing.T) {
 				// Creating output file
-				os.Create(path.Join(os.TempDir(), file+"_output"))
+				path := path.Join(os.TempDir(), file+"_output")
+				_, err := os.Create(path)
+				if err != nil {
+					t.Errorf("failed to create temporary output file: %s", path)
+				}
 			},
 		},
 		{
@@ -159,7 +163,7 @@ func TestMainWorkflow_Execute(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if tt.before != nil {
-				tt.before(tt.fileName)
+				tt.before(tt.fileName, t)
 			}
 			if tt.fileName != "" {
 				name := path.Join(os.TempDir(), tt.fileName)
