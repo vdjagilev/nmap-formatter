@@ -83,7 +83,7 @@ func Test_validate(t *testing.T) {
 				path := path.Join(os.TempDir(), "formatter_cmd_valid_2")
 				err := os.Remove(path)
 				if err != nil {
-					t.Errorf("could not remove temporary file: %s", path)
+					t.Logf("could not remove temporary file: %s", path)
 				}
 			},
 		},
@@ -171,7 +171,7 @@ func Test_run(t *testing.T) {
 			err = os.Remove(file)
 		}
 		if err != nil {
-			t.Errorf("could not remove temporary file: %s", file)
+			t.Logf("could not remove temporary file: %s", file)
 		}
 		workflow = nil
 		config = formatter.Config{}
