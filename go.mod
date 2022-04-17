@@ -3,8 +3,8 @@ module github.com/vdjagilev/nmap-formatter
 go 1.18
 
 require (
-	github.com/spf13/cobra v1.2.1
-	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d
+	github.com/spf13/cobra v1.4.0
+	golang.org/x/net v0.0.0-20220412020605-290c469a71a5
 )
 
 require (
