@@ -21,6 +21,7 @@ A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
     - [Download Binary](#download-binary)
     - [Compile](#compile)
   - [Example](#example)
+  - [Use as a library](#use-as-a-library)
 
 ## Usage
 
@@ -132,7 +133,7 @@ docker run -v /path/to/xml/file.xml:/opt/file.xml ghcr.io/vdjagilev/nmap-formatt
 Choose version from Release page and download it:
 
 ```
-curl https://github.com/vdjagilev/nmap-formatter/releases/download/v0.3.0/nmap-formatter-linux-amd64.tar.gz --output nmap-formatter.tar.gz -L
+curl https://github.com/vdjagilev/nmap-formatter/releases/download/v0.3.1/nmap-formatter-linux-amd64.tar.gz --output nmap-formatter.tar.gz -L
 tar -xzvf nmap-formatter.tar.gz
 ./nmap-formatter --help
 ```
@@ -157,3 +158,63 @@ nmap-formatter basic-example.xml html
 ```
 
 ![Basic HTML Example](docs/images/basic-example-html.png)
+
+## Use as a library
+
+How to parse nmap results using golang
+
+```go
+package main
+
+import (
+	"encoding/xml"
+	"os"
+
+	"github.com/vdjagilev/nmap-formatter/formatter"
+)
+
+func main() {
+	var nmap formatter.NMAPRun
+	var config formatter.Config = formatter.Config{}
+
+	// Read XML file that was produced by nmap (with -oX option)
+	content, err := os.ReadFile("example.xml")
+	if err != nil {
+		panic(err)
+	}
+	// Unmarshal XML and map structure(s) fields accordingly
+	if err = xml.Unmarshal(content, &nmap); err != nil {
+		panic(err)
+	}
+
+	// Output data to console stdout
+	// You can use any other io.Writer implementation
+	// for example: os.OpenFile("file.json", os.O_CREATE|os.O_EXCL|os.O_WRONLY, os.ModePerm)
+	config.Writer = os.Stdout
+	// Formatting data to JSON, you can use:
+	// CSVOutput, MarkdownOutput, HTMLOutput as well
+	config.OutputFormat = formatter.JSONOutput
+
+	// Setting formatter data/options
+	templateData := formatter.TemplateData{
+		NMAPRun: nmap, // NMAP output data itself
+		OutputOptions: formatter.OutputOptions{
+			JSONPrettyPrint: true, // Additional option to prettify JSON
+		},
+	}
+
+	// New formatter instance
+	formatter := formatter.New(&config)
+	if formatter == nil {
+		// Not json/markdown/html/csv
+		panic("wrong formatter provided")
+	}
+
+	// Attempt to format the data
+	if err = formatter.Format(&templateData); err != nil {
+		// html template could not be parsed or some other issue occured
+		panic(err)
+	}
+}
+
+```
