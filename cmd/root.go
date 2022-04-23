@@ -38,7 +38,7 @@ var config = formatter.Config{
 }
 
 // VERSION is describing current version of the nmap-formatter
-const VERSION string = "0.3.0"
+const VERSION string = "0.3.2"
 
 var workflow formatter.Workflow
 

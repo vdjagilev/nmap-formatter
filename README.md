@@ -133,7 +133,7 @@ docker run -v /path/to/xml/file.xml:/opt/file.xml ghcr.io/vdjagilev/nmap-formatt
 Choose version from Release page and download it:
 
 ```
-curl https://github.com/vdjagilev/nmap-formatter/releases/download/v0.3.1/nmap-formatter-linux-amd64.tar.gz --output nmap-formatter.tar.gz -L
+curl https://github.com/vdjagilev/nmap-formatter/releases/download/v0.3.2/nmap-formatter-linux-amd64.tar.gz --output nmap-formatter.tar.gz -L
 tar -xzvf nmap-formatter.tar.gz
 ./nmap-formatter --help
 ```
