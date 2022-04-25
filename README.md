@@ -26,31 +26,31 @@ A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
 ## Usage
 
 ```
-nmap-formatter [path-to-nmap.xml] [html|csv|md|json] [flags]
+nmap-formatter [html|csv|md|json] [path-to-nmap.xml] [flags]
 ```
 
 Convert XML output to nicer HTML
 
 ```
-nmap-formatter [path-to-nmap.xml] html > some-file.html
+nmap-formatter html [path-to-nmap.xml] > some-file.html
 ```
 
 or Markdown
 
 ```
-nmap-formatter [path-to-nmap.xml] md > some-markdown.md
+nmap-formatter md [path-to-nmap.xml] > some-markdown.md
 ```
 
 or JSON
 
 ```
-nmap-formatter [path-to-nmap.xml] json
+nmap-formatter json [path-to-nmap.xml]
 ```
 
 it can be also combined with a `jq` tool, for example, list all the found ports and count them:
 
 ```
-nmap-formatter [nmap.xml] json | jq -r '.Host[]?.Ports?.Port[]?.PortID' | sort | uniq -c
+nmap-formatter json [nmap.xml] | jq -r '.Host[]?.Ports?.Port[]?.PortID' | sort | uniq -c
 ```
 
 ```
@@ -62,7 +62,7 @@ nmap-formatter [nmap.xml] json | jq -r '.Host[]?.Ports?.Port[]?.PortID' | sort |
 another example where only those hosts are selected, which have port where some http service is running:
 
 ```
-nmap-formatter [nmap.xml] json | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.Service.Name== "http") | $host.HostAddress.Address' | uniq -c
+nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.Service.Name== "http") | $host.HostAddress.Address' | uniq -c
 ```
 
 ```
@@ -76,13 +76,13 @@ In this case `192.168.1.3` has 2 http services running (for example on ports 80 
 Another example where it is needed to display only filtered ports:
 
 ```
-nmap-formatter [nmap.xml] json | jq '.Host[]?.Ports?.Port[]? | select(.State.State == "filtered") | .PortID'
+nmap-formatter json [nmap.xml] | jq '.Host[]?.Ports?.Port[]? | select(.State.State == "filtered") | .PortID'
 ```
 
 Display host IP addresses that have filtered ports:
 
 ```
-nmap-formatter [nmap.xml] json | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.State.State == "filtered") | .PortID | $host.HostAddress.Address'
+nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.State.State == "filtered") | .PortID | $host.HostAddress.Address'
 ```
 
 ### Flags
@@ -125,7 +125,7 @@ go install github.com/vdjagilev/nmap-formatter@latest
 No installation needed, just run `docker run`:
 
 ```
-docker run -v /path/to/xml/file.xml:/opt/file.xml ghcr.io/vdjagilev/nmap-formatter:latest /opt/file.xml json
+docker run -v /path/to/xml/file.xml:/opt/file.xml ghcr.io/vdjagilev/nmap-formatter:latest json /opt/file.xml
 ```
 
 ### Download Binary
@@ -146,7 +146,7 @@ cd nmap-formatter
 go mod tidy
 go build
 # or 
-go run . path/to/nmap.xml html
+go run . html path/to/nmap.xml
 ```
 
 ## Example
@@ -154,7 +154,7 @@ go run . path/to/nmap.xml html
 Example of HTML generated output from (https://nmap.org/book/output-formats-xml-output.html)
 
 ```
-nmap-formatter basic-example.xml html
+nmap-formatter html basic-example.xml
 ```
 
 ![Basic HTML Example](docs/images/basic-example-html.png)
