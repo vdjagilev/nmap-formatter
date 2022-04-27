@@ -1,8 +1,8 @@
 NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ==========================================
-{{- $displayDownHosts := not .OutputOptions.SkipDownHosts }}
-{{- $skipSummary := .OutputOptions.SkipSummary }}
-{{- $skipPortScripts := .OutputOptions.SkipPortScripts }}
+{{- $displayDownHosts := not .OutputOptions.MarkdownOptions.SkipDownHosts }}
+{{- $skipSummary := .OutputOptions.MarkdownOptions.SkipSummary }}
+{{- $skipPortScripts := .OutputOptions.MarkdownOptions.SkipPortScripts }}
 
 ## TOC
 

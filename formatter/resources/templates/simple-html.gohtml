@@ -77,11 +77,11 @@
 		</style>
 	</head>
 	<body>
-		{{ $displayDownHosts := not .OutputOptions.SkipDownHosts }}
-		{{ $skipSummary := .OutputOptions.SkipSummary }}
-		{{ $skipTraceroute := .OutputOptions.SkipTraceroute }}
-		{{ $skipMetrics := .OutputOptions.SkipMetrics }}
-		{{ $skipPortScripts := .OutputOptions.SkipPortScripts }}
+		{{ $displayDownHosts := not .OutputOptions.HTMLOptions.SkipDownHosts }}
+		{{ $skipSummary := .OutputOptions.HTMLOptions.SkipSummary }}
+		{{ $skipTraceroute := .OutputOptions.HTMLOptions.SkipTraceroute }}
+		{{ $skipMetrics := .OutputOptions.HTMLOptions.SkipMetrics }}
+		{{ $skipPortScripts := .OutputOptions.HTMLOptions.SkipPortScripts }}
 		<h1>NMAP Scan Result: {{ .NMAPRun.StartStr }}</h1>
 		<hr />
 		<h2>TOC:</h2>

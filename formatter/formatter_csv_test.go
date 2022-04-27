@@ -57,7 +57,9 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: true,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: true,
+						},
 					},
 				},
 			},
@@ -85,7 +87,9 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: true,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: true,
+						},
 					},
 				},
 			},
@@ -122,7 +126,9 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: false,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: false,
+						},
 					},
 				},
 			},
@@ -177,7 +183,9 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: true,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: true,
+						},
 					},
 				},
 			},
@@ -247,7 +255,9 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: true,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: true,
+						},
 					},
 				},
 			},
@@ -337,7 +347,9 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: true,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: true,
+						},
 					},
 				},
 			},
@@ -427,7 +439,9 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: false,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: false,
+						},
 					},
 				},
 			},
@@ -535,7 +549,9 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: false,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: false,
+						},
 					},
 				},
 			},
@@ -583,7 +599,9 @@ func TestCSVFormatter_Format(t *testing.T) {
 						Host: []Host{},
 					},
 					OutputOptions: OutputOptions{
-						SkipDownHosts: true,
+						CSVOptions: CSVOutputOptions{
+							SkipDownHosts: true,
+						},
 					},
 				},
 			},

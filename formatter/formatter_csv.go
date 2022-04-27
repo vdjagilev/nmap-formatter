@@ -21,7 +21,7 @@ func (f *CSVFormatter) convert(td *TemplateData) (data [][]string) {
 	for i := range td.NMAPRun.Host {
 		var host *Host = &td.NMAPRun.Host[i]
 		// Skipping hosts that are down
-		if td.OutputOptions.SkipDownHosts && host.Status.State != "up" {
+		if td.OutputOptions.CSVOptions.SkipDownHosts && host.Status.State != "up" {
 			continue
 		}
 		address := fmt.Sprintf("%s (%s)", host.HostAddress.Address, host.Status.State)
