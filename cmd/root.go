@@ -33,8 +33,13 @@ import (
 )
 
 var config = formatter.Config{
-	OutputOptions: formatter.OutputOptions{},
-	ShowVersion:   false,
+	OutputOptions: formatter.OutputOptions{
+		HTMLOptions:     formatter.HTMLOutputOptions{},
+		MarkdownOptions: formatter.MarkdownOutputOptions{},
+		JSONOptions:     formatter.JSONOutputOptions{},
+		CSVOptions:      formatter.CSVOutputOptions{},
+	},
+	ShowVersion: false,
 }
 
 // VERSION is describing current version of the nmap-formatter
@@ -68,12 +73,27 @@ func init() {
 	rootCmd.Flags().BoolVar(&config.ShowVersion, "version", false, "--version, will show you the current version of the app")
 
 	// Some options related to the output
-	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipDownHosts, "skip-down-hosts", true, "--skip-down-hosts=false")
-	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipSummary, "skip-summary", false, "--skip-summary=true, skips summary in HTML/Markdown output")
-	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipTraceroute, "skip-traceroute", false, "--skip-traceroute=true, skips traceroute information in HTML/Markdown output")
-	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipMetrics, "skip-metrics", false, "--skip-metrics=true, skips metrics information in HTML/Markdown output")
-	rootCmd.Flags().BoolVar(&config.OutputOptions.SkipPortScripts, "skip-port-scripts", false, "--skip-port-scripts=true, skips port scripts information in HTML/Markdown output")
-	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONPrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
+	// Skip hosts that are down, so they won't be listed in the output
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipDownHosts, "html-skip-down-hosts", true, "--html-skip-down-hosts=false, would print all hosts that are offline in HTML output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipDownHosts, "md-skip-down-hosts", true, "--md-skip-down-hosts=false, would print all hosts that are offline in Markdown output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.CSVOptions.SkipDownHosts, "csv-skip-down-hosts", true, "--csv-skip-down-hosts=false, would print all hosts that are offline in CSV output")
+
+	// Skip summary (overall meta information from the scan)
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipSummary, "html-skip-summary", false, "--html-skip-summary=true, skips summary in HTML output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipSummary, "md-skip-summary", false, "--md-skip-summary=true, skips summary in Markdown output")
+
+	// Skip traceroute information (from scan machine to the target)
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipTraceroute, "html-skip-traceroute", false, "--html-skip-traceroute=true, skips traceroute information in HTML output")
+
+	// Skip metrics related information
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipMetrics, "html-skip-metrics", false, "--html-skip-metrics=true, skips metrics information in HTML output")
+
+	// Skip information from port scripts (nse-scripts)
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipPortScripts, "html-skip-port-scripts", false, "--html-skip-port-scripts=true, skips port scripts information in HTML output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipPortScripts, "md-skip-port-scripts", false, "--md-skip-port-scripts=true, skips port scripts information in Markdown output")
+
+	// Pretty-print json
+	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONOptions.PrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
 
 	workflow = &formatter.MainWorkflow{}
 }

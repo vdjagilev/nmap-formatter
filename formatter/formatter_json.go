@@ -14,7 +14,7 @@ type JSONFormatter struct {
 func (f *JSONFormatter) Format(td *TemplateData) (err error) {
 	jsonData := new(bytes.Buffer)
 	encoder := json.NewEncoder(jsonData)
-	if td.OutputOptions.JSONPrettyPrint {
+	if td.OutputOptions.JSONOptions.PrettyPrint {
 		// space size = 2
 		encoder.SetIndent("", "  ")
 	}
