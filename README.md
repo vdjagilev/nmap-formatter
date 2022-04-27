@@ -14,12 +14,12 @@ A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
   - [Table of Contents](#table-of-contents)
   - [Usage](#usage)
     - [Flags](#flags)
-      - [Output Related Flags](#output-related-flags)
+      - [Output Options](#output-options)
 	- [Installation](#installation)
 		- [Using Go](#using-go)
-    - [Docker](#docker)
-    - [Download Binary](#download-binary)
-    - [Compile](#compile)
+    	- [Docker](#docker)
+    	- [Download Binary](#download-binary)
+    	- [Compile](#compile)
   - [Example](#example)
   - [Use as a library](#use-as-a-library)
 
@@ -91,26 +91,36 @@ nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Ports?.Port[]? | s
 * `--help` display help message
 * `--version` display version (also can be used: `./nmap-formatter version`)
 
-#### Output Related Flags
+#### Output Options
 
-* `--skip-down-hosts` skips hosts that are down
-  * Applicable in: `html`, `md`, `csv`
-  * Default: `true`
-* `--skip-summary` skips summary table
-  * Applicable in: `html`, `md`
-  * Default: `false`
-* `--skip-traceroute` skips traceroute information
-  * Applicable in: `html`
-  * Default: `false`
-* `--skip-metrics` skips metrics information
-  * Applicable in: `html`
-  * Default: `false`
-* `--skip-port-scripts` skips port scripts information in ports table
-  * Applicable in: `html`, `md`
-  * Default: `false`
-* `--json-pretty` pretty-prints JSON
-  * Applicable in: `json`
-  * Default: `true`
+##### HTML
+
+| Flag | Description | Default | Example         |
+| ---- | ----------- | ------- | --------------- |
+| `--html-skip-down-hosts` | Skip hosts that are down (offline/unable to connect), so they won't be shown in the output | `true` | `--html-skip-down-hosts=false` |
+| `--html-skip-summary` | Skip summary, it won't show various meta information about the scan | `false` | `--html-skip-summary=false` |
+| `--html-skip-traceroute` | Skip traceroute information (from the machine that ran nmap to the target) | `false` | `--html-skip-traceroute=false` | 
+| `--html-skip-port-scripts` | Skip port scripts output (nse-scripts) | `false` | `--html-skip-port-scripts=false` |
+
+##### Markdown
+
+| Flag | Description | Default | Example         |
+| ---- | ----------- | ------- | --------------- |
+| `--md-skip-down-hosts` | Skip hosts that are down (offline/unable to connect), so they won't be shown in the output | `true` | `--md-skip-down-hosts=false` |
+| `--md-skip-summary` | Skip summary, it won't show various meta information about the scan | `false` | `--md-skip-summary=false` |
+| `--md-skip-port-scripts` | Skip port scripts output (nse-scripts) | `false` | `--md-skip-port-scripts=false` |
+
+##### CSV
+
+| Flag | Description | Default | Example         |
+| ---- | ----------- | ------- | --------------- |
+| `--csv-skip-down-hosts` | Skip hosts that are down (offline/unable to connect), so they won't be shown in the output | `true` | `--csv-skip-down-hosts=false` |
+
+##### JSON
+
+| Flag | Description | Default | Example         |
+| ---- | ----------- | ------- | --------------- |
+| `--json-pretty` | Pretty print of JSON output | `false` | `--json-pretty=true` |
 
 ## Installation
 

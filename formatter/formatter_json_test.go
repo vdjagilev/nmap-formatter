@@ -45,7 +45,9 @@ func TestJSONFormatter_Format(t *testing.T) {
 				td: &TemplateData{
 					NMAPRun: NMAPRun{},
 					OutputOptions: OutputOptions{
-						JSONPrettyPrint: true,
+						JSONOptions: JSONOutputOptions{
+							PrettyPrint: true,
+						},
 					},
 				},
 			},
