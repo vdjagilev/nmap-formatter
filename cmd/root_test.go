@@ -68,7 +68,9 @@ func Test_validate(t *testing.T) {
 			args: args{
 				config: formatter.Config{
 					OutputFormat: formatter.CSVOutput,
-					InputFile:    formatter.InputFile(path.Join(os.TempDir(), "formatter_cmd_valid_2")),
+					InputFileConfig: formatter.InputFileConfig{
+						Path: path.Join(os.TempDir(), "formatter_cmd_valid_2"),
+					},
 				},
 			},
 			wantErr: false,
@@ -115,11 +117,11 @@ func Test_arguments(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "No Output format argument provided",
+			name: "No Output format argument provided (reading from stdin)",
 			args: args{
-				args: []string{"file.xml"},
+				args: []string{"html"},
 			},
-			wantErr: true,
+			wantErr: false,
 		},
 		{
 			name: "Version argument provided",
@@ -163,7 +165,9 @@ func Test_run(t *testing.T) {
 		}
 		workflow = testWorkflow
 		config = testConfig
-		config.InputFile = formatter.InputFile(file)
+		config.InputFileConfig = formatter.InputFileConfig{
+			Path: file,
+		}
 	}
 	after := func(file string, t *testing.T) {
 		var err error

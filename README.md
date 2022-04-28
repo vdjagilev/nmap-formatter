@@ -25,31 +25,45 @@ A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
 
 ## Usage
 
-```
+```bash
 nmap-formatter [html|csv|md|json] [path-to-nmap.xml] [flags]
+```
+
+Or alternatively you can read file from `stdin` and parse it
+
+```bash
+cat some.xml | nmap-formatter json
 ```
 
 Convert XML output to nicer HTML
 
-```
+```bash
 nmap-formatter html [path-to-nmap.xml] > some-file.html
 ```
 
 or Markdown
 
-```
+```bash
 nmap-formatter md [path-to-nmap.xml] > some-markdown.md
 ```
 
 or JSON
 
-```
+```bash
 nmap-formatter json [path-to-nmap.xml]
+# This approach is also possible
+cat nmap.xml | nmap-formatter json
 ```
 
-it can be also combined with a `jq` tool, for example, list all the found ports and count them:
+It can be also combined with a `jq` tool
 
+```bash
+cat nmap.xml | nmap-formatter json | jq
 ```
+
+List all the found ports and count them:
+
+```bash
 nmap-formatter json [nmap.xml] | jq -r '.Host[]?.Ports?.Port[]?.PortID' | sort | uniq -c
 ```
 
@@ -61,7 +75,7 @@ nmap-formatter json [nmap.xml] | jq -r '.Host[]?.Ports?.Port[]?.PortID' | sort |
 
 another example where only those hosts are selected, which have port where some http service is running:
 
-```
+```bash
 nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.Service.Name== "http") | $host.HostAddress.Address' | uniq -c
 ```
 
@@ -81,7 +95,7 @@ nmap-formatter json [nmap.xml] | jq '.Host[]?.Ports?.Port[]? | select(.State.Sta
 
 Display host IP addresses that have filtered ports:
 
-```
+```bash
 nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.State.State == "filtered") | .PortID | $host.HostAddress.Address'
 ```
 
