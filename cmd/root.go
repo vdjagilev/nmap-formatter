@@ -107,9 +107,7 @@ func arguments(cmd *cobra.Command, args []string) error {
 	if len(args) < 1 {
 		return errors.New("requires output format argument")
 	}
-	// if len(args) < 2 {
-	// 	return errors.New("requires an xml file argument")
-	// }
+
 	config.OutputFormat = formatter.OutputFormat(args[0])
 	config.InputFileConfig = formatter.InputFileConfig{}
 
@@ -166,6 +164,5 @@ func validate(config formatter.Config) error {
 			return fmt.Errorf("could not open XML file: %v", err)
 		}
 	}
-	//defer f.Close()
 	return nil
 }
