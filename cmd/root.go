@@ -84,9 +84,11 @@ func init() {
 
 	// Skip traceroute information (from scan machine to the target)
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipTraceroute, "html-skip-traceroute", false, "--html-skip-traceroute=true, skips traceroute information in HTML output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipTraceroute, "md-skip-traceroute", false, "--md-skip-traceroute=true, skips traceroute information in Markdown output")
 
 	// Skip metrics related information
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipMetrics, "html-skip-metrics", false, "--html-skip-metrics=true, skips metrics information in HTML output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipMetrics, "md-skip-metrics", false, "--md-skip-metrics=true, skips metrics information in Markdown output")
 
 	// Skip information from port scripts (nse-scripts)
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipPortScripts, "html-skip-port-scripts", false, "--html-skip-port-scripts=true, skips port scripts information in HTML output")
