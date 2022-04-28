@@ -67,13 +67,13 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 
 | Port | State | Service | Reason | Product | Version | Extra Info |
 | ---- | ----- | ------- | ------ | ------- | ------- | ---------- |
-{{ range .Ports.Port -}}
+{{ range .Port -}}
 | {{ .PortID }} | {{ .Protocol }} | {{ .State.State }} | {{ .Service.Name }} | {{ .State.Reason }} | {{ .Service.Product }} | {{ .Service.Version }} | {{ .Service.ExtraInfo }} |
-{{ end }}{{/* range .Ports.Port */}}
+{{ end }}{{/* range .Port */}}
 {{ if not $skipPortScripts }}
 
 ### Scripts:
-{{ range .Ports.Port -}}
+{{ range .Port -}}
 {{- if .Script -}}
 #### PORT {{ .PortID }}
 {{ range .Script }}
@@ -86,7 +86,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 {{- end -}}{{/* range .Script */}}
 {{- end -}}{{/* if .Script */}}
 {{ end -}}{{/* if not $skipPortScripts */}}
-{{ end -}}{{/* range .Ports.Port */}}
+{{ end -}}{{/* range .Port */}}
 {{- end -}}{{/* if eq .Status.State "up" */}}
 
 ----

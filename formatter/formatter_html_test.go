@@ -92,7 +92,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
 								},
@@ -111,7 +111,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
 								},
@@ -156,7 +156,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
 								},
@@ -175,7 +175,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
 								},
@@ -220,7 +220,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
 								},
@@ -239,7 +239,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
 								},
@@ -284,26 +284,24 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports: Ports{
-									Port: []Port{
-										{
-											Protocol: "tcp",
-											PortID:   80,
-											State: PortState{
-												State: "open",
-											},
-											Service: PortService{},
-											Script:  []Script{},
+								Port: []Port{
+									{
+										Protocol: "tcp",
+										PortID:   80,
+										State: PortState{
+											State: "open",
 										},
-										{
-											Protocol: "tcp",
-											PortID:   443,
-											State: PortState{
-												State: "up",
-											},
-											Service: PortService{},
-											Script:  []Script{},
+										Service: PortService{},
+										Script:  []Script{},
+									},
+									{
+										Protocol: "tcp",
+										PortID:   443,
+										State: PortState{
+											State: "up",
 										},
+										Service: PortService{},
+										Script:  []Script{},
 									},
 								},
 								HostAddress: HostAddress{
@@ -324,17 +322,15 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports: Ports{
-									Port: []Port{
-										{
-											Protocol: "tcp",
-											PortID:   8080,
-											State: PortState{
-												State: "open",
-											},
-											Service: PortService{},
-											Script:  []Script{},
+								Port: []Port{
+									{
+										Protocol: "tcp",
+										PortID:   8080,
+										State: PortState{
+											State: "open",
 										},
+										Service: PortService{},
+										Script:  []Script{},
 									},
 								},
 								HostAddress: HostAddress{},
@@ -376,7 +372,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
 								},
@@ -395,7 +391,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
 								},
@@ -414,7 +410,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.3",
 								},
@@ -459,7 +455,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
 								},
@@ -478,7 +474,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.2",
 								},
@@ -497,7 +493,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.3",
 								},
