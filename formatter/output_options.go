@@ -11,9 +11,9 @@ type OutputOptions struct {
 type HTMLOutputOptions struct {
 	// SkipDownHosts skips hosts that are down (including TOC)
 	SkipDownHosts bool
-	// SkipSummary skips general summary for HTML & Markdown
+	// SkipSummary skips general summary for HTML
 	SkipSummary bool
-	// SkipTraceroute skips traceroute information for HTML & Markdown
+	// SkipTraceroute skips traceroute information for HTML
 	SkipTraceroute bool
 	// SkipMetrics skips metrics related data for HTML
 	SkipMetrics bool
@@ -24,10 +24,14 @@ type HTMLOutputOptions struct {
 type MarkdownOutputOptions struct {
 	// SkipDownHosts skips hosts that are down (including TOC)
 	SkipDownHosts bool
-	// SkipSummary skips general summary for HTML & Markdown
+	// SkipSummary skips general summary for Markdown
 	SkipSummary bool
-	// SkipPortScripts skips port scripts information for HTML
+	// SkipPortScripts skips port scripts information for Markdown
 	SkipPortScripts bool
+	// SkipTraceroute skips traceroute information for Markdown
+	SkipTraceroute bool
+	// SkipMetrics skips metrics related data for Markdown
+	SkipMetrics bool
 }
 
 type JSONOutputOptions struct {
