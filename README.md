@@ -64,7 +64,7 @@ cat nmap.xml | nmap-formatter json | jq
 List all the found ports and count them:
 
 ```bash
-nmap-formatter json [nmap.xml] | jq -r '.Host[]?.Ports?.Port[]?.PortID' | sort | uniq -c
+nmap-formatter json [nmap.xml] | jq -r '.Host[]?.Port[]?.PortID' | sort | uniq -c
 ```
 
 ```
@@ -76,7 +76,7 @@ nmap-formatter json [nmap.xml] | jq -r '.Host[]?.Ports?.Port[]?.PortID' | sort |
 another example where only those hosts are selected, which have port where some http service is running:
 
 ```bash
-nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.Service.Name== "http") | $host.HostAddress.Address' | uniq -c
+nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Port[]? | select(.Service.Name== "http") | $host.HostAddress.Address' | uniq -c
 ```
 
 ```
@@ -89,14 +89,14 @@ In this case `192.168.1.3` has 2 http services running (for example on ports 80 
 
 Another example where it is needed to display only filtered ports:
 
-```
-nmap-formatter json [nmap.xml] | jq '.Host[]?.Ports?.Port[]? | select(.State.State == "filtered") | .PortID'
+```bash
+nmap-formatter json [nmap.xml] | jq '.Host[]?.Port[]? | select(.State.State == "filtered") | .PortID'
 ```
 
 Display host IP addresses that have filtered ports:
 
 ```bash
-nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Ports?.Port[]? | select(.State.State == "filtered") | .PortID | $host.HostAddress.Address'
+nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Port[]? | select(.State.State == "filtered") | .PortID | $host.HostAddress.Address'
 ```
 
 ### Flags

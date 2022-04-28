@@ -26,8 +26,8 @@ func (f *CSVFormatter) convert(td *TemplateData) (data [][]string) {
 		}
 		address := fmt.Sprintf("%s (%s)", host.HostAddress.Address, host.Status.State)
 		data = append(data, []string{address, "", "", "", "", "", "", "", ""})
-		for j := range host.Ports.Port {
-			var port *Port = &host.Ports.Port[j]
+		for j := range host.Port {
+			var port *Port = &host.Port[j]
 			data = append(
 				data,
 				[]string{
