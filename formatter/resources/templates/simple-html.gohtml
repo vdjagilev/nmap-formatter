@@ -41,15 +41,15 @@
 			.address-info-table > tbody > tr > td > ul {
 				padding-left: 0;
 			}
-			.ports-table > tbody > tr > td.port-open {
+			.port-table > tbody > tr > td.port-open {
 				background-color: rgba(54, 182, 14, 0.18);
 				border-color: rgba(62, 198, 16, 0.3);
 			}
-			.ports-table > tbody > tr > td.port-closed {
+			.port-table > tbody > tr > td.port-closed {
 				background-color: rgba(182, 2, 5, 0.18);
 				border-color: rgba(253, 155, 157, 0.3);
 			}
-			.ports-table > tbody > tr > td.port-filtered {
+			.port-table > tbody > tr > td.port-filtered {
 				background-color: rgba(217, 63, 11, 0.18);
 				border-color: rgba(247, 136, 100, 0.3);
 			}
@@ -216,7 +216,7 @@
 			</tbody>
 		</table>
 		<h3>Ports</h3>
-		<table class="ports-table data-table" cellspacing="0">
+		<table class="port-table data-table" cellspacing="0">
 			<thead>
 				<tr>
 					<th colspan="2">Port</th>
@@ -229,7 +229,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{ range .Ports.Port }}
+				{{ range .Port }}
 				<tr>
 					<td class="port-{{ .State.State }}">{{ .PortID }}</td>
 					<td class="port-{{ .State.State }}">{{ .Protocol }}</td>
@@ -249,7 +249,7 @@
 				</tr>
 				{{ end }}{{/* range .Script */}}
 				{{ end }}{{/* if and (.Script) (not $skipPortScripts) */}}
-				{{ end }}{{/* range .Ports.Port */}}
+				{{ end }}{{/* range .Port */}}
 			</tbody>
 		</table>
 		{{ if and (.Trace) (not $skipTraceroute) }}

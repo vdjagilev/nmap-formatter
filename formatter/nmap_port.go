@@ -1,10 +1,5 @@
 package formatter
 
-// Ports has a list of Port structs. Ports itself is defined in Host struct
-type Ports struct {
-	Port []Port `xml:"port"`
-}
-
 // Port record contains main information about port that was scanned
 type Port struct {
 	Protocol string      `xml:"protocol,attr"`

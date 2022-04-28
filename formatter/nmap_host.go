@@ -4,7 +4,7 @@ package formatter
 type Host struct {
 	StartTime     int           `xml:"starttime,attr"`
 	EndTime       int           `xml:"endtime,attr"`
-	Ports         Ports         `xml:"ports"`
+	Port          []Port        `xml:"ports>port"`
 	HostAddress   HostAddress   `xml:"address"`
 	HostNames     HostNames     `xml:"hostnames"`
 	Status        HostStatus    `xml:"status"`

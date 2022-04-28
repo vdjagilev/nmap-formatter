@@ -40,7 +40,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime:   0,
 								EndTime:     0,
-								Ports:       Ports{},
+								Port:        []Port{},
 								HostAddress: HostAddress{},
 								HostNames:   HostNames{},
 								Status: HostStatus{
@@ -107,7 +107,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "127.0.0.1",
 								},
@@ -147,22 +147,20 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports: Ports{
-									Port: []Port{
-										{
-											Protocol: "tcp",
-											PortID:   80,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+								Port: []Port{
+									{
+										Protocol: "tcp",
+										PortID:   80,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
 										},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
+										},
+										Script: []Script{},
 									},
 								},
 								HostAddress: HostAddress{
@@ -205,36 +203,34 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports: Ports{
-									Port: []Port{
-										{
-											Protocol: "tcp",
-											PortID:   80,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+								Port: []Port{
+									{
+										Protocol: "tcp",
+										PortID:   80,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
 										},
-										{
-											Protocol: "tcp",
-											PortID:   443,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
 										},
+										Script: []Script{},
+									},
+									{
+										Protocol: "tcp",
+										PortID:   443,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
+										},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
+										},
+										Script: []Script{},
 									},
 								},
 								HostAddress: HostAddress{
@@ -278,36 +274,34 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports: Ports{
-									Port: []Port{
-										{
-											Protocol: "tcp",
-											PortID:   80,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+								Port: []Port{
+									{
+										Protocol: "tcp",
+										PortID:   80,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
 										},
-										{
-											Protocol: "tcp",
-											PortID:   443,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
 										},
+										Script: []Script{},
+									},
+									{
+										Protocol: "tcp",
+										PortID:   443,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
+										},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
+										},
+										Script: []Script{},
 									},
 								},
 								HostAddress: HostAddress{
@@ -328,7 +322,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
 								},
@@ -370,36 +364,34 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports: Ports{
-									Port: []Port{
-										{
-											Protocol: "tcp",
-											PortID:   80,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+								Port: []Port{
+									{
+										Protocol: "tcp",
+										PortID:   80,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
 										},
-										{
-											Protocol: "tcp",
-											PortID:   443,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
 										},
+										Script: []Script{},
+									},
+									{
+										Protocol: "tcp",
+										PortID:   443,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
+										},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
+										},
+										Script: []Script{},
 									},
 								},
 								HostAddress: HostAddress{
@@ -420,7 +412,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports:     Ports{},
+								Port:      []Port{},
 								HostAddress: HostAddress{
 									Address: "192.168.1.1",
 								},
@@ -463,36 +455,34 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports: Ports{
-									Port: []Port{
-										{
-											Protocol: "tcp",
-											PortID:   80,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+								Port: []Port{
+									{
+										Protocol: "tcp",
+										PortID:   80,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
 										},
-										{
-											Protocol: "tcp",
-											PortID:   443,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "http",
-												Product: "nginx",
-												Version: "1.21.1",
-											},
-											Script: []Script{},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
 										},
+										Script: []Script{},
+									},
+									{
+										Protocol: "tcp",
+										PortID:   443,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
+										},
+										Service: PortService{
+											Name:    "http",
+											Product: "nginx",
+											Version: "1.21.1",
+										},
+										Script: []Script{},
 									},
 								},
 								HostAddress: HostAddress{
@@ -513,22 +503,20 @@ func TestCSVFormatter_convert(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Ports: Ports{
-									Port: []Port{
-										{
-											Protocol: "tcp",
-											PortID:   22,
-											State: PortState{
-												State:  "open",
-												Reason: "syn-ack",
-											},
-											Service: PortService{
-												Name:    "ssh",
-												Product: "OpenSSH",
-												Version: "5.3p1 Debian 3ubuntu7",
-											},
-											Script: []Script{},
+								Port: []Port{
+									{
+										Protocol: "tcp",
+										PortID:   22,
+										State: PortState{
+											State:  "open",
+											Reason: "syn-ack",
 										},
+										Service: PortService{
+											Name:    "ssh",
+											Product: "OpenSSH",
+											Version: "5.3p1 Debian 3ubuntu7",
+										},
+										Script: []Script{},
 									},
 								},
 								HostAddress: HostAddress{
