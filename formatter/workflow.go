@@ -25,6 +25,9 @@ func (w *MainWorkflow) SetConfig(c *Config) {
 // Execute is the core of the application which executes required steps
 // one-by-one to achieve formatting from input -> output.
 func (w *MainWorkflow) Execute() (err error) {
+	var inputFile *os.File
+	// This one is read in `parse()` function, we can close it here
+	defer inputFile.Close()
 	// If no output file has been provided all content
 	// goes to the STDOUT
 	if w.Config.OutputFile == "" {
@@ -39,6 +42,17 @@ func (w *MainWorkflow) Execute() (err error) {
 		defer f.Close()
 		w.Config.Writer = f
 	}
+
+	// Set InputFileConfig source to stdin or specific file
+	if w.Config.InputFileConfig.IsStdin {
+		inputFile = os.Stdin
+	} else {
+		inputFile, err = os.Open(w.Config.InputFileConfig.Path)
+		if err != nil {
+			return
+		}
+	}
+	w.Config.InputFileConfig.Source = inputFile
 
 	// Reading & parsing the input file
 	NMAPRun, err := w.parse()
@@ -66,7 +80,7 @@ func (w *MainWorkflow) Execute() (err error) {
 
 // parse reads & unmarshalles the input file into NMAPRun struct
 func (w *MainWorkflow) parse() (run NMAPRun, err error) {
-	input, err := os.ReadFile(string(w.Config.InputFile))
+	input, err := w.Config.InputFileConfig.ReadContents()
 	if err != nil {
 		return
 	}

@@ -20,7 +20,9 @@ func TestMainWorkflow_parse(t *testing.T) {
 			name: "Wrong path (file does not exists)",
 			w: &MainWorkflow{
 				Config: &Config{
-					InputFile: InputFile(""),
+					InputFileConfig: InputFileConfig{
+						Path: "",
+					},
 				},
 			},
 			wantNMAPRun: NMAPRun{},
@@ -79,7 +81,15 @@ func TestMainWorkflow_parse(t *testing.T) {
 				}
 				// deferring file removal after the test
 				defer os.Remove(name)
-				tt.w.Config.InputFile = InputFile(name)
+				f, err := os.Open(name)
+				if err != nil {
+					t.Errorf("could not read source file: %v", err)
+				}
+				defer f.Close()
+				tt.w.Config.InputFileConfig = InputFileConfig{
+					Path:   name,
+					Source: f,
+				}
 			}
 			gotNMAPRun, err := tt.w.parse()
 			if (err != nil) != tt.wantErr {
@@ -173,7 +183,9 @@ func TestMainWorkflow_Execute(t *testing.T) {
 				}
 				defer os.Remove(name)
 				defer os.Remove(name + "_output")
-				tt.w.Config.InputFile = InputFile(name)
+				tt.w.Config.InputFileConfig = InputFileConfig{
+					Path: name,
+				}
 				tt.w.Config.OutputFile = OutputFile(name + "_output")
 			}
 			if err := tt.w.Execute(); (err != nil) != tt.wantErr {
