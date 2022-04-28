@@ -1,12 +1,14 @@
 NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ==========================================
-{{- $displayDownHosts := not .OutputOptions.MarkdownOptions.SkipDownHosts }}
-{{- $skipSummary := .OutputOptions.MarkdownOptions.SkipSummary }}
-{{- $skipPortScripts := .OutputOptions.MarkdownOptions.SkipPortScripts }}
+{{ $displayDownHosts := not .OutputOptions.MarkdownOptions.SkipDownHosts }}
+{{ $skipSummary := .OutputOptions.MarkdownOptions.SkipSummary }}
+{{ $skipPortScripts := .OutputOptions.MarkdownOptions.SkipPortScripts }}
+{{ $skipMetrics := .OutputOptions.MarkdownOptions.SkipMetrics }}
+{{ $skipTraceroute := .OutputOptions.MarkdownOptions.SkipTraceroute }}
 
 ## TOC
 
-{{- if not $skipSummary }}
+{{ if not $skipSummary }}
 * [Scan Summary](#scan-summary)
 {{- end }}{{/* if $skipSummary */}}
 {{- range .NMAPRun.Host -}}
@@ -71,6 +73,34 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 | {{ .PortID }} | {{ .Protocol }} | {{ .State.State }} | {{ .Service.Name }} | {{ .State.Reason }} | {{ .Service.Product }} | {{ .Service.Version }} | {{ .Service.ExtraInfo }} |
 {{ end }}{{/* range .Port */}}
 {{ if not $skipPortScripts }}
+
+{{ if and (.Trace) (not $skipTraceroute) }}
+### Traceroute information:
+{{ if .Trace.Hops }}
+`(open) Generated traceroute data {{ if .Trace.Port }}using {{ .Trace.Port }}{{ if .Trace.Protocol }}/{{ .Trace.Protocol }}{{ end }}{{ end }}`
+
+| Hop | Rtt | IP | Host |
+| --- | --- | -- | ---- |
+{{ range .Trace.Hops -}}
+| {{ .TTL }} | {{ .RTT }} | {{ .IPAddr }} | {{ .Host }} |
+{{ end }}{{/* range .Trace.Hops */}}
+{{ else }}
+`No traceroute information`
+{{ end }}{{/* if .Trace.Hops */}}
+{{ end }}{{/* if and (.Trace) (not $skipTraceroute) */}}
+
+{{ if not $skipMetrics }}
+### Misc Metrics
+
+| Metric | Value |
+| ------ | ----- |
+| Ping Results | {{ if .Status.Reason }}{{ .Status.Reason }}{{ else }}N/A{{ end }} |
+| System Uptime | {{ if .Uptime.Seconds }}{{ .Uptime.Seconds }} (last boot: {{ .Uptime.LastBoot }}){{ else }}N/A{{ end }} |
+| Network Distance | {{ if .Distance.Value }}{{ .Distance.Value }}{{ else }}N/A{{ end }} |
+| TCP Sequence Prediction | {{ if .TCPSequence.Difficulty }}{{ .TCPSequence.Difficulty }} ```{{ .TCPSequence.Values }}```{{ else }}N/A{{ end }} |
+| IP ID Sequence Generation | {{ if .IPIDSequence.Class }}{{ .IPIDSequence.Class }} ```{{ .IPIDSequence.Values }}```{{ else }}N/A{{ end }} |
+| TCP TS Sequence | {{ if .TCPTSSequence.Class }}{{ .TCPTSSequence.Class }} ```{{ .TCPTSSequence.Values }}```{{ else }}N/A{{ end }} |
+{{ end }}{{/* if not $skipMetrics */}}
 
 ### Scripts:
 {{ range .Port -}}
