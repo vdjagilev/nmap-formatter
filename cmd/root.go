@@ -157,7 +157,6 @@ func validate(config formatter.Config) error {
 	}
 
 	// Checking if xml file is readable
-	//f, err := os.Open(string(config.InputFileConfig))
 	if !config.InputFileConfig.IsStdin {
 		err := config.InputFileConfig.ExistsOpen()
 		if err != nil {
