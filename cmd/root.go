@@ -72,6 +72,10 @@ func init() {
 	rootCmd.Flags().StringVarP((*string)(&config.OutputFile), "file", "f", "", "-f output-file (by default \"\" will output to STDOUT)")
 	rootCmd.Flags().BoolVar(&config.ShowVersion, "version", false, "--version, will show you the current version of the app")
 
+	// Use custom templates for HTML or Markdown output
+	rootCmd.Flags().StringVar(&config.TemplatePath, "html-use-template", "", "--html-use-template /path/to/template.html")
+	rootCmd.Flags().StringVar(&config.TemplatePath, "md-use-template", "", "--md-use-template /path/to/template.md")
+
 	// Some options related to the output
 	// Skip hosts that are down, so they won't be listed in the output
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipDownHosts, "html-skip-down-hosts", true, "--html-skip-down-hosts=false, would print all hosts that are offline in HTML output")
@@ -164,6 +168,20 @@ func validate(config formatter.Config) error {
 		if err != nil {
 			return fmt.Errorf("could not open XML file: %v", err)
 		}
+	}
+
+	// Checking if custom template is existing and readable and
+	if config.TemplatePath != "" {
+		switch config.OutputFormat {
+		case formatter.CSVOutput:
+		case formatter.JSONOutput:
+			return fmt.Errorf("cannot set templates for the formats other than HTML or Markdown")
+		}
+		file, err := os.Open(config.TemplatePath)
+		if err != nil {
+			return fmt.Errorf("could not read template file: %v", err)
+		}
+		defer file.Close()
 	}
 	return nil
 }

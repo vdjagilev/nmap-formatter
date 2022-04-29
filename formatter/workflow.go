@@ -74,7 +74,13 @@ func (w *MainWorkflow) Execute() (err error) {
 		return fmt.Errorf("no formatter is defined")
 	}
 
-	err = formatter.Format(&templateData)
+	// Trying to read template content (read a file, or get default in case where no option was used)
+	templateContent, err := TemplateContent(formatter, w.Config)
+	if err != nil {
+		return fmt.Errorf("error getting template content: %v", err)
+	}
+
+	err = formatter.Format(&templateData, templateContent)
 	return
 }
 

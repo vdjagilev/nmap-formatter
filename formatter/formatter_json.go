@@ -11,7 +11,7 @@ type JSONFormatter struct {
 }
 
 // Format the data and output it to appropriate io.Writer
-func (f *JSONFormatter) Format(td *TemplateData) (err error) {
+func (f *JSONFormatter) Format(td *TemplateData, templateContent string) (err error) {
 	jsonData := new(bytes.Buffer)
 	encoder := json.NewEncoder(jsonData)
 	if td.OutputOptions.JSONOptions.PrettyPrint {
@@ -24,4 +24,8 @@ func (f *JSONFormatter) Format(td *TemplateData) (err error) {
 	}
 	_, err = f.config.Writer.Write(jsonData.Bytes())
 	return
+}
+
+func (f *JSONFormatter) defaultTemplateContent() string {
+	return ""
 }

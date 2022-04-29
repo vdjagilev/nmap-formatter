@@ -535,7 +535,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			tt.f.config = &Config{
 				Writer: &writer,
 			}
-			if err := tt.f.Format(tt.args.td); (err != nil) != tt.wantErr {
+			if err := tt.f.Format(tt.args.td, HTMLSimpleTemplate); (err != nil) != tt.wantErr {
 				t.Errorf("HTMLFormatter.Format() error = %v, wantErr %v", err, tt.wantErr)
 			} else if tt.validate != nil {
 				tt.validate(tt.f, string(writer.data), t)

@@ -11,7 +11,7 @@ type CSVFormatter struct {
 }
 
 // Format the data to CSV and output it to appropriate io.Writer
-func (f *CSVFormatter) Format(td *TemplateData) (err error) {
+func (f *CSVFormatter) Format(td *TemplateData, templateContent string) (err error) {
 	return csv.NewWriter(f.config.Writer).WriteAll(f.convert(td))
 }
 
@@ -45,4 +45,8 @@ func (f *CSVFormatter) convert(td *TemplateData) (data [][]string) {
 		}
 	}
 	return
+}
+
+func (f *CSVFormatter) defaultTemplateContent() string {
+	return HTMLSimpleTemplate
 }

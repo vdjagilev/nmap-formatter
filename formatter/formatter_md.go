@@ -90,10 +90,10 @@ func (m *markdownOutputFilter) filter() []byte {
 }
 
 // Format the data and output it to appropriate io.Writer
-func (f *MarkdownFormatter) Format(td *TemplateData) (err error) {
+func (f *MarkdownFormatter) Format(td *TemplateData, templateContent string) (err error) {
 	tmpl := template.New("markdown")
 	f.defineTemplateFunctions(tmpl)
-	tmpl, err = tmpl.Parse(MarkdownTemplate)
+	tmpl, err = tmpl.Parse(templateContent)
 	if err != nil {
 		return
 	}
@@ -104,6 +104,10 @@ func (f *MarkdownFormatter) Format(td *TemplateData) (err error) {
 	}
 	_, err = f.config.Writer.Write(markdownOutput.filter())
 	return err
+}
+
+func (f *MarkdownFormatter) defaultTemplateContent() string {
+	return MarkdownTemplate
 }
 
 func (f *MarkdownFormatter) defineTemplateFunctions(tmpl *template.Template) {
