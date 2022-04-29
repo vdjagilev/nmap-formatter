@@ -39,12 +39,12 @@ type Formatter interface {
 
 func TemplateContent(f Formatter, c *Config) (string, error) {
 	if c.TemplatePath != "" {
-		f, err := os.Open(c.TemplatePath)
+		file, err := os.Open(c.TemplatePath)
 		if err != nil {
 			return "", err
 		}
-		defer f.Close()
-		content, err := io.ReadAll(f)
+		defer file.Close()
+		content, err := io.ReadAll(file)
 		if err != nil {
 			return "", err
 		}
