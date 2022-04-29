@@ -71,6 +71,7 @@ func init() {
 
 	rootCmd.Flags().StringVarP((*string)(&config.OutputFile), "file", "f", "", "-f output-file (by default \"\" will output to STDOUT)")
 	rootCmd.Flags().BoolVar(&config.ShowVersion, "version", false, "--version, will show you the current version of the app")
+	rootCmd.Flags().StringArrayVar(&config.CustomOptions, "x-opts", []string{}, "--x-opts=\"some_key=some_value\"")
 
 	// Use custom templates for HTML or Markdown output
 	rootCmd.Flags().StringVar(&config.TemplatePath, "html-use-template", "", "--html-use-template /path/to/template.html")
