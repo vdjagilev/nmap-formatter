@@ -245,7 +245,9 @@ func main() {
 	templateData := formatter.TemplateData{
 		NMAPRun: nmap, // NMAP output data itself
 		OutputOptions: formatter.OutputOptions{
-			JSONPrettyPrint: true, // Additional option to prettify JSON
+			JSONOptions: formatter.JSONOutputOptions{
+				PrettyPrint: true, // Additional option to prettify JSON
+			},
 		},
 	}
 
@@ -257,7 +259,7 @@ func main() {
 	}
 
 	// Attempt to format the data
-	if err = formatter.Format(&templateData); err != nil {
+	if err = formatter.Format(&templateData, "" /* no template content for JSON */); err != nil {
 		// html template could not be parsed or some other issue occured
 		panic(err)
 	}
