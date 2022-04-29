@@ -14,4 +14,5 @@ type Config struct {
 	OutputFile      OutputFile
 	OutputOptions   OutputOptions
 	ShowVersion     bool
+	TemplatePath    string
 }

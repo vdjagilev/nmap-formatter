@@ -116,6 +116,7 @@ nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Port[]? | select(.
 | `--html-skip-traceroute` | Skip traceroute information (from the machine that ran nmap to the target) | `false` | `--html-skip-traceroute=false` | 
 | `--html-skip-metrics` | Skip miscellaneous metrics information | `false` | `--html-skip-metrics=true` |
 | `--html-skip-port-scripts` | Skip port scripts output (nse-scripts) | `false` | `--html-skip-port-scripts=false` |
+| `--html-use-template` | Use specific HTML template instead of default one | `""` | `--html-use-template /path/to/template.html` |
 
 ##### Markdown
 
@@ -126,6 +127,7 @@ nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Port[]? | select(.
 | `--md-skip-traceroute` | Skip traceroute information (from the machine that ran nmap to the target) | `false` | `--md-skip-traceroute=false` |
 | `--md-skip-metrics` | Skip miscellaneous metrics information | `false` | `--md-skip-metrics=true` |
 | `--md-skip-port-scripts` | Skip port scripts output (nse-scripts) | `false` | `--md-skip-port-scripts=false` |
+| `--md-use-template` | Use specific Markdown template instead of default one | `""` | `--md-use-template /path/to/template.md` |
 
 ##### CSV
 

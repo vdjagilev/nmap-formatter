@@ -109,7 +109,7 @@ func TestJSONFormatter_Format(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			writer.err = tt.err
-			if err := tt.f.Format(tt.args.td); (err != nil) != tt.wantErr {
+			if err := tt.f.Format(tt.args.td, ""); (err != nil) != tt.wantErr {
 				t.Errorf("JSONFormatter.Format() error = %v, wantErr %v", err, tt.wantErr)
 			}
 			if tt.err == nil && string(tt.wantOutput) != string(writer.data) {
