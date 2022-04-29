@@ -33,7 +33,7 @@ func New(config *Config) Formatter {
 type Formatter interface {
 	// Format the data and output it to appropriate io.Writer
 	Format(td *TemplateData, templateContent string) error
-	// TemplateContent() (string, error)
+	// defaultTemplateContent returns default template content for any typical chosen formatter (HTML or Markdown)
 	defaultTemplateContent() string
 }
 
