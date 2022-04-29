@@ -5,8 +5,13 @@
 		<meta charset="utf-8" />
 		<style>
 			body {
-				color: #eee;
-				background-color: #121212;
+				{{ if .OutputOptions.HTMLOptions.DarkMode }}
+					color: #eee;
+					background-color: #121212;
+				{{ else }}
+					color: #121212;
+					background-color: #eee;
+				{{ end }}
 				font-family: -apple-system,Helvetica,"Segoe UI Symbol";
 			}
 			#summary-table {
