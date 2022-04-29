@@ -166,8 +166,25 @@
 				</tr>
 			</tbody>
 		</table>
-		<hr />
 		{{ end }}{{/* if not $skipSummary */}}
+		{{ if .CustomOptions }}
+		<h2>Custom Options</h2>
+		<table class="data-table">
+			<thead>
+				<th>Key</th>
+				<th>Value</th>
+			</thead>
+			<tbody>
+			{{ range $key, $value := .CustomOptions -}}
+				<tr>
+					<td>{{ $key }}</td>
+					<td><pre>{{ $value }}</pre></td>
+				</tr>
+			{{ end }}
+			</tbody>
+		</table>
+		{{ end }}{{/* if .CustomOptions */}}
+		<hr />
 		{{ range .NMAPRun.Host }}
 		{{ if or ($displayDownHosts) (eq .Status.State "up") }}
 		<a name="{{ .HostAddress.Address }}"></a>
