@@ -99,6 +99,8 @@ func init() {
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipPortScripts, "html-skip-port-scripts", false, "--html-skip-port-scripts=true, skips port scripts information in HTML output")
 	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipPortScripts, "md-skip-port-scripts", false, "--md-skip-port-scripts=true, skips port scripts information in Markdown output")
 
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.DarkMode, "html-dark-mode", true, "--html-dark-mode=false, sets HTML output in dark colours")
+
 	// Pretty-print json
 	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONOptions.PrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
 
