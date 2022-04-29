@@ -105,6 +105,23 @@ nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Port[]? | select(.
 * `--help` display help message
 * `--version` display version (also can be used: `./nmap-formatter version`)
 
+#### Custom Options
+
+Custom options can be used to deliver some information to the output (like user ID, or environment or hostname where scan has been performed). For this purpose there is `--x-opts` flag exists. It's possible to use multiple variables:
+
+```bash
+nmap-formatter md nmap-file.xml --x-opts="Hostname=$HOST" --x-opts="Terminal=$TERM"
+```
+
+The end result would contain those values after `Scan Summary` chapter. It would look something like this:
+
+| Key | Value |
+| --- | ----- |
+| **Hostname** | `hostname123` |
+| **Terminal** | `xterm-256color` |
+
+This command is applicable only in HTML & Markdown templates.
+
 #### Output Options
 
 ##### HTML

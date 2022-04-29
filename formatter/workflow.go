@@ -66,6 +66,11 @@ func (w *MainWorkflow) Execute() (err error) {
 		OutputOptions: w.Config.OutputOptions,
 	}
 
+	// Setting custom options for template if they exist
+	if len(w.Config.CustomOptions) > 0 {
+		templateData.CustomOptions = w.Config.CustomOptionsMap()
+	}
+
 	// Getting new instance of formatter based on provided config
 	formatter := New(w.Config)
 

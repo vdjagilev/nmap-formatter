@@ -46,6 +46,17 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ```
 
 {{ end }}{{/* if not $skipSummary */}}
+
+{{ if .CustomOptions }}
+## Custom Values
+
+| Key | Value |
+| --- | ----- |
+{{ range $key, $value := .CustomOptions -}}
+| **{{ md $key }}** | `{{ md $value }}` |
+{{ end }}{{/* range $key, $value := .CustomOptions */}}
+{{ end }}{{/* if .CustomOptions */}}
+
 ----
 
 {{ range .NMAPRun.Host -}}
