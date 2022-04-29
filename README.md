@@ -114,6 +114,7 @@ nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Port[]? | select(.
 | `--html-skip-down-hosts` | Skip hosts that are down (offline/unable to connect), so they won't be shown in the output | `true` | `--html-skip-down-hosts=false` |
 | `--html-skip-summary` | Skip summary, it won't show various meta information about the scan | `false` | `--html-skip-summary=false` |
 | `--html-skip-traceroute` | Skip traceroute information (from the machine that ran nmap to the target) | `false` | `--html-skip-traceroute=false` | 
+| `--html-skip-metrics` | Skip miscellaneous metrics information | `false` | `--html-skip-metrics=true` |
 | `--html-skip-port-scripts` | Skip port scripts output (nse-scripts) | `false` | `--html-skip-port-scripts=false` |
 
 ##### Markdown
@@ -122,6 +123,8 @@ nmap-formatter json [nmap.xml] | jq '.Host[]? | . as $host | .Port[]? | select(.
 | ---- | ----------- | ------- | --------------- |
 | `--md-skip-down-hosts` | Skip hosts that are down (offline/unable to connect), so they won't be shown in the output | `true` | `--md-skip-down-hosts=false` |
 | `--md-skip-summary` | Skip summary, it won't show various meta information about the scan | `false` | `--md-skip-summary=false` |
+| `--md-skip-traceroute` | Skip traceroute information (from the machine that ran nmap to the target) | `false` | `--md-skip-traceroute=false` |
+| `--md-skip-metrics` | Skip miscellaneous metrics information | `false` | `--md-skip-metrics=true` |
 | `--md-skip-port-scripts` | Skip port scripts output (nse-scripts) | `false` | `--md-skip-port-scripts=false` |
 
 ##### CSV
