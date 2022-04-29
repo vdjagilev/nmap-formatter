@@ -32,13 +32,19 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 | Type of scan | {{ .NMAPRun.ScanInfo.Type }} |
 | Protocol | {{ .NMAPRun.ScanInfo.Protocol }} |
 | Number of services | {{ .NMAPRun.ScanInfo.NumServices }} |
-| Services | <details><summary>(open)</summary>`{{ md .NMAPRun.ScanInfo.Services }}`</details> |
 | Arguments | `{{ md .NMAPRun.Args }}` |
 | Verbosity | {{ .NMAPRun.Verbose.Level }} |
 | Debug | {{ .NMAPRun.Debugging.Level }} |
 | Exit (success) | {{ .NMAPRun.RunStats.Finished.Exit }} |
 | Summary | {{ .NMAPRun.RunStats.Finished.Summary }} |
 | Hosts | Up: {{ .NMAPRun.RunStats.Hosts.Up }}, Down: {{ .NMAPRun.RunStats.Hosts.Down }}, Total: {{ .NMAPRun.RunStats.Hosts.Total }} |
+
+### Services Scanned
+
+```
+{{ md .NMAPRun.ScanInfo.Services }}
+```
+
 {{ end }}{{/* if not $skipSummary */}}
 ----
 
