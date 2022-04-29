@@ -19,6 +19,8 @@ type HTMLOutputOptions struct {
 	SkipMetrics bool
 	// SkipPortScripts skips port scripts information for HTML
 	SkipPortScripts bool
+	// DarkMode sets a style to be mostly in dark colours, if false, light colours would be used
+	DarkMode bool
 }
 
 type MarkdownOutputOptions struct {

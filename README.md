@@ -134,6 +134,7 @@ This command is applicable only in HTML & Markdown templates.
 | `--html-skip-metrics` | Skip miscellaneous metrics information | `false` | `--html-skip-metrics=true` |
 | `--html-skip-port-scripts` | Skip port scripts output (nse-scripts) | `false` | `--html-skip-port-scripts=false` |
 | `--html-use-template` | Use specific HTML template instead of default one | `""` | `--html-use-template /path/to/template.html` |
+| `--html-dark-mode` | Dark mode in HTML template, enabled by default | `true` | `--html-dark-mode=false` |
 
 ##### Markdown
 
