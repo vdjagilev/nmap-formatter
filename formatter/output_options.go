@@ -21,6 +21,8 @@ type HTMLOutputOptions struct {
 	SkipPortScripts bool
 	// DarkMode sets a style to be mostly in dark colours, if false, light colours would be used
 	DarkMode bool
+	// FloatingContentsTable is an option to make contents table float on the side of the page
+	FloatingContentsTable bool
 }
 
 type MarkdownOutputOptions struct {

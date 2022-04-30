@@ -101,6 +101,8 @@ func init() {
 
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.DarkMode, "html-dark-mode", true, "--html-dark-mode=false, sets HTML output in dark colours")
 
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.FloatingContentsTable, "html-toc-float", false, "--html-toc-float=true, Table of contents floats along with the scroll")
+
 	// Pretty-print json
 	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONOptions.PrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
 
