@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		{{ $ftColor := "#121212" }}
+		{{ $bgColor := "#eee" }}
+		{{ if .OutputOptions.HTMLOptions.DarkMode }}
+			{{ $ftColor = "#eee" }}
+			{{ $bgColor = "#121212" }}
+		{{ end }}
 		<title>NMAP Scan result: {{ .NMAPRun.StartStr }}</title>
 		<meta charset="utf-8" />
 		<style>
 			body {
-				{{ if .OutputOptions.HTMLOptions.DarkMode }}
-					color: #eee;
-					background-color: #121212;
-				{{ else }}
-					color: #121212;
-					background-color: #eee;
-				{{ end }}
+				color: {{ $ftColor }};
+				background-color: {{ $bgColor }};
 				font-family: -apple-system,Helvetica,"Segoe UI Symbol";
 			}
+			{{ if .OutputOptions.HTMLOptions.FloatingContentsTable }}
+			#toc {
+				position: fixed;
+				top: 20px;
+				right: 0;
+				margin-right: 5px;
+				z-index: 1000;
+				max-height: 780px;
+				max-width: 250px;
+				overflow: auto;
+				background-color: {{ $bgColor }};
+			}
+			{{ end }}
 			#summary-table {
 				table-layout: fixed;
 				width: 640px;
@@ -35,6 +49,9 @@
 			}
 			.data-table > tbody > tr > td {
 				border-bottom: 1px solid #404040;
+			}
+			.data-table > tbody > tr > td > pre {
+				white-space: pre-wrap;
 			}
 			.data-table > tbody > tr > td > ul {
 				padding-left: 0;
@@ -89,16 +106,18 @@
 		{{ $skipPortScripts := .OutputOptions.HTMLOptions.SkipPortScripts }}
 		<h1>NMAP Scan Result: {{ .NMAPRun.StartStr }}</h1>
 		<hr />
-		<h2>TOC:</h2>
-		<ul>
-			{{ if not $skipSummary }}<li><a href="#scan-summary">Scan Summary</a></li>{{ end }}
-			{{ range .NMAPRun.Host }}
-			{{ if or ($displayDownHosts) (eq .Status.State "up") }}
-			<li><a href="#{{ .HostAddress.Address }}">{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}</a> ({{ .Status.State }})</li>
-			{{ end }}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
-			{{ end }}{{/* range .Host */}}
-		</ul>
-		<hr />
+		<div id="toc">
+			<h2>Table of contents:</h2>
+			<ul>
+				{{ if not $skipSummary }}<li><a href="#scan-summary">Scan Summary</a></li>{{ end }}
+				{{ range .NMAPRun.Host }}
+				{{ if or ($displayDownHosts) (eq .Status.State "up") }}
+				<li><a href="#{{ .HostAddress.Address }}">{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}</a> ({{ .Status.State }})</li>
+				{{ end }}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
+				{{ end }}{{/* range .Host */}}
+			</ul>
+			<hr />
+		</div>
 		{{ if not $skipSummary }}
 		<a name="scan-summary"></a>
 		<h2>Scan Summary:</h2>
