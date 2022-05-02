@@ -113,32 +113,6 @@ func TestMainWorkflow_Execute(t *testing.T) {
 		before      func(file string, t *testing.T)
 	}{
 		{
-			name: "Cannot open OutputFile for a write",
-			w: &MainWorkflow{
-				Config: &Config{
-					OutputFile: OutputFile(""),
-				},
-			},
-			wantErr: true,
-		},
-		{
-			name: "OutputFile already exists",
-			w: &MainWorkflow{
-				Config: &Config{},
-			},
-			wantErr:     true,
-			fileName:    "main_workflow_Execute_2_test",
-			fileContent: "",
-			before: func(file string, t *testing.T) {
-				// Creating output file
-				path := path.Join(os.TempDir(), file+"_output")
-				_, err := os.Create(path)
-				if err != nil {
-					t.Errorf("failed to create temporary output file: %s", path)
-				}
-			},
-		},
-		{
 			name: "Parse of the file has failed",
 			w: &MainWorkflow{
 				Config: &Config{},
@@ -188,6 +162,8 @@ func TestMainWorkflow_Execute(t *testing.T) {
 				}
 				tt.w.Config.OutputFile = OutputFile(name + "_output")
 			}
+			tt.w.SetOutputFile()
+			tt.w.SetInputFile()
 			if err := tt.w.Execute(); (err != nil) != tt.wantErr {
 				t.Errorf("MainWorkflow.Execute() error = %v, wantErr %v", err, tt.wantErr)
 			}

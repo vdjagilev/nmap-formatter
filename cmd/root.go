@@ -153,40 +153,20 @@ func run(cmd *cobra.Command, args []string) error {
 	}
 
 	workflow.SetConfig(&config)
+	workflow.SetInputFile()
+	workflow.SetOutputFile()
 
 	err = workflow.Execute()
 	if err != nil {
 		return err
 	}
-	return nil
-}
 
-// validate is checking input from the command line
-func validate(config formatter.Config) error {
-	if !config.OutputFormat.IsValid() {
-		return fmt.Errorf("not valid format: %s, please choose html/json/md/csv", config.OutputFormat)
+	if config.Writer != nil {
+		config.Writer.Close()
+	}
+	if config.InputFileConfig.Source != nil {
+		config.InputFileConfig.Source.Close()
 	}
 
-	// Checking if xml file is readable
-	if !config.InputFileConfig.IsStdin {
-		err := config.InputFileConfig.ExistsOpen()
-		if err != nil {
-			return fmt.Errorf("could not open XML file: %v", err)
-		}
-	}
-
-	// Checking if custom template is existing and readable and
-	if config.TemplatePath != "" {
-		switch config.OutputFormat {
-		case formatter.CSVOutput:
-		case formatter.JSONOutput:
-			return fmt.Errorf("cannot set templates for the formats other than HTML or Markdown")
-		}
-		file, err := os.Open(config.TemplatePath)
-		if err != nil {
-			return fmt.Errorf("could not read template file: %v", err)
-		}
-		defer file.Close()
-	}
 	return nil
 }

@@ -617,3 +617,7 @@ func (w *csvMockedWriter) Write(p []byte) (n int, err error) {
 	w.data = p
 	return len(p), nil
 }
+
+func (w *csvMockedWriter) Close() error {
+	return nil
+}
