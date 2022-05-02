@@ -8,6 +8,7 @@ type OutputOptions struct {
 	CSVOptions      CSVOutputOptions
 }
 
+// HTMLOutputOptions stores options related only to HTML conversion/formatting
 type HTMLOutputOptions struct {
 	// SkipDownHosts skips hosts that are down (including TOC)
 	SkipDownHosts bool
@@ -25,6 +26,7 @@ type HTMLOutputOptions struct {
 	FloatingContentsTable bool
 }
 
+// MarkdownOutputOptions stores options related only to Markdown conversion/formatting
 type MarkdownOutputOptions struct {
 	// SkipDownHosts skips hosts that are down (including TOC)
 	SkipDownHosts bool
@@ -38,11 +40,13 @@ type MarkdownOutputOptions struct {
 	SkipMetrics bool
 }
 
+// JSONOutputOptions store option related only to JSON conversion/formatting
 type JSONOutputOptions struct {
 	// PrettyPrint defines if JSON output would be pretty-printed (human-readable) or not (machine readable)
 	PrettyPrint bool
 }
 
+// CSVOutputOptions store option related only to CSV conversion/formatting
 type CSVOutputOptions struct {
 	// The hosts that are down won't be displayed
 	SkipDownHosts bool
