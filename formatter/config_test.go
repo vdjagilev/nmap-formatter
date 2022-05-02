@@ -8,7 +8,7 @@ import (
 
 func TestConfig_CustomOptionsMap(t *testing.T) {
 	type fields struct {
-		Writer          io.Writer
+		Writer          io.WriteCloser
 		OutputFormat    OutputFormat
 		InputFileConfig InputFileConfig
 		OutputFile      OutputFile

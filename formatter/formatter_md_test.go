@@ -130,6 +130,10 @@ func (w *markdownMockedWriter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
+func (w *markdownMockedWriter) Close() error {
+	return nil
+}
+
 func TestMarkdownFormatter_Format(t *testing.T) {
 	type args struct {
 		td *TemplateData

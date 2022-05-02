@@ -10,7 +10,7 @@ import (
 // where output will be delivered, desired output format, input file path, output file path
 // and different output options
 type Config struct {
-	Writer          io.Writer
+	Writer          io.WriteCloser
 	OutputFormat    OutputFormat
 	InputFileConfig InputFileConfig
 	OutputFile      OutputFile

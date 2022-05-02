@@ -22,6 +22,10 @@ func (f *testHTMLMockedFormatterWriter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
+func (f *testHTMLMockedFormatterWriter) Close() error {
+	return nil
+}
+
 func TestHTMLFormatter_Format(t *testing.T) {
 	type args struct {
 		td *TemplateData

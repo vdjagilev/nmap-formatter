@@ -10,6 +10,8 @@ import (
 type Workflow interface {
 	Execute() (err error)
 	SetConfig(c *Config)
+	SetInputFile()
+	SetOutputFile()
 }
 
 // MainWorkflow is main workflow implementation struct
@@ -22,38 +24,33 @@ func (w *MainWorkflow) SetConfig(c *Config) {
 	w.Config = c
 }
 
-// Execute is the core of the application which executes required steps
-// one-by-one to achieve formatting from input -> output.
-func (w *MainWorkflow) Execute() (err error) {
-	var inputFile *os.File
-	// This one is read in `parse()` function, we can close it here
-	defer inputFile.Close()
-	// If no output file has been provided all content
-	// goes to the STDOUT
+// SetOutputFile sets output file (file descriptor) depending on config and returns error
+// if there is output file reading issue
+func (w *MainWorkflow) SetOutputFile() {
 	if w.Config.OutputFile == "" {
 		w.Config.Writer = os.Stdout
 	} else {
-		// Open output file for writing, produces an error if file already exists
-		// This won't work if user redirects output to some file using ">" or ">>"
-		f, err := os.OpenFile(string(w.Config.OutputFile), os.O_CREATE|os.O_EXCL|os.O_WRONLY, os.ModePerm)
-		if err != nil {
-			return err
-		}
-		defer f.Close()
+		// Error has been checked before executing this function
+		f, _ := os.OpenFile(string(w.Config.OutputFile), os.O_CREATE|os.O_EXCL|os.O_WRONLY, os.ModePerm)
 		w.Config.Writer = f
 	}
+}
 
-	// Set InputFileConfig source to stdin or specific file
+// SetInputFile sets an input file (file descriptor) in the config
+func (w *MainWorkflow) SetInputFile() {
+	var inputFile *os.File
 	if w.Config.InputFileConfig.IsStdin {
 		inputFile = os.Stdin
 	} else {
-		inputFile, err = os.Open(w.Config.InputFileConfig.Path)
-		if err != nil {
-			return
-		}
+		// Error has been checked before executing this function
+		inputFile, _ = os.Open(w.Config.InputFileConfig.Path)
 	}
 	w.Config.InputFileConfig.Source = inputFile
+}
 
+// Execute is the core of the application which executes required steps
+// one-by-one to achieve formatting from input -> output.
+func (w *MainWorkflow) Execute() (err error) {
 	// Reading & parsing the input file
 	NMAPRun, err := w.parse()
 	if err != nil {
@@ -84,9 +81,7 @@ func (w *MainWorkflow) Execute() (err error) {
 	if err != nil {
 		return fmt.Errorf("error getting template content: %v", err)
 	}
-
-	err = formatter.Format(&templateData, templateContent)
-	return
+	return formatter.Format(&templateData, templateContent)
 }
 
 // parse reads & unmarshalles the input file into NMAPRun struct

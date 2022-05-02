@@ -131,3 +131,7 @@ func (w *jsonMockedWriter) Write(p []byte) (n int, err error) {
 	w.data = p
 	return len(p), nil
 }
+
+func (w *jsonMockedWriter) Close() error {
+	return nil
+}

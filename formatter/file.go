@@ -16,7 +16,7 @@ type InputFile string
 type InputFileConfig struct {
 	Path    string
 	IsStdin bool
-	Source  io.Reader
+	Source  io.ReadCloser
 }
 
 // ReadContents reads content from stdin or provided file-path
