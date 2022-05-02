@@ -13,6 +13,7 @@ type OutputFile string
 // InputFile describes input file (nmap XML full path)
 type InputFile string
 
+// InputFileConfig stores all options related to nmap XML (path, is content is taken from stdin and io reader)
 type InputFileConfig struct {
 	Path    string
 	IsStdin bool

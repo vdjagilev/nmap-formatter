@@ -37,6 +37,7 @@ type Formatter interface {
 	defaultTemplateContent() string
 }
 
+// TemplateContent reads customly provided template content or fails with error
 func TemplateContent(f Formatter, c *Config) (string, error) {
 	if c.TemplatePath != "" {
 		file, err := os.Open(c.TemplatePath)
