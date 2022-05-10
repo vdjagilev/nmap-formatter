@@ -8,6 +8,16 @@
 
 A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
 
+## Installation
+
+It's possible to install it using `go install` command
+
+```
+go install github.com/vdjagilev/nmap-formatter@latest
+```
+
+All other options can be found on [Installation Wiki page](https://github.com/vdjagilev/nmap-formatter/wiki/Installation).
+
 ## Usage
 
 ```bash
@@ -50,17 +60,9 @@ More examples can be found on [Usage Wiki page](https://github.com/vdjagilev/nma
 
 It's also possible to change various output options. More examples on [Usage Wiki Page - Flags](https://github.com/vdjagilev/nmap-formatter/wiki/Usage#flags-and-output-options).
 
-## Installation
-
-It's possible to install it using `go install` command
-
-```
-go install github.com/vdjagilev/nmap-formatter@latest
-```
-
-All other options can be found on [Installation Wiki page](https://github.com/vdjagilev/nmap-formatter/wiki/Installation).
-
 ## Example
+
+![nmap-example-html](https://user-images.githubusercontent.com/2762286/166215713-02ab3e43-5e89-4f4a-b9f1-64651f2939e1.png)
 
 Screenshots of various formats available [here](https://github.com/vdjagilev/nmap-formatter/wiki/Examples)
 
