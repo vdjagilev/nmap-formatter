@@ -84,8 +84,8 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 
 ### Ports:
 
-| Port | State | Service | Reason | Product | Version | Extra Info |
-| ---- | ----- | ------- | ------ | ------- | ------- | ---------- |
+| Port | Protocol | State | Service | Reason | Product | Version | Extra Info |
+| ---- | -------- | ----- | ------- | ------ | ------- | ------- | ---------- |
 {{ range .Port -}}
 | {{ .PortID }} | {{ .Protocol }} | {{ .State.State }} | {{ .Service.Name }} | {{ .State.Reason }} | {{ .Service.Product }} | {{ .Service.Version }} | {{ .Service.ExtraInfo }} |
 {{ end }}{{/* range .Port */}}
