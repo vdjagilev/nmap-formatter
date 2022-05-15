@@ -99,19 +99,19 @@ func (w *MainWorkflow) parse() (run NMAPRun, err error) {
 	// A temporary solution to parse `<address>` node separately and choose only ipv4 or ipv6 for
 	// host addresses (avoid using mac-addresses), issue: #105
 	if len(run.Host) > 0 {
-		setValidHostAddresses(&run, bytes.NewReader(input))
+		overrideHostAddresses(&run, bytes.NewReader(input))
 	}
 	return run, nil
 }
 
-// setValidHostAddresses fixes output by overriding HostAddress.Address
+// overrideHostAddresses fixes output by overriding HostAddress.Address
 // struct for the reason if IPv4/IPv6 `<address>` type is getting overwritten
 // by MAC-type address. This fix is temporary in order to provide a bugfix, but to avoid any BC-breaks
 // Will be removed in new major release
-func setValidHostAddresses(run *NMAPRun, reader io.Reader) {
+func overrideHostAddresses(run *NMAPRun, reader io.Reader) {
 	var tag string
-	var hostId int = 0
-	var unmarshalledHost *Host = &run.Host[hostId]
+	var hostID int = 0
+	var unmarshalledHost *Host = &run.Host[hostID]
 	var decoder *xml.Decoder = xml.NewDecoder(reader)
 	for {
 		token, _ := decoder.Token()
@@ -122,21 +122,26 @@ func setValidHostAddresses(run *NMAPRun, reader io.Reader) {
 		case xml.StartElement:
 			tag = element.Name.Local
 			if tag == "host" {
-				unmarshalledHost = &run.Host[hostId]
-				hostId++
+				unmarshalledHost = &run.Host[hostID]
+				hostID++
 			} else if tag == "address" && unmarshalledHost != nil {
-				if hasAddressIPAttr(&element) {
-					for _, attr := range element.Attr {
-						switch attr.Name.Local {
-						case "addr":
-							unmarshalledHost.HostAddress.Address = attr.Value
-						case "addrtype":
-							unmarshalledHost.HostAddress.AddressType = attr.Value
-						}
-					}
-				}
+				setHostAddress(unmarshalledHost, &element)
 			}
 		default:
+		}
+	}
+}
+
+// setHostAddress setting the Address & AddressType
+func setHostAddress(h *Host, e *xml.StartElement) {
+	if hasAddressIPAttr(e) {
+		for _, attr := range e.Attr {
+			switch attr.Name.Local {
+			case "addr":
+				h.HostAddress.Address = attr.Value
+			case "addrtype":
+				h.HostAddress.AddressType = attr.Value
+			}
 		}
 	}
 }
