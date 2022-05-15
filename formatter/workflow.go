@@ -1,8 +1,10 @@
 package formatter
 
 import (
+	"bytes"
 	"encoding/xml"
 	"fmt"
+	"io"
 	"os"
 )
 
@@ -93,5 +95,59 @@ func (w *MainWorkflow) parse() (run NMAPRun, err error) {
 	if err = xml.Unmarshal(input, &run); err != nil {
 		return
 	}
+
+	// A temporary solution to parse `<address>` node separately and choose only ipv4 or ipv6 for
+	// host addresses (avoid using mac-addresses), issue: #105
+	if len(run.Host) > 0 {
+		setValidHostAddresses(&run, bytes.NewReader(input))
+	}
 	return run, nil
+}
+
+// setValidHostAddresses fixes output by overriding HostAddress.Address
+// struct for the reason if IPv4/IPv6 `<address>` type is getting overwritten
+// by MAC-type address. This fix is temporary in order to provide a bugfix, but to avoid any BC-breaks
+// Will be removed in new major release
+func setValidHostAddresses(run *NMAPRun, reader io.Reader) {
+	var tag string
+	var hostId int = 0
+	var unmarshalledHost *Host = &run.Host[hostId]
+	var decoder *xml.Decoder = xml.NewDecoder(reader)
+	for {
+		token, _ := decoder.Token()
+		if token == nil {
+			break
+		}
+		switch element := token.(type) {
+		case xml.StartElement:
+			tag = element.Name.Local
+			if tag == "host" {
+				unmarshalledHost = &run.Host[hostId]
+				hostId++
+			} else if tag == "address" && unmarshalledHost != nil {
+				if hasAddressIPAttr(&element) {
+					for _, attr := range element.Attr {
+						switch attr.Name.Local {
+						case "addr":
+							unmarshalledHost.HostAddress.Address = attr.Value
+						case "addrtype":
+							unmarshalledHost.HostAddress.AddressType = attr.Value
+						}
+					}
+				}
+			}
+		default:
+		}
+	}
+}
+
+// hasAddressIPAttr determines whether XML element attributes have IPv4 or IPv6 address type
+func hasAddressIPAttr(e *xml.StartElement) bool {
+	for _, attr := range e.Attr {
+		if attr.Name.Local == "addrtype" &&
+			(attr.Value == "ipv4" || attr.Value == "ipv6") {
+			return true
+		}
+	}
+	return false
 }
