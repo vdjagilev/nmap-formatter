@@ -171,8 +171,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -190,8 +192,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.2",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -209,8 +213,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.3",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.3",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -254,8 +260,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -273,8 +281,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.2",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -292,8 +302,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.3",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.3",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -356,8 +368,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 										Script:  []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -375,8 +389,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.2",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -404,8 +420,10 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 										Script:  []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "192.168.1.3",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.3",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -469,8 +487,10 @@ func Test_markdownHostAnchorTitle(t *testing.T) {
 			name: "IP addr (up)",
 			args: args{
 				h: &Host{
-					HostAddress: HostAddress{
-						Address: "192.168.1.21",
+					HostAddress: []HostAddress{
+						{
+							Address: "192.168.1.21",
+						},
 					},
 					Status: HostStatus{
 						State: "up",
@@ -483,8 +503,10 @@ func Test_markdownHostAnchorTitle(t *testing.T) {
 			name: "IP addr (down)",
 			args: args{
 				h: &Host{
-					HostAddress: HostAddress{
-						Address: "192.168.22.23",
+					HostAddress: []HostAddress{
+						{
+							Address: "192.168.22.23",
+						},
 					},
 					Status: HostStatus{
 						State: "down",
@@ -497,8 +519,10 @@ func Test_markdownHostAnchorTitle(t *testing.T) {
 			name: "IP addr, 1 hostname (up)",
 			args: args{
 				h: &Host{
-					HostAddress: HostAddress{
-						Address: "192.168.22.23",
+					HostAddress: []HostAddress{
+						{
+							Address: "192.168.22.23",
+						},
 					},
 					HostNames: HostNames{
 						[]HostName{
@@ -518,8 +542,10 @@ func Test_markdownHostAnchorTitle(t *testing.T) {
 			name: "IP addr, 2 hostnames (up)",
 			args: args{
 				h: &Host{
-					HostAddress: HostAddress{
-						Address: "192.168.32.33",
+					HostAddress: []HostAddress{
+						{
+							Address: "192.168.32.33",
+						},
 					},
 					HostNames: HostNames{
 						[]HostName{

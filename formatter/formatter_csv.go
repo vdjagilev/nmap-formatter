@@ -24,7 +24,7 @@ func (f *CSVFormatter) convert(td *TemplateData) (data [][]string) {
 		if td.OutputOptions.CSVOptions.SkipDownHosts && host.Status.State != "up" {
 			continue
 		}
-		address := fmt.Sprintf("%s (%s)", host.HostAddress.Address, host.Status.State)
+		address := fmt.Sprintf("%s (%s)", host.JoinedAddresses("/"), host.Status.State)
 		data = append(data, []string{address, "", "", "", "", "", "", "", ""})
 		for j := range host.Port {
 			var port *Port = &host.Port[j]
