@@ -97,8 +97,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -116,8 +118,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.2",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -143,7 +147,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			wantErr: false,
 			validate: func(f *HTMLFormatter, output string, t *testing.T) {
 				expect := 2
-				re := regexp.MustCompile(`<li><a href="#192\.168\.1\.([12])">`)
+				re := regexp.MustCompile(`<li><a href="#\d+">`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
 					t.Fatalf("Expected %d addresses in TOC, got %d", expect, actual)
@@ -161,8 +165,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -180,8 +186,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.2",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -207,7 +215,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			wantErr: false,
 			validate: func(f *HTMLFormatter, output string, t *testing.T) {
 				expect := 1
-				re := regexp.MustCompile(`<li><a href="#192\.168\.1\.([12])">`)
+				re := regexp.MustCompile(`<li><a href="#\d+">`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
 					t.Fatalf("Expected %d addresses in TOC, got %d", expect, actual)
@@ -225,8 +233,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -244,8 +254,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.2",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -271,7 +283,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			wantErr: false,
 			validate: func(f *HTMLFormatter, output string, t *testing.T) {
 				expect := 2
-				re := regexp.MustCompile(`<li><a href="#192\.168\.1\.([12])">`)
+				re := regexp.MustCompile(`<li><a href="#\d+">`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
 					t.Fatalf("Expected %d addresses in TOC, got %d", expect, actual)
@@ -308,8 +320,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 										Script:  []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -337,7 +351,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 										Script:  []Script{},
 									},
 								},
-								HostAddress: HostAddress{},
+								HostAddress: []HostAddress{},
 								HostNames:   HostNames{},
 								Status: HostStatus{
 									State: "up",
@@ -377,8 +391,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -396,8 +412,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.2",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -415,8 +433,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.3",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.3",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -460,8 +480,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -479,8 +501,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.2",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -498,8 +522,10 @@ func TestHTMLFormatter_Format(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.3",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.3",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{

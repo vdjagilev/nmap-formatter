@@ -124,7 +124,7 @@ func (f *MarkdownFormatter) defineTemplateFunctions(tmpl *template.Template) {
 
 // markdownHostAnchorTitle helps to generate a title for specific hostname
 func markdownHostAnchorTitle(h *Host) string {
-	title := h.HostAddress.Address
+	title := h.JoinedAddresses("/")
 	for i := range h.HostNames.HostName {
 		title += fmt.Sprintf(" / %s", h.HostNames.HostName[i].Name)
 	}

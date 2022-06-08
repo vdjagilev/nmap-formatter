@@ -41,7 +41,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 								StartTime:   0,
 								EndTime:     0,
 								Port:        []Port{},
-								HostAddress: HostAddress{},
+								HostAddress: []HostAddress{},
 								HostNames:   HostNames{},
 								Status: HostStatus{
 									State: "down",
@@ -108,8 +108,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "127.0.0.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "127.0.0.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -163,8 +165,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 										Script: []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "127.0.0.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "127.0.0.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -233,8 +237,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 										Script: []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "127.0.0.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "127.0.0.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -304,8 +310,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 										Script: []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "127.0.0.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "127.0.0.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -323,8 +331,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -394,8 +404,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 										Script: []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "127.0.0.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "127.0.0.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -413,8 +425,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 								StartTime: 0,
 								EndTime:   0,
 								Port:      []Port{},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -485,8 +499,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 										Script: []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "127.0.0.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "127.0.0.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
@@ -519,8 +535,10 @@ func TestCSVFormatter_convert(t *testing.T) {
 										Script: []Script{},
 									},
 								},
-								HostAddress: HostAddress{
-									Address: "192.168.1.1",
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
 								},
 								HostNames: HostNames{},
 								Status: HostStatus{
