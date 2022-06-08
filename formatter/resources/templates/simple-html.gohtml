@@ -110,9 +110,9 @@
 			<h2>Table of contents:</h2>
 			<ul>
 				{{ if not $skipSummary }}<li><a href="#scan-summary">Scan Summary</a></li>{{ end }}
-				{{ range .NMAPRun.Host }}
+				{{ range $index, $value := .NMAPRun.Host }}
 				{{ if or ($displayDownHosts) (eq .Status.State "up") }}
-				<li><a href="#{{ .HostAddress.Address }}">{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}</a> ({{ .Status.State }})</li>
+				<li><a href="#{{ $index }}">{{ .JoinedAddresses "/" }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}</a> ({{ .Status.State }})</li>
 				{{ end }}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
 				{{ end }}{{/* range .Host */}}
 			</ul>
@@ -209,11 +209,11 @@
 		</table>
 		{{ end }}{{/* if .CustomOptions */}}
 		<hr />
-		{{ range .NMAPRun.Host }}
+		{{ range $index, $value := .NMAPRun.Host }}
 		{{ if or ($displayDownHosts) (eq .Status.State "up") }}
-		<a name="{{ .HostAddress.Address }}"></a>
+		<a name="{{ $index }}"></a>
 		<h2 class="host-address-header{{ if eq .Status.State "up" }} host-up{{ else }} host-down{{ end }}">
-		{{ .HostAddress.Address }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }} {{ if eq .Status.State "up" }}(up){{ else }}(down){{ end }}
+		{{ .JoinedAddresses "/" }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }} {{ if eq .Status.State "up" }}(up){{ else }}(down){{ end }}
 		</h2>
 		{{ if eq .Status.State "up" }}
 		<h3>Info:</h3>
@@ -221,7 +221,13 @@
 			<tbody>
 				<tr>
 					<th>Address</th>
-					<td>{{ .HostAddress.Address }} ({{ .HostAddress.AddressType }})</td>
+					<td>
+						<ul>
+							{{ range .HostAddress }}
+							<li>{{ .Address }} ({{ .AddressType }})
+							{{ end }}
+						</ul>
+					</td>
 				</tr>
 				<tr>
 					<th>Hostnames</th>

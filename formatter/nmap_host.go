@@ -1,11 +1,13 @@
 package formatter
 
+import "fmt"
+
 // Host describes host related entry (`host` node)
 type Host struct {
 	StartTime     int           `xml:"starttime,attr"`
 	EndTime       int           `xml:"endtime,attr"`
 	Port          []Port        `xml:"ports>port"`
-	HostAddress   HostAddress   `xml:"address"`
+	HostAddress   []HostAddress `xml:"address"`
 	HostNames     HostNames     `xml:"hostnames"`
 	Status        HostStatus    `xml:"status"`
 	OS            OS            `xml:"os"`
@@ -15,6 +17,20 @@ type Host struct {
 	TCPSequence   TCPSequence   `xml:"tcpsequence"`
 	IPIDSequence  IPIDSequence  `xml:"ipidsequence"`
 	TCPTSSequence TCPTSSequence `xml:"tcptssequence"`
+}
+
+// JoinedAddresses joins all possible host addresses with a delimiter string
+func (h *Host) JoinedAddresses(delimiter string) string {
+	var addr string = ""
+	for i := range h.HostAddress {
+		// First element does not require prepended delimiter
+		if i == 0 {
+			addr += h.HostAddress[i].Address
+		} else {
+			addr += fmt.Sprintf(" %s %s", delimiter, h.HostAddress[i].Address)
+		}
+	}
+	return addr
 }
 
 // TCPTSSequence describes all information related to `<tcptssequence>` node
