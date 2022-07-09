@@ -1,6 +1,8 @@
 package formatter
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestHost_JoinedAddresses(t *testing.T) {
 	type fields struct {

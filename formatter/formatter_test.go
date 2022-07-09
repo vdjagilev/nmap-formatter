@@ -61,6 +61,15 @@ func TestNew(t *testing.T) {
 			},
 			want: &CSVFormatter{config: &Config{OutputFormat: CSVOutput}},
 		},
+		{
+			name: "DOT output",
+			args: args{
+				config: &Config{
+					OutputFormat: DotOutput,
+				},
+			},
+			want: &DotFormatter{config: &Config{OutputFormat: DotOutput}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

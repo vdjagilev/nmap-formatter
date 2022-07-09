@@ -55,3 +55,16 @@ type StatHosts struct {
 	Down  int `xml:"down,attr"`
 	Total int `xml:"total,attr"`
 }
+
+// AllHops is getting all possible hops that occurred during the scan and
+// merges them uniquely into one map
+func (n *NMAPRun) AllHops() map[string]Hop {
+	var hops map[string]Hop = map[string]Hop{}
+	for i := range n.Host {
+		for j := range n.Host[i].Trace.Hops {
+			hop := n.Host[i].Trace.Hops[j]
+			hops[hop.IPAddr] = hop
+		}
+	}
+	return hops
+}

@@ -1,0 +1,29 @@
+strict digraph "Scan" {
+    fontname="monospace"
+    node [fontname="monospace", width=.25, height=.375, fontsize=9]
+    edge [fontname="monospace"]
+    bgcolor="#111"
+    layout=dot
+
+    scanner [label="{{ .NMAPRun.Scanner }}", shape=hexagon, style=filled];
+
+    {{- $hops := .NMAPRun.AllHops }}
+    {{ range $key, $value := $hops -}}
+    hop{{ clean_ip $key }} [label="", tooltip="{{ $key }}", shape=circle, height=.12, width=.12, style=filled]
+    {{ end }}
+
+    {{ range $key, $value := .NMAPRun.Host -}}
+    {{ if eq $value.Status.State "up" -}}
+    srv{{ $key }} [label="{{ $value.JoinedAddresses "/" }}" tooltip="{{ $value.JoinedAddresses "/" }}", shape=hexagon, style=filled];
+    {{ range $portKey, $portValue := $value.Port }}
+    srv{{ $key }}_port_{{ $portValue.Protocol }}_{{ $portValue.PortID }} [label="{{ $portValue.Protocol }}/{{ $portValue.PortID }} ({{ $portValue.State.State }})", tooltip="{{ $portValue.Protocol }}/{{ $portValue.PortID }} ({{ $portValue.State.State }})", shape=underline, width=.12, height=.12, fontsize=8, color="{{ port_state_color $portValue }}", fontcolor=gray];
+    srv{{ $key }} -> srv{{ $key }}_port_{{ $portValue.Protocol }}_{{ $portValue.PortID }} [arrowhead=none, color=gray];
+    {{ end -}}
+
+    {{ range $hopSource, $hopTarget := hop_list $value.Trace.Hops "scanner" "srv" $key }}
+    {{ clean_ip $hopSource }} -> {{ clean_ip $hopTarget }} [arrowhead=none, color=gray]
+    {{- end }}
+
+    {{- end }}
+    {{ end }}
+}

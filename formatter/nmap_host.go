@@ -1,6 +1,10 @@
 package formatter
 
-import "fmt"
+import (
+	"encoding/xml"
+	"fmt"
+	"strconv"
+)
 
 // Host describes host related entry (`host` node)
 type Host struct {
@@ -126,8 +130,20 @@ type Trace struct {
 
 // Hop struct contains information about HOP record with time to live, host name, IP
 type Hop struct {
-	TTL    int     `xml:"ttl,attr"`
-	IPAddr string  `xml:"ipaddr,attr"`
-	RTT    float64 `xml:"rtt,attr"`
-	Host   string  `xml:"host,attr"`
+	TTL    int    `xml:"ttl,attr"`
+	IPAddr string `xml:"ipaddr,attr"`
+	RTT    RTT    `xml:"rtt,attr"`
+	Host   string `xml:"host,attr"`
+}
+
+type RTT float64
+
+// UnmarshalXMLAttr
+func (r *RTT) UnmarshalXMLAttr(attr xml.Attr) error {
+	value, err := strconv.ParseFloat(attr.Value, 64)
+	if err != nil {
+		value = 0.0
+	}
+	*(*float64)(r) = value
+	return nil
 }
