@@ -20,7 +20,16 @@ const (
 	DotFilteredPortColor = "#FFAE00"
 	DotClosedPortColor   = "#DC143C"
 	DotDefaultColor      = "gray"
+
+	DotFontStyle = "monospace"
+
+	DotLayout = "dot"
 )
+
+type DotTemplateData struct {
+	NMAPRun   *NMAPRun
+	Constants map[string]string
+}
 
 // Format the data and output it to appropriate io.Writer
 func (f *DotFormatter) Format(td *TemplateData, templateContent string) (err error) {
@@ -30,7 +39,15 @@ func (f *DotFormatter) Format(td *TemplateData, templateContent string) (err err
 	if err != nil {
 		return
 	}
-	return tmpl.Execute(f.config.Writer, td)
+	dotTemplateData := DotTemplateData{
+		NMAPRun: &td.NMAPRun,
+		Constants: map[string]string{
+			"default_font":  DotFontStyle,
+			"layout":        DotLayout,
+			"color_default": DotDefaultColor,
+		},
+	}
+	return tmpl.Execute(f.config.Writer, dotTemplateData)
 }
 
 // defaultTemplateContent returns default template content for any typical chosen formatter (HTML or Markdown)

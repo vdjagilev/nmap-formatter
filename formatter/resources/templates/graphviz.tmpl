@@ -1,8 +1,8 @@
 strict digraph "Scan" {
-    fontname="monospace"
-    node [fontname="monospace", width=.25, height=.375, fontsize=9]
-    edge [fontname="monospace"]
-    layout=dot
+    fontname="{{ index .Constants "default_font" }}"
+    node [fontname="{{ index .Constants "default_font" }}", width=.25, height=.375, fontsize=9]
+    edge [fontname="{{ index .Constants "default_font" }}"]
+    layout={{ index .Constants "layout" }}
 
     scanner [label="{{ .NMAPRun.Scanner }}", shape=hexagon, style=filled];
 
