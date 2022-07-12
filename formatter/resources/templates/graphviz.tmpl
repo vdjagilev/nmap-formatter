@@ -8,7 +8,7 @@ strict digraph "Scan" {
 
     {{- $hops := .NMAPRun.AllHops }}
     {{ range $key, $value := $hops -}}
-    hop{{ clean_ip $key }} [label="", tooltip="{{ $key }}", shape=circle, height=.12, width=.12, style=filled]
+    hop{{ clean_ip $key }} [label="", tooltip="{{ $key }}", shape=circle, height=.12, width=.12, style=filled];
     {{ end }}
 
     {{ range $key, $value := .NMAPRun.Host -}}
@@ -20,7 +20,7 @@ strict digraph "Scan" {
     {{ end -}}
 
     {{ range $hopSource, $hopTarget := hop_list $value.Trace.Hops "scanner" "srv" $key }}
-    {{ clean_ip $hopSource }} -> {{ clean_ip $hopTarget }} [arrowhead=none]
+    {{ clean_ip $hopSource }} -> {{ clean_ip $hopTarget }} [arrowhead=none];
     {{- end }}
 
     {{- end }}
