@@ -26,6 +26,12 @@ const (
 	DotLayout = "dot"
 )
 
+var DotDefaultOptions = map[string]string{
+	"default_font":  DotFontStyle,
+	"layout":        DotLayout,
+	"color_default": DotDefaultColor,
+}
+
 type DotTemplateData struct {
 	NMAPRun   *NMAPRun
 	Constants map[string]string
@@ -40,12 +46,8 @@ func (f *DotFormatter) Format(td *TemplateData, templateContent string) (err err
 		return
 	}
 	dotTemplateData := DotTemplateData{
-		NMAPRun: &td.NMAPRun,
-		Constants: map[string]string{
-			"default_font":  DotFontStyle,
-			"layout":        DotLayout,
-			"color_default": DotDefaultColor,
-		},
+		NMAPRun:   &td.NMAPRun,
+		Constants: DotDefaultOptions,
 	}
 	return tmpl.Execute(f.config.Writer, dotTemplateData)
 }
