@@ -12,13 +12,15 @@ const (
 	MarkdownOutput OutputFormat = "md"
 	// JSONOutput constant defines OutputFormat for JavaScript Object Notation, which is more useful for machine-related operations (parsing)
 	JSONOutput OutputFormat = "json"
+	// DotOutput constant defined OutputFormat for Dot (Graphviz), which can be used to generate various graphs
+	DotOutput OutputFormat = "dot"
 )
 
 // IsValid checks whether requested output format is valid
 func (of OutputFormat) IsValid() bool {
 	// markdown & md is essentially the same thing
 	switch of {
-	case "markdown", "md", "html", "csv", "json":
+	case "markdown", "md", "html", "csv", "json", "dot":
 		return true
 	}
 	return false
@@ -35,6 +37,8 @@ func (of OutputFormat) FileOutputFormat() OutputFormat {
 		return CSVOutput
 	case "json":
 		return JSONOutput
+	case "dot":
+		return DotOutput
 	}
 	return HTMLOutput
 }

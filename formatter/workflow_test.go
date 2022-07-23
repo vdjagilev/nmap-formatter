@@ -69,6 +69,64 @@ func TestMainWorkflow_parse(t *testing.T) {
 			</nmaprun>`,
 			fileName: "main_workflow_parse_4_test",
 		},
+		{
+			name: "XML types test for trace: hops",
+			w: &MainWorkflow{
+				Config: &Config{},
+			},
+			wantNMAPRun: NMAPRun{
+				Scanner: "nmap",
+				Version: "5.59BETA3",
+				ScanInfo: ScanInfo{
+					Services: "1-1000",
+				},
+				Host: []Host{
+					{
+						HostAddress: []HostAddress{
+							{
+								Address:     "10.10.10.20",
+								AddressType: "ipv4",
+							},
+						},
+						Trace: Trace{
+							Port:     256,
+							Protocol: "tcp",
+							Hops: []Hop{
+								{
+									TTL:    1,
+									IPAddr: "192.168.200.1",
+									RTT:    0,
+								},
+								{
+									TTL:    2,
+									IPAddr: "192.168.1.1",
+									RTT:    10.20,
+								},
+								{
+									TTL:    3,
+									IPAddr: "10.10.10.20",
+									RTT:    23.30,
+								},
+							},
+						},
+					},
+				},
+			},
+			wantErr: false,
+			fileContent: `<?xml version="1.0"?>
+			<nmaprun scanner="nmap" version="5.59BETA3">
+				<scaninfo services="1-1000" />
+				<host>
+					<address addr="10.10.10.20" addrtype="ipv4" />
+					<trace port="256" proto="tcp">
+						<hop ttl="1" ipaddr="192.168.200.1" rtt="--" />
+						<hop ttl="2" ipaddr="192.168.1.1" rtt="10.20" />
+						<hop ttl="3" ipaddr="10.10.10.20" rtt="23.30" />
+					</trace>
+				</host>
+			</nmaprun>`,
+			fileName: "main_workflow_parse_5_test_hops",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -41,6 +41,11 @@ func TestOutputFormat_FileOutputFormat(t *testing.T) {
 			of:   "json",
 			want: "json",
 		},
+		{
+			name: "dot",
+			of:   "dot",
+			want: "dot",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -85,6 +90,11 @@ func TestOutputFormat_IsValid(t *testing.T) {
 		{
 			name: "CSV",
 			of:   "csv",
+			want: true,
+		},
+		{
+			name: "dot",
+			of:   "dot",
 			want: true,
 		},
 	}
