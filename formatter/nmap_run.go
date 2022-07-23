@@ -62,6 +62,10 @@ func (n *NMAPRun) AllHops() map[string]Hop {
 	var hops map[string]Hop = map[string]Hop{}
 	for i := range n.Host {
 		for j := range n.Host[i].Trace.Hops {
+			// Skip the last hop, because it has the same IP as the target server
+			if j == len(n.Host[i].Trace.Hops)-1 {
+				break
+			}
 			hop := n.Host[i].Trace.Hops[j]
 			hops[hop.IPAddr] = hop
 		}

@@ -86,10 +86,15 @@ func portStateColor(port *Port) string {
 	return DotDefaultColor
 }
 
+// hopList function returns a map with a list of hops where very first hop is `startHop` (scanner itself)
 func hopList(hops []Hop, startHop string, endHopName string, endHopKey int) map[string]string {
 	var hopList map[string]string = map[string]string{}
 	var previous *Hop = nil
 	for i := range hops {
+		// Skip last hop, because it has the same IP as the target server
+		if i == len(hops)-1 {
+			break
+		}
 		if i == 0 {
 			hopList[startHop] = fmt.Sprintf("hop%s", hops[i].IPAddr)
 		} else {
@@ -97,6 +102,10 @@ func hopList(hops []Hop, startHop string, endHopName string, endHopKey int) map[
 		}
 		previous = &hops[i]
 	}
-	hopList[fmt.Sprintf("hop%s", previous.IPAddr)] = fmt.Sprintf("%s%d", endHopName, endHopKey)
+	if previous != nil {
+		hopList[fmt.Sprintf("hop%s", previous.IPAddr)] = fmt.Sprintf("%s%d", endHopName, endHopKey)
+	} else {
+		hopList[startHop] = fmt.Sprintf("%s%d", endHopName, endHopKey)
+	}
 	return hopList
 }
