@@ -136,9 +136,11 @@ type Hop struct {
 	Host   string `xml:"host,attr"`
 }
 
+// RTT is a separate type that is located in Hop struct
 type RTT float64
 
-// UnmarshalXMLAttr
+// UnmarshalXMLAttr is a separate function that attempts to parse RTT float value
+// if it fails to do so, it sets the value to 0.0
 func (r *RTT) UnmarshalXMLAttr(attr xml.Attr) error {
 	value, err := strconv.ParseFloat(attr.Value, 64)
 	if err != nil {

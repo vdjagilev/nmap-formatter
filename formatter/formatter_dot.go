@@ -1,12 +1,14 @@
 package formatter
 
 import (
+	// Used to embed graphviz template file
 	_ "embed"
 	"fmt"
 	"strings"
 	"text/template"
 )
 
+// DotFormatter is used to create Graphviz (dot) format
 type DotFormatter struct {
 	config *Config
 }
@@ -16,22 +18,30 @@ type DotFormatter struct {
 var DotTemplate string
 
 const (
-	DotOpenPortColor     = "#228B22"
+	// DotOpenPortColor defines default color of the opened port
+	DotOpenPortColor = "#228B22"
+	// DotFilteredPortColor defines default color of the filtered port
 	DotFilteredPortColor = "#FFAE00"
-	DotClosedPortColor   = "#DC143C"
-	DotDefaultColor      = "gray"
+	// DotClosedPortColor defies default color of the closed port
+	DotClosedPortColor = "#DC143C"
+	// DotDefaultColor defines default color of various elements (lines, boxes)
+	DotDefaultColor = "gray"
 
+	// DotFontStyle default font style
 	DotFontStyle = "monospace"
 
+	// DotLayout is a type of layout used in Graphviz (dot by default is the most fitting)
 	DotLayout = "dot"
 )
 
+// DotDefaultOptions is a config map that is used in Graphviz template
 var DotDefaultOptions = map[string]string{
 	"default_font":  DotFontStyle,
 	"layout":        DotLayout,
 	"color_default": DotDefaultColor,
 }
 
+// DotTemplateData is a custom TemplateData struct that is used by DotFormatter
 type DotTemplateData struct {
 	NMAPRun   *NMAPRun
 	Constants map[string]string
