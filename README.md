@@ -6,6 +6,13 @@
 
 ---
 
+## Examples
+
+HTML:
+![nmap-example-html](https://user-images.githubusercontent.com/2762286/166215713-02ab3e43-5e89-4f4a-b9f1-64651f2939e1.png)
+Graphviz:
+![nmap-example-graphviz](docs/images/example-dot.png)
+
 A tool that allows you to convert NMAP XML output to html/csv/json/markdown.
 
 ## Installation
@@ -59,10 +66,6 @@ More examples can be found on [Usage Wiki page](https://github.com/vdjagilev/nma
 * `--version` display version (also can be used: `./nmap-formatter version`)
 
 It's also possible to change various output options. More examples on [Usage Wiki Page - Flags](https://github.com/vdjagilev/nmap-formatter/wiki/Usage#flags-and-output-options).
-
-## Example
-
-![nmap-example-html](https://user-images.githubusercontent.com/2762286/166215713-02ab3e43-5e89-4f4a-b9f1-64651f2939e1.png)
 
 Screenshots of various formats available [here](https://github.com/vdjagilev/nmap-formatter/wiki/Examples)
 
