@@ -13,7 +13,7 @@ strict digraph "Scan" {
 
     {{ range $key, $value := .NMAPRun.Host -}}
     {{ if eq $value.Status.State "up" -}}
-    srv{{ $key }} [label="{{ $value.JoinedAddresses "/" }}" tooltip="{{ $value.JoinedAddresses "/" }}", shape=hexagon, style=filled];
+    srv{{ $key }} [label="{{ $value.JoinedAddresses "/" }}", tooltip="{{ $value.JoinedAddresses "/" }}", shape=hexagon, style=filled];
     {{ range $portKey, $portValue := $value.Port }}
     srv{{ $key }}_port_{{ $portValue.Protocol }}_{{ $portValue.PortID }} [label="{{ $portValue.Protocol }}/{{ $portValue.PortID }} ({{ $portValue.State.State }})", tooltip="{{ $portValue.Protocol }}/{{ $portValue.PortID }} ({{ $portValue.State.State }})", shape=underline, width=.12, height=.12, fontsize=8, color="{{ port_state_color $portValue }}"];
     srv{{ $key }} -> srv{{ $key }}_port_{{ $portValue.Protocol }}_{{ $portValue.PortID }} [arrowhead=none];
