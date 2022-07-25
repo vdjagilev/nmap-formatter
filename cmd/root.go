@@ -49,9 +49,9 @@ var workflow formatter.Workflow
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "nmap-formatter [html|csv|md|json] [path-to-nmap.xml]",
+	Use:   "nmap-formatter [html|csv|md|json|dot] [path-to-nmap.xml]",
 	Short: "Utility that can help you to convert NMAP XML application output to various other formats",
-	Long:  `This utility allows you to convert NMAP XML output to various other formats like (html, csv, markdown (md), json)`,
+	Long:  `This utility allows you to convert NMAP XML output to various other formats like (html, csv, markdown (md), json, dot)`,
 	Args:  arguments,
 	RunE:  run,
 }
