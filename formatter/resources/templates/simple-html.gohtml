@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		{{ $ftColor := "#121212" }}
 		{{ $bgColor := "#eee" }}
@@ -8,7 +8,7 @@
 			{{ $bgColor = "#121212" }}
 		{{ end }}
 		<title>NMAP Scan result: {{ .NMAPRun.StartStr }}</title>
-		<meta charset="utf-8" />
+		<meta charset="utf-8">
 		<style>
 			body {
 				color: {{ $ftColor }};
@@ -28,6 +28,9 @@
 				background-color: {{ $bgColor }};
 			}
 			{{ end }}
+			table {
+				border-spacing: 0;
+			}
 			#summary-table {
 				table-layout: fixed;
 				width: 640px;
@@ -107,7 +110,7 @@
 		{{ $skipMetrics := .OutputOptions.HTMLOptions.SkipMetrics }}
 		{{ $skipPortScripts := .OutputOptions.HTMLOptions.SkipPortScripts }}
 		<h1>NMAP Scan Result: {{ .NMAPRun.StartStr }}</h1>
-		<hr />
+		<hr>
 		<div id="toc">
 			<h2>Table of contents:</h2>
 			<ul>
@@ -118,10 +121,10 @@
 				{{ end }}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
 				{{ end }}{{/* range .Host */}}
 			</ul>
-			<hr />
+			<hr>
 		</div>
 		{{ if not $skipSummary }}
-		<a name="scan-summary"></a>
+		<a id="scan-summary"></a>
 		<h2>Scan Summary:</h2>
 		<table id="summary-table">
 			<tbody>
@@ -210,10 +213,10 @@
 			</tbody>
 		</table>
 		{{ end }}{{/* if .CustomOptions */}}
-		<hr />
+		<hr>
 		{{ range $index, $value := .NMAPRun.Host }}
 		{{ if or ($displayDownHosts) (eq .Status.State "up") }}
-		<a name="{{ $index }}"></a>
+		<a id="{{ $index }}"></a>
 		<h2 class="host-address-header{{ if eq .Status.State "up" }} host-up{{ else }} host-down{{ end }}">
 		{{ .JoinedAddresses "/" }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }} {{ if eq .Status.State "up" }}(up){{ else }}(down){{ end }}
 		</h2>
@@ -226,7 +229,7 @@
 					<td>
 						<ul>
 							{{ range .HostAddress }}
-							<li>{{ .Address }} ({{ .AddressType }})
+							<li>{{ .Address }} ({{ .AddressType }})</li>
 							{{ end }}
 						</ul>
 					</td>
@@ -265,7 +268,7 @@
 			</tbody>
 		</table>
 		<h3>Ports</h3>
-		<table class="port-table data-table" cellspacing="0">
+		<table class="port-table data-table">
 			<thead>
 				<tr>
 					<th colspan="2">Port</th>
@@ -371,7 +374,7 @@
 			</table>
 		</details>
 		{{ end }}{{/* if not $skipMetrics */}}
-		<hr />
+		<hr>
 		{{ end }}{{/* if eq .Status.State "up" */}}
 		{{ end }}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
 		{{ end }}{{/* range .Host */}}
