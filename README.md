@@ -20,7 +20,7 @@ A tool that allows you to convert NMAP XML output to html/csv/json/markdown/dot.
 It's possible to install it using `go install` command
 
 ```
-go install github.com/vdjagilev/nmap-formatter@latest
+go install github.com/vdjagilev/nmap-formatter/v2@latest
 ```
 
 All other options can be found on [Installation Wiki page](https://github.com/vdjagilev/nmap-formatter/wiki/Installation).
