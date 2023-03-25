@@ -2,10 +2,11 @@ package formatter
 
 // OutputOptions describes various output options for nmap formatter
 type OutputOptions struct {
-	HTMLOptions     HTMLOutputOptions
-	MarkdownOptions MarkdownOutputOptions
-	JSONOptions     JSONOutputOptions
-	CSVOptions      CSVOutputOptions
+	HTMLOptions         HTMLOutputOptions
+	MarkdownOptions     MarkdownOutputOptions
+	JSONOptions         JSONOutputOptions
+	CSVOptions          CSVOutputOptions
+	SqliteOutputOptions SqliteOutputOptions
 }
 
 // HTMLOutputOptions stores options related only to HTML conversion/formatting
@@ -50,4 +51,16 @@ type JSONOutputOptions struct {
 type CSVOutputOptions struct {
 	// The hosts that are down won't be displayed
 	SkipDownHosts bool
+}
+
+// SqliteOutputOptions store options related to SQLite database formatting
+type SqliteOutputOptions struct {
+	// OutputType defines an output type for sqlite format type (either plain SQL or binary data of sqlite database)
+	// By default raw SQL is the main output type
+	OutputType string
+	// DSN is a Data Source Name to sqlite embedded database, by default it's empty which results in stdout output,
+	// however, if both DSN and OutputFile provided, OutputFile option takes preference over SqliteOutputOptions.DSN
+	DSN string
+	// ScanIdentifier is a unique string passed by the user to identify unique scans. If it's empty, it's generated automatically
+	ScanIdentifier string
 }

@@ -18,6 +18,7 @@ type Config struct {
 	ShowVersion     bool
 	TemplatePath    string
 	CustomOptions   []string
+	CurrentVersion  string
 }
 
 // CustomOptionsMap returns custom options provided in the CLI
