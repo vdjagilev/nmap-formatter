@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	// Written this way to avoid automatic removal by text editor
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -52,12 +53,12 @@ func (f *SqliteFormatter) Format(td *TemplateData, templateContent string) error
 	//		panic(err)
 	//	}
 
-	scan_id, err := f.insertScan(db, &td.NMAPRun)
+	scanID, err := f.insertScan(db, &td.NMAPRun)
 	if err != nil {
 		return fmt.Errorf("could not insert new scan: %v", err)
 	}
 
-	log.Printf("New scan with ID (%d) is inserted", scan_id)
+	log.Printf("New scan with ID (%d) is inserted", scanID)
 
 	return err
 }
