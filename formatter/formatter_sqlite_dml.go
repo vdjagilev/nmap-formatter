@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-const InsertScanSql = `
+const insertScanSQL = `
 	INSERT INTO scans (
 		nf_identifier, 
 		scanner, 
@@ -33,14 +33,14 @@ const InsertScanSql = `
 // insertScan creates a new scan record in database and returns it's last inserted ID
 func (f *SqliteFormatter) insertScan(db *sql.DB, n *NMAPRun) (int64, error) {
 	id := int64(0)
-	insert, err := db.Prepare(InsertScanSql)
+	insert, err := db.Prepare(insertScanSQL)
 	if err != nil {
 		return id, err
 	}
 	defer insert.Close()
 
 	now := time.Now()
-	scan_insert_result, err := insert.Exec(
+	scanInsertResult, err := insert.Exec(
 		f.getScanIdentifier(),
 		n.Scanner,
 		n.Args,
@@ -65,5 +65,5 @@ func (f *SqliteFormatter) insertScan(db *sql.DB, n *NMAPRun) (int64, error) {
 	if err != nil {
 		return id, err
 	}
-	return scan_insert_result.LastInsertId()
+	return scanInsertResult.LastInsertId()
 }
