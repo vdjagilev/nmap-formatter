@@ -14,8 +14,9 @@ type MarkdownFormatter struct {
 	config *Config
 }
 
-//go:embed resources/templates/markdown.tmpl
 // MarkdownTemplate variable is used to store markdown.tmpl embed file contents
+//
+//go:embed resources/templates/markdown.tmpl
 var MarkdownTemplate string
 
 type markdownOutputFilter struct {

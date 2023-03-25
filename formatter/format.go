@@ -14,13 +14,15 @@ const (
 	JSONOutput OutputFormat = "json"
 	// DotOutput constant defined OutputFormat for Dot (Graphviz), which can be used to generate various graphs
 	DotOutput OutputFormat = "dot"
+	// SqliteOutput constant defines OutputFormat for sqlite file, which can be used to generate sqlite embedded databases
+	SqliteOutput OutputFormat = "sqlite"
 )
 
 // IsValid checks whether requested output format is valid
 func (of OutputFormat) IsValid() bool {
 	// markdown & md is essentially the same thing
 	switch of {
-	case "markdown", "md", "html", "csv", "json", "dot":
+	case "markdown", "md", "html", "csv", "json", "dot", "sqlite":
 		return true
 	}
 	return false
@@ -39,6 +41,8 @@ func (of OutputFormat) FileOutputFormat() OutputFormat {
 		return JSONOutput
 	case "dot":
 		return DotOutput
+	case "sqlite":
+		return SqliteOutput
 	}
 	return HTMLOutput
 }

@@ -29,6 +29,10 @@ func New(config *Config) Formatter {
 		return &DotFormatter{
 			config,
 		}
+	case SqliteOutput:
+		return &SqliteFormatter{
+			config,
+		}
 	}
 	return nil
 }

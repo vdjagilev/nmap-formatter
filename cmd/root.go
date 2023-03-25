@@ -34,12 +34,14 @@ import (
 
 var config = formatter.Config{
 	OutputOptions: formatter.OutputOptions{
-		HTMLOptions:     formatter.HTMLOutputOptions{},
-		MarkdownOptions: formatter.MarkdownOutputOptions{},
-		JSONOptions:     formatter.JSONOutputOptions{},
-		CSVOptions:      formatter.CSVOutputOptions{},
+		HTMLOptions:         formatter.HTMLOutputOptions{},
+		MarkdownOptions:     formatter.MarkdownOutputOptions{},
+		JSONOptions:         formatter.JSONOutputOptions{},
+		CSVOptions:          formatter.CSVOutputOptions{},
+		SqliteOutputOptions: formatter.SqliteOutputOptions{},
 	},
-	ShowVersion: false,
+	ShowVersion:    false,
+	CurrentVersion: VERSION,
 }
 
 // VERSION is describing current version of the nmap-formatter
@@ -49,7 +51,7 @@ var workflow formatter.Workflow
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "nmap-formatter [html|csv|md|json|dot] [path-to-nmap.xml]",
+	Use:   "nmap-formatter [html|csv|md|json|dot|sqlite] [path-to-nmap.xml]",
 	Short: "Utility that can help you to convert NMAP XML application output to various other formats",
 	Long:  `This utility allows you to convert NMAP XML output to various other formats like (html, csv, markdown (md), json, dot)`,
 	Args:  arguments,
@@ -105,6 +107,8 @@ func init() {
 
 	// Pretty-print json
 	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONOptions.PrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
+
+	// TODO: Add scan-id option here
 
 	workflow = &formatter.MainWorkflow{}
 }
