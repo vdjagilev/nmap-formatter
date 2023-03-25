@@ -2,8 +2,8 @@ package formatter
 
 import "database/sql"
 
-// SQLITE_DDL describes the whole database schema for sqlite
-const SQLITE_DDL = `
+// SqliteDdl describes the whole database schema for sqlite
+const SqliteDdl = `
 CREATE TABLE IF NOT EXISTS scans (
 	id integer not null primary key,
 	nf_identifier text,
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS nf_schema (
 
 func (f *SqliteFormatter) generateSchema(db *sql.DB) error {
 	// Create migrate schema
-	_, err := db.Exec(SQLITE_DDL)
+	_, err := db.Exec(SqliteDdl)
 	if err != nil {
 		return err
 	}
