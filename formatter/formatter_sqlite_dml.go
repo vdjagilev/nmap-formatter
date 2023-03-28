@@ -67,3 +67,35 @@ func (f *SqliteFormatter) insertScan(db *sql.DB, n *NMAPRun) (int64, error) {
 	}
 	return scanInsertResult.LastInsertId()
 }
+
+func (f *SqliteFormatter) insertHosts(db *sql.DB, hosts []Host) error {
+	return nil
+}
+
+func (f *SqliteFormatter) insertHostTraces(db *sql.DB, trace *Trace) error {
+	return nil
+}
+
+func (f *SqliteFormatter) insertHostTracesHops(db *sql.DB, hops []Hop) error {
+	return nil
+}
+
+func (f *SqliteFormatter) insertHostAddresses(db *sql.DB, addresses []HostAddress) error {
+	return nil
+}
+
+func (f *SqliteFormatter) insertHostNames(db *sql.DB, names *HostNames) error {
+	return nil
+}
+
+func (f *SqliteFormatter) insertOSRecords(db *sql.DB, os *OS) error {
+	return nil
+}
+
+func (f *SqliteFormatter) insertPorts(db *sql.DB, n []Port) error {
+	return nil
+}
+
+func (f *SqliteFormatter) insertPortScripts(db *sql.DB, n []Script) error {
+	return nil
+}
