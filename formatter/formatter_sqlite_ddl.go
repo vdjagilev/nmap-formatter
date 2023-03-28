@@ -49,7 +49,20 @@ CREATE TABLE IF NOT EXISTS hosts (
 	tcp_ts_sequence_values text,
 	status text
 );
+CREATE TABLE IF NOT EXISTS host_traces (
+	id integer not null primary key,
+	host_id integer not null,
+	port integer,
+	protocol text,
 );
+CREATE TABLE IF NOT EXISTS host_traces_hops (
+	id integer not null primary key,
+	host_traces_id integer not null,
+	ttl integer,
+	ip_address text,
+	rtt real,
+	host text
+)
 CREATE TABLE IF NOT EXISTS host_addresses (
 	id integer not null primary key,
 	host_id integer not null,
