@@ -30,16 +30,25 @@ CREATE TABLE IF NOT EXISTS scans (
 CREATE TABLE IF NOT EXISTS hosts (
 	id integer not null primary key,
 	scan_id integer not null,
-	nf_adress_joined text,
+	nf_address_joined text,
+	nf_host_names_joined text,
+	nf_created integer,
 	start_time integer,
 	end_time integer,
 	status_state text,
 	status_reason text,
-
-	// TODO: Insert the rest
-
-	status text,
-	nf_created integer
+	uptime_seconds integer,
+	uptime_last_boot string,
+	distance_value integer,
+	tcp_sequence_index text,
+	tcp_sequence_difficulty text,
+	tcp_sequence_values text,
+	ip_id_sequence_class text,
+	ip_id_sequence_values text,
+	tcp_ts_sequence_class text,
+	tcp_ts_sequence_values text,
+	status text
+);
 );
 CREATE TABLE IF NOT EXISTS host_addresses (
 	id integer not null primary key,
