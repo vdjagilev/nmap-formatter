@@ -1,6 +1,9 @@
 package formatter
 
-import "database/sql"
+import (
+	"database/sql"
+	"fmt"
+)
 
 // SqliteDdl describes the whole database schema for sqlite
 const SqliteDdl = `
@@ -53,7 +56,7 @@ CREATE TABLE IF NOT EXISTS host_traces (
 	id integer not null primary key,
 	host_id integer not null,
 	port integer,
-	protocol text,
+	protocol text
 );
 CREATE TABLE IF NOT EXISTS host_traces_hops (
 	id integer not null primary key,
@@ -62,7 +65,7 @@ CREATE TABLE IF NOT EXISTS host_traces_hops (
 	ip_address text,
 	rtt real,
 	host text
-)
+);
 CREATE TABLE IF NOT EXISTS host_addresses (
 	id integer not null primary key,
 	host_id integer not null,
@@ -132,10 +135,16 @@ func (f *SqliteFormatter) generateSchema(db *sql.DB) error {
 	}
 
 	// Set schema version by truncating table and inserting new version
-	_, err = db.Exec(`TRUNCATE nf_schema; INSERT INTO nf_schema VALUES (?);`, f.config.CurrentVersion)
+	_, err = db.Exec(`DELETE FROM nf_schema;`)
 	if err != nil {
-		return err
+		return fmt.Errorf("could not clean nf_schema table: %v", err)
 	}
+
+	_, err = db.Exec(`INSERT INTO nf_schema VALUES (?);`, f.config.CurrentVersion)
+	if err != nil {
+		return fmt.Errorf("could not insert new nf_schema version: %v", err)
+	}
+
 	return nil
 }
 
