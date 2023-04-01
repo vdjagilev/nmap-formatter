@@ -55,9 +55,6 @@ type CSVOutputOptions struct {
 
 // SqliteOutputOptions store options related to SQLite database formatting
 type SqliteOutputOptions struct {
-	// OutputType defines an output type for sqlite format type (either plain SQL or binary data of sqlite database)
-	// By default raw SQL is the main output type
-	OutputType string
 	// DSN is a Data Source Name to sqlite embedded database, by default it's empty which results in stdout output,
 	// however, if both DSN and OutputFile provided, OutputFile option takes preference over SqliteOutputOptions.DSN
 	DSN string
