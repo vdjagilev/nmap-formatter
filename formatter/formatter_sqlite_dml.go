@@ -20,6 +20,7 @@ const insertScanSQL = `
 		run_stats_finished_summary,
 		run_stats_finished_exit,
 		run_stats_stat_hosts_up,
+		run_stats_stat_hosts_down,
 		run_stats_stat_hosts_total,
 		verbose_level,
 		debugging_level,
@@ -28,7 +29,7 @@ const insertScanSQL = `
 		nf_created
 	) 
 	VALUES 
-	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 // insertScan creates a new scan record in database and returns it's last inserted ID
 func (f *SqliteFormatter) insertScan(db *sql.DB, n *NMAPRun) (int64, error) {
