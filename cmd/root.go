@@ -108,7 +108,9 @@ func init() {
 	// Pretty-print json
 	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONOptions.PrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
 
-	// TODO: Add scan-id option here
+	// Configs related to SQLite
+	rootCmd.Flags().StringVar(&config.OutputOptions.SqliteOutputOptions.DSN, "sqlite-dsn", "nmap.sqlite", "--sqlite-dsn nmap.sqlite")
+	rootCmd.Flags().StringVar(&config.OutputOptions.SqliteOutputOptions.ScanIdentifier, "scan-id", "", "--scan-id abc123")
 
 	workflow = &formatter.MainWorkflow{}
 }

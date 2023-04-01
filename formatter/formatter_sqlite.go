@@ -29,8 +29,7 @@ func (f *SqliteFormatter) Format(td *TemplateData, templateContent string) error
 	// It's really hard to determine uniqueness of the scan, so we simply have to add new value to the table
 	// and add columns which store the time when this scan was added
 
-	// Creating db, TODO: Change path accordingly (how user asks)
-	db, err := sql.Open("sqlite3", "./test.db")
+	db, err := sql.Open("sqlite3", f.config.OutputOptions.SqliteOutputOptions.DSN)
 	if err != nil {
 		panic(err)
 	}
