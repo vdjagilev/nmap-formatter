@@ -35,7 +35,6 @@ CREATE TABLE IF NOT EXISTS hosts (
 	scan_id integer not null,
 	nf_address_joined text,
 	nf_host_names_joined text,
-	nf_created integer,
 	start_time integer,
 	end_time integer,
 	status_state text,
@@ -50,17 +49,13 @@ CREATE TABLE IF NOT EXISTS hosts (
 	ip_id_sequence_values text,
 	tcp_ts_sequence_class text,
 	tcp_ts_sequence_values text,
+	traces_port integer,
+	traces_protocol text,
 	status text
-);
-CREATE TABLE IF NOT EXISTS host_traces (
-	id integer not null primary key,
-	host_id integer not null,
-	port integer,
-	protocol text
 );
 CREATE TABLE IF NOT EXISTS host_traces_hops (
 	id integer not null primary key,
-	host_traces_id integer not null,
+	host_id integer not null,
 	ttl integer,
 	ip_address text,
 	rtt real,
