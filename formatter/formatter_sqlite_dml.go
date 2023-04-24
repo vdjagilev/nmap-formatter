@@ -2,8 +2,11 @@ package formatter
 
 import (
 	"database/sql"
+	"strings"
 	"time"
 )
+
+const sqliteStringDelimiter = ", "
 
 const insertScanSQL = `
 	INSERT INTO scans (
@@ -36,7 +39,6 @@ const insertHostsSQL = `
 		scan_id,
 		nf_address_joined,
 		nf_host_names_joined,
-		nf_created,
 		start_time,
 		end_time,
 		status_state,
@@ -56,13 +58,13 @@ const insertHostsSQL = `
 		status
 	)
 	VALUES
-	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 const insertHostTracesHopsSQL = `
 	INSERT INTO host_traces_hops (
 		host_id,
 		ttl,
-		ip_address
+		ip_address,
 		rtt,
 		host
 	) VALUES (?, ?, ?, ?, ?)`
@@ -72,7 +74,7 @@ const insertHostAddressesSQL = `
 		host_id,
 		address,
 		address_type
-	)`
+	) VALUES (?, ?, ?)`
 
 const insertHostNamesSQL = `
 	INSERT INTO host_names (
@@ -112,7 +114,7 @@ const insertPortsSQL = `
 	INSERT INTO ports (
 		host_id,
 		port_id,
-		state_state text,
+		state_state,
 		state_reason,
 		state_reason_ttl,
 		service_name,
@@ -125,7 +127,7 @@ const insertPortsSQL = `
 	) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 const insertPortsScriptsSQL = `
-	INSERT INTOP ports_scripts (
+	INSERT INTO ports_scripts (
 		ports_id,
 		script_id,
 		script_output
@@ -167,6 +169,29 @@ func (f *SqliteFormatter) insertScan(db *sql.DB, n *NMAPRun) (int64, error) {
 		return id, err
 	}
 	return scanInsertResult.LastInsertId()
+}
+
+func (f *SqliteFormatter) insertReturnID(db *sql.DB, sql string, args ...any) (int64, error) {
+	insert, err := db.Prepare(sql)
+	if err != nil {
+		return 0, err
+	}
+	defer insert.Close()
+	result, err := insert.Exec(args...)
+	if err != nil {
+		return 0, err
+	}
+	return result.LastInsertId()
+}
+
+func (f *SqliteFormatter) insert(db *sql.DB, sql string, args ...any) error {
+	insert, err := db.Prepare(sql)
+	if err != nil {
+		return err
+	}
+	defer insert.Close()
+	_, err = insert.Exec(args)
+	return err
 }
 
 func (f *SqliteFormatter) insertHosts(db *sql.DB, scanID int64, hosts []Host) ([]int64, error) {
@@ -234,22 +259,157 @@ func (f *SqliteFormatter) insertHostTracesHops(db *sql.DB, hostID int64, hops []
 	return err
 }
 
-func (f *SqliteFormatter) insertHostAddresses(db *sql.DB, addresses []HostAddress) error {
-	return nil
+func (f *SqliteFormatter) insertHostAddresses(db *sql.DB, hostID int64, addresses []HostAddress) error {
+	var err error
+	insert, err := db.Prepare(insertHostAddressesSQL)
+	if err != nil {
+		return err
+	}
+	defer insert.Close()
+	for _, hostAddress := range addresses {
+		_, err := insert.Exec(
+			hostID,
+			hostAddress.Address,
+			hostAddress.AddressType,
+		)
+		if err != nil {
+			return err
+		}
+	}
+	return err
 }
 
-func (f *SqliteFormatter) insertHostNames(db *sql.DB, names *HostNames) error {
-	return nil
+func (f *SqliteFormatter) insertHostNames(db *sql.DB, hostID int64, names *HostNames) error {
+	var err error
+	insert, err := db.Prepare(insertHostNamesSQL)
+	if err != nil {
+		return err
+	}
+	defer insert.Close()
+	for _, hostName := range names.HostName {
+		_, err := insert.Exec(
+			hostID,
+			hostName.Name,
+			hostName.Type,
+		)
+		if err != nil {
+			return err
+		}
+	}
+	return err
 }
 
-func (f *SqliteFormatter) insertOSRecords(db *sql.DB, os *OS) ([]int64, error) {
-	return []int64{}, nil
+func (f *SqliteFormatter) insertOSRecords(db *sql.DB, hostID int64, os *OS) (int64, error) {
+	var err error
+	insert, err := db.Prepare(insertHostOSSQL)
+	if err != nil {
+		return 0, err
+	}
+	defer insert.Close()
+	result, err := insert.Exec(
+		hostID,
+		os.OSClass.Type,
+		os.OSClass.Vendor,
+		os.OSClass.OSFamily,
+		os.OSClass.OSGen,
+		os.OSClass.Accuracy,
+		strings.Join(os.OSClass.CPE, sqliteStringDelimiter),
+	)
+	if err != nil {
+		return 0, err
+	}
+	return result.LastInsertId()
 }
 
-func (f *SqliteFormatter) insertPorts(db *sql.DB, n []Port) ([]int64, error) {
-	return []int64{}, nil
+func (f *SqliteFormatter) insertOSPortUsed(db *sql.DB, osID int64, portUsed []OSPortUsed) error {
+	insert, err := db.Prepare(insertHostOSPortUsedSQL)
+	if err != nil {
+		return err
+	}
+	defer insert.Close()
+	for _, port := range portUsed {
+		_, err := insert.Exec(
+			osID,
+			port.State,
+			port.Protocol,
+			port.PortID,
+		)
+		if err != nil {
+			return err
+		}
+	}
+	return err
 }
 
-func (f *SqliteFormatter) insertPortScripts(db *sql.DB, n []Script) error {
-	return nil
+func (f *SqliteFormatter) insertOSMatch(db *sql.DB, osID int64, match []OSMatch) error {
+	insert, err := db.Prepare(insertHostOSMatchSQL)
+	if err != nil {
+		return err
+	}
+	defer insert.Close()
+	for _, matchRecord := range match {
+		_, err = insert.Exec(
+			osID,
+			matchRecord.Name,
+			matchRecord.Accuracy,
+			matchRecord.Line,
+		)
+		if err != nil {
+			return err
+		}
+	}
+	return err
+}
+
+func (f *SqliteFormatter) insertPorts(db *sql.DB, hostID int64, n []Port) ([]int64, error) {
+	var portIDs []int64
+	insert, err := db.Prepare(insertPortsSQL)
+	if err != nil {
+		return portIDs, err
+	}
+	defer insert.Close()
+	for _, portRecord := range n {
+		result, err := insert.Exec(
+			hostID,
+			portRecord.PortID,
+			portRecord.State.State,
+			portRecord.State.Reason,
+			portRecord.State.ReasonTTL,
+			portRecord.Service.Name,
+			portRecord.Service.Product,
+			portRecord.Service.Version,
+			portRecord.Service.ExtraInfo,
+			portRecord.Service.Method,
+			portRecord.Service.Conf,
+			strings.Join(portRecord.Service.CPE, sqliteStringDelimiter),
+		)
+		if err != nil {
+			return portIDs, err
+		}
+		portID, err := result.LastInsertId()
+		if err != nil {
+			return portIDs, err
+		}
+		portIDs = append(portIDs, portID)
+	}
+	return portIDs, err
+}
+
+func (f *SqliteFormatter) insertPortScripts(db *sql.DB, portsID int64, n []Script) error {
+	insert, err := db.Prepare(insertPortsScriptsSQL)
+	if err != nil {
+		return err
+	}
+	defer insert.Close()
+	for _, script := range n {
+		_, err := insert.Exec(
+			portsID,
+			script.ID,
+			script.Output,
+		)
+		if err != nil {
+			return err
+		}
+	}
+	return err
 }
