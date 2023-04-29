@@ -184,59 +184,6 @@ func (f *SqliteFormatter) insertReturnID(db *sql.DB, sql string, args ...any) (i
 	return result.LastInsertId()
 }
 
-func (f *SqliteFormatter) insert(db *sql.DB, sql string, args ...any) error {
-	insert, err := db.Prepare(sql)
-	if err != nil {
-		return err
-	}
-	defer insert.Close()
-	_, err = insert.Exec(args)
-	return err
-}
-
-func (f *SqliteFormatter) insertHosts(db *sql.DB, scanID int64, hosts []Host) ([]int64, error) {
-	var ids []int64
-	insert, err := db.Prepare(insertHostsSQL)
-	if err != nil {
-		return ids, err
-	}
-	defer insert.Close()
-
-	for _, host := range hosts {
-		insertResult, err := insert.Exec(
-			scanID,
-			"TODO",
-			"TODO",
-			host.StartTime,
-			host.EndTime,
-			host.Status.State,
-			host.Status.Reason,
-			host.Uptime.Seconds,
-			host.Uptime.LastBoot,
-			host.Distance.Value,
-			host.TCPSequence.Index,
-			host.TCPSequence.Difficulty,
-			host.TCPSequence.Values,
-			host.IPIDSequence.Class,
-			host.IPIDSequence.Values,
-			host.TCPTSSequence.Class,
-			host.TCPTSSequence.Values,
-			host.Trace.Port,
-			host.Trace.Protocol,
-			host.Status,
-		)
-		if err != nil {
-			return []int64{}, err
-		}
-		id, err := insertResult.LastInsertId()
-		if err != nil {
-			return []int64{}, err
-		}
-		ids = append(ids, id)
-	}
-	return ids, nil
-}
-
 func (f *SqliteFormatter) insertHostTracesHops(db *sql.DB, hostID int64, hops []Hop) error {
 	var err error
 	insert, err := db.Prepare(insertHostTracesHopsSQL)
@@ -359,40 +306,6 @@ func (f *SqliteFormatter) insertOSMatch(db *sql.DB, osID int64, match []OSMatch)
 		}
 	}
 	return err
-}
-
-func (f *SqliteFormatter) insertPorts(db *sql.DB, hostID int64, n []Port) ([]int64, error) {
-	var portIDs []int64
-	insert, err := db.Prepare(insertPortsSQL)
-	if err != nil {
-		return portIDs, err
-	}
-	defer insert.Close()
-	for _, portRecord := range n {
-		result, err := insert.Exec(
-			hostID,
-			portRecord.PortID,
-			portRecord.State.State,
-			portRecord.State.Reason,
-			portRecord.State.ReasonTTL,
-			portRecord.Service.Name,
-			portRecord.Service.Product,
-			portRecord.Service.Version,
-			portRecord.Service.ExtraInfo,
-			portRecord.Service.Method,
-			portRecord.Service.Conf,
-			strings.Join(portRecord.Service.CPE, sqliteStringDelimiter),
-		)
-		if err != nil {
-			return portIDs, err
-		}
-		portID, err := result.LastInsertId()
-		if err != nil {
-			return portIDs, err
-		}
-		portIDs = append(portIDs, portID)
-	}
-	return portIDs, err
 }
 
 func (f *SqliteFormatter) insertPortScripts(db *sql.DB, portsID int64, n []Script) error {
