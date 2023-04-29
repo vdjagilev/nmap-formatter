@@ -37,6 +37,19 @@ func (h *Host) JoinedAddresses(delimiter string) string {
 	return addr
 }
 
+// JoinedHostNames returns a joined string of host names with a provided delimiter
+func (h *Host) JoinedHostNames(delimiter string) string {
+	var hostAddr string = ""
+	for i := range h.HostNames.HostName {
+		// First element does not require prepended delimiter
+		if i != 0 {
+			hostAddr += delimiter
+		}
+		hostAddr += h.HostNames.HostName[i].Name
+	}
+	return hostAddr
+}
+
 // TCPTSSequence describes all information related to `<tcptssequence>` node
 type TCPTSSequence struct {
 	Class  string `xml:"class,attr"`
