@@ -1,12 +1,3 @@
-package formatter
-
-import (
-	"database/sql"
-	"fmt"
-)
-
-// SqliteDdl describes the whole database schema for sqlite
-const SqliteDdl = `
 CREATE TABLE IF NOT EXISTS scans (
 	id integer not null primary key,
 	nf_identifier text,
@@ -120,38 +111,4 @@ CREATE TABLE IF NOT EXISTS ports_scripts (
 );
 CREATE TABLE IF NOT EXISTS nf_schema (
 	version text
-);`
-
-func (f *SqliteFormatter) generateSchema(db *sql.DB) error {
-	// Create migrate schema
-	_, err := db.Exec(SqliteDdl)
-	if err != nil {
-		return err
-	}
-
-	// Set schema version by truncating table and inserting new version
-	_, err = db.Exec(`DELETE FROM nf_schema;`)
-	if err != nil {
-		return fmt.Errorf("could not clean nf_schema table: %v", err)
-	}
-
-	_, err = db.Exec(`INSERT INTO nf_schema VALUES (?);`, f.config.CurrentVersion)
-	if err != nil {
-		return fmt.Errorf("could not insert new nf_schema version: %v", err)
-	}
-
-	return nil
-}
-
-// schemaExists queries database and tries to select data from nf_schema
-// database table, if that fails it's a clear indicator that schema
-// does not exist in a database
-func (f *SqliteFormatter) schemaExists(db *sql.DB) bool {
-	// Try to get data from the database
-	rows, err := db.Query(`SELECT version FROM nf_schema LIMIT 1`)
-	if err != nil {
-		return false
-	}
-	defer rows.Close()
-	return true
-}
+);
