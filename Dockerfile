@@ -1,10 +1,9 @@
-FROM golang:1.19-alpine AS build
+FROM golang:1.19-alpine
 
 WORKDIR /src/
 COPY . /src/
-RUN CGO_ENABLED=0 go build -o /bin/nmap-formatter
 
-FROM scratch
-COPY --from=build /bin/nmap-formatter /bin/nmap-formatter
+RUN apk add --update gcc musl-dev
+RUN CGO_ENABLED=1 go build -o /bin/nmap-formatter
 
 ENTRYPOINT ["/bin/nmap-formatter"]
