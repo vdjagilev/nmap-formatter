@@ -10,7 +10,7 @@ import (
 // validate is checking input from the command line
 func validate(config formatter.Config) error {
 	if !config.OutputFormat.IsValid() {
-		return fmt.Errorf("not valid format: %s, please choose html/json/md/csv", config.OutputFormat)
+		return fmt.Errorf("not valid format: %s, please choose html/json/md/csv/sqlite", config.OutputFormat)
 	}
 
 	err := validateIOFiles(config)
