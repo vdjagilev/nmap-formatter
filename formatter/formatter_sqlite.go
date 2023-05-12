@@ -4,6 +4,7 @@ import (
 	// Written this way to avoid automatic removal by text editor
 	"fmt"
 
+	// import sqlite library, mainly used only in formatter package
 	_ "github.com/mattn/go-sqlite3"
 )
 
