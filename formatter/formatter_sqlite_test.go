@@ -3,6 +3,7 @@ package formatter
 import (
 	"testing"
 
+	// including go-sqlite3 to for unit tests in memory
 	_ "github.com/mattn/go-sqlite3"
 )
 

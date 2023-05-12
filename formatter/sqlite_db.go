@@ -8,6 +8,9 @@ import (
 	_ "embed"
 )
 
+// SqliteDB holds sqlite connection and transaction and performs
+// main database function - preparation, population and finishing
+// data migration
 type SqliteDB struct {
 	db             *sql.DB
 	tx             *sql.Tx

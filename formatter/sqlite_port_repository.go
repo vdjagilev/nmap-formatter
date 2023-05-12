@@ -5,6 +5,8 @@ import (
 	"strings"
 )
 
+// PortRepository is responsible for populating database with a data
+// related to ports
 type PortRepository struct {
 	sqlite *SqliteDB
 	conn   *sql.DB

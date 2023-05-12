@@ -5,6 +5,8 @@ import (
 	"strings"
 )
 
+// OSRepository is responsible for populating database with OS related data on
+// the scanned host
 type OSRepository struct {
 	sqlite *SqliteDB
 	conn   *sql.DB
