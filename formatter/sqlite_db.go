@@ -3,7 +3,6 @@ package formatter
 import (
 	"database/sql"
 	"fmt"
-	"log"
 
 	// a package needed to embed files into a go runtime
 	_ "embed"
@@ -100,16 +99,19 @@ func (s *SqliteDB) populate(n *NMAPRun) error {
 
 // finish is a place where commit or rollback should happen and database connection is closed
 func (s *SqliteDB) finish(err error) error {
+	defer s.db.Close()
 	if err != nil {
-		if s.tx.Rollback() != nil {
-			log.Printf("failed to rollback")
+		rollbackErr := s.tx.Rollback()
+		if rollbackErr != nil {
+			return fmt.Errorf("failed rollback: %v: failed: %v", rollbackErr, err)
 		}
-	} else {
-		if s.tx.Commit() != nil {
-			log.Printf("failed to commit")
-		}
+		return err
 	}
-	s.db.Close()
+
+	err = s.tx.Commit()
+	if err != nil {
+		return fmt.Errorf("failed commit: %v", err)
+	}
 	return err
 }
 
