@@ -2,6 +2,8 @@ package formatter
 
 import "database/sql"
 
+// HostRepository main responsibility is to populated database
+// with host related data
 type HostRepository struct {
 	sqlite *SqliteDB
 	conn   *sql.DB

@@ -7,6 +7,8 @@ import (
 	"github.com/google/uuid"
 )
 
+// ScanRepository main function is to make a first step populating
+// sqlite database with values
 type ScanRepository struct {
 	sqlite *SqliteDB
 	conn   *sql.DB
