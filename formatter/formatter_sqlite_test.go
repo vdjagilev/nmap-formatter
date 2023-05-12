@@ -103,8 +103,36 @@ func TestSqliteFormatter_Format(t *testing.T) {
 										},
 									},
 								},
-								Status:        HostStatus{},
-								OS:            OS{},
+								Status: HostStatus{},
+								OS: OS{
+									OSPortUsed: []OSPortUsed{
+										{
+											State:    "up",
+											Protocol: "tcp",
+											PortID:   80,
+										},
+										{
+											State:    "filtered",
+											Protocol: "tcp",
+											PortID:   443,
+										},
+									},
+									OSClass: OSClass{
+										Type:     "a",
+										Vendor:   "b",
+										OSFamily: "c",
+										OSGen:    "d",
+										Accuracy: "e",
+										CPE:      []string{"a", "b"},
+									},
+									OSMatch: []OSMatch{
+										{
+											Name:     "a",
+											Accuracy: "1",
+											Line:     "1",
+										},
+									},
+								},
 								Trace:         Trace{},
 								Uptime:        Uptime{},
 								Distance:      Distance{},
@@ -162,9 +190,26 @@ func TestSqliteFormatter_Format(t *testing.T) {
 										},
 									},
 								},
-								Status:        HostStatus{},
-								OS:            OS{},
-								Trace:         Trace{},
+								Status: HostStatus{},
+								OS:     OS{},
+								Trace: Trace{
+									Port:     80,
+									Protocol: "tcp",
+									Hops: []Hop{
+										{
+											TTL:    2,
+											IPAddr: "10.0.0.1",
+											RTT:    0,
+											Host:   "",
+										},
+										{
+											TTL:    1,
+											IPAddr: "192.168.1.1",
+											RTT:    0,
+											Host:   "",
+										},
+									},
+								},
 								Uptime:        Uptime{},
 								Distance:      Distance{},
 								TCPSequence:   TCPSequence{},
