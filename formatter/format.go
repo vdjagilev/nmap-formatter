@@ -27,22 +27,3 @@ func (of OutputFormat) IsValid() bool {
 	}
 	return false
 }
-
-// FileOutputFormat returns appropriate file format, users can provide short
-func (of OutputFormat) FileOutputFormat() OutputFormat {
-	switch of {
-	case "markdown", "md":
-		return MarkdownOutput
-	case "html":
-		return HTMLOutput
-	case "csv":
-		return CSVOutput
-	case "json":
-		return JSONOutput
-	case "dot":
-		return DotOutput
-	case "sqlite":
-		return SqliteOutput
-	}
-	return HTMLOutput
-}
