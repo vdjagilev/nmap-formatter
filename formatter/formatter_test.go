@@ -70,6 +70,15 @@ func TestNew(t *testing.T) {
 			},
 			want: &DotFormatter{config: &Config{OutputFormat: DotOutput}},
 		},
+		{
+			name: "SQLite output",
+			args: args{
+				config: &Config{
+					OutputFormat: SqliteOutput,
+				},
+			},
+			want: &SqliteFormatter{config: &Config{OutputFormat: SqliteOutput}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
