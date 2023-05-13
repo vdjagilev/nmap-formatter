@@ -117,13 +117,23 @@ func TestSqliteFormatter_Format(t *testing.T) {
 											PortID:   443,
 										},
 									},
-									OSClass: OSClass{
-										Type:     "a",
-										Vendor:   "b",
-										OSFamily: "c",
-										OSGen:    "d",
-										Accuracy: "e",
-										CPE:      []string{"a", "b"},
+									OSClass: []OSClass{
+										{
+											Type:     "a",
+											Vendor:   "b",
+											OSFamily: "c",
+											OSGen:    "d",
+											Accuracy: "e",
+											CPE:      []string{"a", "b"},
+										},
+										{
+											Type:     "a",
+											Vendor:   "b",
+											OSFamily: "c",
+											OSGen:    "d",
+											Accuracy: "e",
+											CPE:      []string{"a", "b"},
+										},
 									},
 									OSMatch: []OSMatch{
 										{

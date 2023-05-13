@@ -64,26 +64,26 @@ CREATE TABLE IF NOT EXISTS host_names (
 	name text,
 	type text
 );
-CREATE TABLE IF NOT EXISTS host_os (
+CREATE TABLE IF NOT EXISTS host_os_class (
 	id integer not null primary key,
 	host_id integer not null,
-	class_type text,
-	class_vendor text,
-	class_osfamily text,
-	class_osgen text,
-	class_accuracy text,
+	type text,
+	vendor text,
+	osfamily text,
+	osgen text,
+	accuracy text,
 	cpe text
 );
 CREATE TABLE IF NOT EXISTS host_os_port_used (
 	id integer not null primary key,
-	host_os_id integer not null,
+	host_id integer not null,
 	state text,
 	protocol text,
 	port_id integer
 );
 CREATE TABLE IF NOT EXISTS host_os_match (
 	id integer not null primary key,
-	host_os_id integer not null,
+	host_id integer not null,
 	name text,
 	accuracy text,
 	line text
