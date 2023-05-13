@@ -1,7 +1,7 @@
 package cmd
 
 /*
-Copyright © 2021-2022 vdjagilev
+Copyright © 2021-2023 vdjagilev
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ var config = formatter.Config{
 }
 
 // VERSION is describing current version of the nmap-formatter
-const VERSION string = "2.0.4"
+const VERSION string = "2.1.0"
 
 var workflow formatter.Workflow
 
