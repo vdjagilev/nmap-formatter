@@ -93,7 +93,7 @@ type HostName struct {
 // OS describes all information about underlying operating system that this host operates
 type OS struct {
 	OSPortUsed []OSPortUsed `xml:"portused"`
-	OSClass    OSClass      `xml:"osclass"`
+	OSClass    []OSClass    `xml:"osclass"`
 	OSMatch    []OSMatch    `xml:"osmatch"`
 }
 
