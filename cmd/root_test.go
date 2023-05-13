@@ -25,7 +25,6 @@ package cmd
 import (
 	_ "embed"
 	"errors"
-	"log"
 	"os"
 	"path"
 	"testing"
@@ -228,7 +227,7 @@ func Test_run(t *testing.T) {
 			config: formatter.Config{
 				OutputFormat: "html",
 				ShowVersion:  false, // false by default
-				Writer:       os.Stdout,
+				Writer:       &rootMockedWriter{},
 				InputFileConfig: formatter.InputFileConfig{
 					Source: os.Stdin,
 				},
@@ -259,15 +258,25 @@ func (w *testWorkflow) Execute() (err error) {
 }
 
 func (w *testWorkflow) SetConfig(c *formatter.Config) {
-	log.Println("testWorkflow -> SetConfig")
 }
 
 func (w *testWorkflow) SetInputFile() {
-	log.Println("testWorkflow -> SetInputFile")
 }
 
 func (w *testWorkflow) SetOutputFile() {
-	log.Println("testWorkflow -> SetOutputFile")
+}
+
+type rootMockedWriter struct {
+	data []byte
+}
+
+func (w *rootMockedWriter) Write(p []byte) (n int, err error) {
+	w.data = p
+	return len(p), nil
+}
+
+func (w *rootMockedWriter) Close() error {
+	return nil
 }
 
 func Test_shouldShowVersion(t *testing.T) {
