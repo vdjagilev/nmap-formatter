@@ -69,7 +69,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 
 | Name | Value |
 | ---- | ----- |
-| Address(es) | .JoinedAddresses "/" |
+| Address(es) | {{ .JoinedAddresses "/" }} |
 | Hostnames | `{{ range .HostNames.HostName }} / {{ .Name }} ({{ .Type }}){{ else }}N/A{{ end }}` |
 {{- if .OS }}
 {{- range .OS.OSPortUsed }}
