@@ -6,7 +6,7 @@ require (
 	github.com/google/uuid v1.3.1
 	github.com/mattn/go-sqlite3 v1.14.17
 	github.com/spf13/cobra v1.7.0
-	golang.org/x/net v0.15.0
+	golang.org/x/net v0.17.0
 )
 
 require (
