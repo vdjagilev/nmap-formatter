@@ -28,6 +28,8 @@ func (i *InputFileConfig) ReadContents() ([]byte, error) {
 		return nil, errors.New("no reading source is defined")
 	}
 	scanner := bufio.NewScanner(i.Source)
+	buf := make([]byte, 0, 64*1024)
+	scanner.Buffer(buf, 1024*1024)
 	for scanner.Scan() {
 		content = append(content, scanner.Bytes()...)
 	}
