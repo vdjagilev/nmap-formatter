@@ -86,12 +86,15 @@ func (w *MainWorkflow) Execute() (err error) {
 
 // parse reads & unmarshalles the input file into NMAPRun struct
 func (w *MainWorkflow) parse() (run NMAPRun, err error) {
-	input, err := w.Config.InputFileConfig.ReadContents()
+	if w.Config.InputFileConfig.Source == nil {
+		return run, fmt.Errorf("no input file is defined")
+	}
+	d := xml.NewDecoder(w.Config.InputFileConfig.Source)
+	_, err = d.Token()
 	if err != nil {
 		return
 	}
-	if err = xml.Unmarshal(input, &run); err != nil {
-		return
-	}
-	return run, nil
+
+	err = d.Decode(&run)
+	return
 }

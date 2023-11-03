@@ -51,6 +51,16 @@ func TestMainWorkflow_parse(t *testing.T) {
 			fileName: "main_workflow_parse_3_test",
 		},
 		{
+			name: "Bad XML file",
+			w: &MainWorkflow{
+				Config: &Config{},
+			},
+			wantNMAPRun: NMAPRun{},
+			wantErr:     true,
+			fileContent: "<?x< version=",
+			fileName:    "main_workflow_parse_4_test_wrong_xml",
+		},
+		{
 			name: "XML file with some matching output",
 			w: &MainWorkflow{
 				Config: &Config{},
