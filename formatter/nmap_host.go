@@ -90,6 +90,7 @@ type HostStatus struct {
 type HostAddress struct {
 	Address     string `xml:"addr,attr"`
 	AddressType string `xml:"addrtype,attr"`
+	Vendor      string `xml:"vendor,attr"`
 }
 
 // HostNames struct contains list of hostnames (domains) that this host has
