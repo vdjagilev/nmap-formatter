@@ -20,10 +20,10 @@ A tool that allows you to convert NMAP XML output to excel/html/csv/json/markdow
 It's possible to install it using `go install` command
 
 ```
-go install github.com/vdjagilev/nmap-formatter/v2@latest
+git clone https://github.com/gorkavp/nmap-formatter.git
+cd nmap-formatter
+go build
 ```
-
-All other options can be found on [Installation Wiki page](https://github.com/vdjagilev/nmap-formatter/wiki/Installation).
 
 ## Usage
 
