@@ -13,7 +13,7 @@ HTML:
 Graphviz:
 ![nmap-example-graphviz](docs/images/example-dot.png)
 
-A tool that allows you to convert NMAP XML output to html/csv/json/markdown/dot/sqlite.
+A tool that allows you to convert NMAP XML output to excel/html/csv/json/markdown/dot/sqlite.
 
 ## Installation
 
