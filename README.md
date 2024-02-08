@@ -17,8 +17,6 @@ A tool that allows you to convert NMAP XML output to excel/html/csv/json/markdow
 
 ## Installation
 
-It's possible to install it using `go install` command
-
 ```
 git clone https://github.com/gorkavp/nmap-formatter.git
 cd nmap-formatter
