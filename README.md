@@ -28,7 +28,7 @@ All other options can be found on [Installation Wiki page](https://github.com/vd
 ## Usage
 
 ```bash
-nmap-formatter [html|csv|md|json|dot|sqlite] [path-to-nmap.xml] [flags]
+nmap-formatter [html|csv|md|json|dot|sqlite|excel] [path-to-nmap.xml] [flags]
 ```
 
 Or alternatively you can read file from `stdin` and parse it
@@ -47,6 +47,12 @@ or Markdown
 
 ```bash
 nmap-formatter md [path-to-nmap.xml] > some-markdown.md
+```
+
+or Excel
+
+```bash
+nmap-formatter excel [path-to-nmap.xml]
 ```
 
 or JSON
