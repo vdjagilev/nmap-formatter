@@ -39,6 +39,7 @@ var config = formatter.Config{
 		JSONOptions:         formatter.JSONOutputOptions{},
 		CSVOptions:          formatter.CSVOutputOptions{},
 		SqliteOutputOptions: formatter.SqliteOutputOptions{},
+		ExcelOptions:        formatter.ExcelOutputOptions{},
 	},
 	ShowVersion:    false,
 	CurrentVersion: VERSION,
@@ -51,9 +52,9 @@ var workflow formatter.Workflow
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "nmap-formatter [html|csv|md|json|dot|sqlite] [path-to-nmap.xml]",
+	Use:   "nmap-formatter [html|csv|md|json|dot|sqlite|excel] [path-to-nmap.xml]",
 	Short: "Utility that can help you to convert NMAP XML application output to various other formats",
-	Long:  `This utility allows you to convert NMAP XML output to various other formats like (html, csv, markdown (md), json, dot)`,
+	Long:  `This utility allows you to convert NMAP XML output to various other formats like (html, csv, markdown (md), json, dot, excel, sqlite)`,
 	Args:  arguments,
 	RunE:  run,
 }

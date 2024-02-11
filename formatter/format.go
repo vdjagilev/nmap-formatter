@@ -16,13 +16,15 @@ const (
 	DotOutput OutputFormat = "dot"
 	// SqliteOutput constant defines OutputFormat for sqlite file, which can be used to generate sqlite embedded databases
 	SqliteOutput OutputFormat = "sqlite"
+	// ExcelOutput constant defines OutputFormat for Excel file, which can be used to generate Excel files
+	ExcelOutput OutputFormat = "excel"
 )
 
 // IsValid checks whether requested output format is valid
 func (of OutputFormat) IsValid() bool {
 	// markdown & md is essentially the same thing
 	switch of {
-	case "markdown", "md", "html", "csv", "json", "dot", "sqlite":
+	case "markdown", "md", "html", "csv", "json", "dot", "sqlite", "excel":
 		return true
 	}
 	return false
