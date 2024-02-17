@@ -33,7 +33,7 @@ func (f *ExcelFormatter) Format(td *TemplateData, templateContent string) (err e
 	row := 2 // Start from row 2 for data
 
 	for i := range td.NMAPRun.Host {
-		var host *Host = &td.NMAPRun.Host[i]
+		host := &td.NMAPRun.Host[i]
 		// Skipping hosts that are down
 		if td.OutputOptions.ExcelOptions.SkipDownHosts && host.Status.State != "up" {
 			continue
@@ -48,7 +48,7 @@ func (f *ExcelFormatter) Format(td *TemplateData, templateContent string) (err e
 		startRow := row // Remember the start row for this host
 
 		for j := range host.Port {
-			var port *Port = &host.Port[j]
+			port := &host.Port[j]
 			col := 'B' // Start from column B for Services
 
 			// Set the Service value
@@ -84,5 +84,5 @@ func (f *ExcelFormatter) writeHeaders(sheetName string, file *excelize.File, sty
 }
 
 func (f *ExcelFormatter) defaultTemplateContent() string {
-	return HTMLSimpleTemplate
+	return ""
 }
