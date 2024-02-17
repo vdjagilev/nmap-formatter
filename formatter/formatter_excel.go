@@ -24,11 +24,11 @@ func (f *ExcelFormatter) Format(td *TemplateData, templateContent string) (err e
 		return err
 	}
 
-	// Set the column headers
-	file.SetCellValue(sheetName, "A1", "IP/Host")
-	file.SetCellValue(sheetName, "B1", "Servicios")
-	file.SetCellStyle(sheetName, "A1", "A1", style)
-	file.SetCellStyle(sheetName, "B1", "B1", style)
+	// Set column headers with titles
+	err = f.writeHeaders(sheetName, file, style)
+	if err != nil {
+		return err
+	}
 
 	row := 2 // Start from row 2 for data
 
@@ -64,9 +64,23 @@ func (f *ExcelFormatter) Format(td *TemplateData, templateContent string) (err e
 		}
 	}
 
-	// Save the Excel file
-	err = file.SaveAs("nmap-output.xlsx")
-	return err
+	return file.Write(f.config.Writer, excelize.Options{})
+}
+
+func (f *ExcelFormatter) writeHeaders(sheetName string, file *excelize.File, style int) error {
+	err := file.SetCellValue(sheetName, "A1", "IP/Host")
+	if err != nil {
+		return err
+	}
+	err = file.SetCellValue(sheetName, "B1", "Services")
+	if err != nil {
+		return err
+	}
+	err = file.SetCellStyle(sheetName, "A1", "A1", style)
+	if err != nil {
+		return err
+	}
+	return file.SetCellStyle(sheetName, "B1", "B1", style)
 }
 
 func (f *ExcelFormatter) defaultTemplateContent() string {
