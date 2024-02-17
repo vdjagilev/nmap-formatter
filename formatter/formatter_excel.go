@@ -20,6 +20,9 @@ func (f *ExcelFormatter) Format(td *TemplateData, templateContent string) (err e
 	style, err := file.NewStyle(&excelize.Style{
 		Alignment: &excelize.Alignment{Horizontal: "center", Vertical: "center"},
 	})
+	if err != nil {
+		return err
+	}
 
 	// Set the column headers
 	file.SetCellValue(sheetName, "A1", "IP/Host")
