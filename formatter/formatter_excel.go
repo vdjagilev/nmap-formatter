@@ -6,6 +6,8 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
+var EXCEL_COL_WIDTH float64 = 50
+
 // ExcelFormatter is struct defined for Excel Output use-case
 type ExcelFormatter struct {
 	config *Config
@@ -129,6 +131,12 @@ func (f *ExcelFormatter) writePorts(p []Port, cd *CellData, row *int) error {
 
 func (f *ExcelFormatter) writeHeaders(cd *CellData) error {
 	err := cd.writeCell("A1", "IP/Host")
+	if err != nil {
+		return err
+	}
+
+	// Setting the width of the columns in order not to cut the text
+	err = cd.file.SetColWidth(cd.sheetName, "A", "B", EXCEL_COL_WIDTH)
 	if err != nil {
 		return err
 	}
