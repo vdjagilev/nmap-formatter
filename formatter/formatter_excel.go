@@ -36,7 +36,11 @@ func (f *ExcelFormatter) Format(td *TemplateData, templateContent string) (err e
 
 	// Create a style for center alignment
 	style, err := file.NewStyle(&excelize.Style{
-		Alignment: &excelize.Alignment{Horizontal: "center", Vertical: "center"},
+		Alignment: &excelize.Alignment{
+			Horizontal: "center",
+			Vertical:   "center",
+			WrapText:   true,
+		},
 	})
 	if err != nil {
 		return err
