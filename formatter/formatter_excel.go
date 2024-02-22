@@ -79,11 +79,19 @@ func (f *ExcelFormatter) writeHostRows(h []Host, cd *CellData) error {
 			continue
 		}
 
-		address := fmt.Sprintf(
-			"%s (%s)",
-			host.JoinedAddresses("/"),
-			host.JoinedHostNames("/"),
-		)
+		joinedAddresses := host.JoinedAddresses("/")
+		joinedHostnames := host.JoinedHostNames("/")
+		address := ""
+
+		if joinedHostnames == "" {
+			address = joinedAddresses
+		} else {
+			address = fmt.Sprintf(
+				"%s (%s)",
+				joinedAddresses,
+				joinedHostnames,
+			)
+		}
 
 		// Set the IP/Host value
 		cell := fmt.Sprintf("A%d", row)
