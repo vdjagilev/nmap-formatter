@@ -17,9 +17,6 @@ func (w *excelMockedWriter) Close() error {
 
 func TestExcelFormatter_Format(t *testing.T) {
 	writer := &excelMockedWriter{}
-	type fields struct {
-		config *Config
-	}
 	type args struct {
 		td *TemplateData
 	}
