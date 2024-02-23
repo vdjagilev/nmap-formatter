@@ -7,6 +7,7 @@ type OutputOptions struct {
 	JSONOptions         JSONOutputOptions
 	CSVOptions          CSVOutputOptions
 	SqliteOutputOptions SqliteOutputOptions
+	ExcelOptions        ExcelOutputOptions
 }
 
 // HTMLOutputOptions stores options related only to HTML conversion/formatting
@@ -60,4 +61,10 @@ type SqliteOutputOptions struct {
 	DSN string
 	// ScanIdentifier is a unique string passed by the user to identify unique scans. If it's empty, it's generated automatically
 	ScanIdentifier string
+}
+
+// ExcelOutputOptions store options related to Excel file formatting
+type ExcelOutputOptions struct {
+	// The hosts that are down won't be displayed
+	SkipDownHosts bool
 }

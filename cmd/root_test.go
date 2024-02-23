@@ -1,5 +1,5 @@
 /*
-Copyright © 2021-2023 vdjagilev
+Copyright © 2021-2024 vdjagilev
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -85,6 +85,64 @@ func Test_validate(t *testing.T) {
 				err := os.Remove(path)
 				if err != nil {
 					t.Logf("could not remove temporary file: %s", path)
+				}
+			},
+		},
+		{
+			name: "Successful validation output file",
+			args: args{
+				config: formatter.Config{
+					OutputFormat: formatter.ExcelOutput,
+					InputFileConfig: formatter.InputFileConfig{
+						Path: path.Join(os.TempDir(), "formatter_cmd_valid_output"),
+					},
+					OutputFile: formatter.OutputFile("output.xlsx"),
+				},
+			},
+			wantErr: false,
+			before: func(t *testing.T) {
+				path := path.Join(os.TempDir(), "formatter_cmd_valid_output")
+				_, err := os.Create(path)
+				if err != nil {
+					t.Errorf("could not create input file: %s", path)
+				}
+			},
+			after: func(t *testing.T) {},
+		},
+		{
+			name: "Successful validation template",
+			args: args{
+				config: formatter.Config{
+					OutputFormat: formatter.MarkdownOutput,
+					TemplatePath: path.Join(os.TempDir(), "formatter_template_valid"),
+					InputFileConfig: formatter.InputFileConfig{
+						Path: path.Join(os.TempDir(), "formatter_cmd_valid_template_3"),
+					},
+				},
+			},
+			wantErr: false,
+			before: func(t *testing.T) {
+				templatePath := path.Join(os.TempDir(), "formatter_template_valid")
+				filePath := path.Join(os.TempDir(), "formatter_cmd_valid_template_3")
+				_, err := os.Create(templatePath)
+				if err != nil {
+					t.Errorf("could not create temporary file: %s", templatePath)
+				}
+				_, err = os.Create(filePath)
+				if err != nil {
+					t.Errorf("could not create temporary file: %s", filePath)
+				}
+			},
+			after: func(t *testing.T) {
+				templatePath := path.Join(os.TempDir(), "formatter_template_valid")
+				filePath := path.Join(os.TempDir(), "formatter_cmd_valid_template_3")
+				err := os.Remove(templatePath)
+				if err != nil {
+					t.Logf("could not remove temporary file: %s", templatePath)
+				}
+				err = os.Remove(filePath)
+				if err != nil {
+					t.Logf("could not remove temporary file: %s", filePath)
 				}
 			},
 		},

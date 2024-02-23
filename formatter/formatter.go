@@ -25,6 +25,10 @@ func New(config *Config) Formatter {
 		return &CSVFormatter{
 			config,
 		}
+	case ExcelOutput:
+		return &ExcelFormatter{
+			config,
+		}
 	case DotOutput:
 		return &DotFormatter{
 			config,

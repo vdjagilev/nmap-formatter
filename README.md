@@ -13,22 +13,20 @@ HTML:
 Graphviz:
 ![nmap-example-graphviz](docs/images/example-dot.png)
 
-A tool that allows you to convert NMAP XML output to html/csv/json/markdown/dot/sqlite.
+A tool that allows you to convert NMAP XML output to excel/html/csv/json/markdown/dot/sqlite.
 
 ## Installation
 
-It's possible to install it using `go install` command
-
 ```
-go install github.com/vdjagilev/nmap-formatter/v2@latest
+git clone https://github.com/gorkavp/nmap-formatter.git
+cd nmap-formatter
+go build
 ```
-
-All other options can be found on [Installation Wiki page](https://github.com/vdjagilev/nmap-formatter/wiki/Installation).
 
 ## Usage
 
 ```bash
-nmap-formatter [html|csv|md|json|dot|sqlite] [path-to-nmap.xml] [flags]
+nmap-formatter [html|csv|md|json|dot|sqlite|excel] [path-to-nmap.xml] [flags]
 ```
 
 Or alternatively you can read file from `stdin` and parse it
@@ -47,6 +45,12 @@ or Markdown
 
 ```bash
 nmap-formatter md [path-to-nmap.xml] > some-markdown.md
+```
+
+or Excel
+
+```bash
+nmap-formatter excel [path-to-nmap.xml]
 ```
 
 or JSON
