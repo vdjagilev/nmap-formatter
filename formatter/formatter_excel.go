@@ -30,7 +30,6 @@ func (cd *CellData) writeCell(cell string, value string) error {
 
 // Format the data to Excel and output it to an Excel file
 func (f *ExcelFormatter) Format(td *TemplateData, templateContent string) (err error) {
-	// TODO: Write unit tests
 	file := excelize.NewFile()
 	sheetName := "Sheet1"
 

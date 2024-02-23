@@ -56,13 +56,39 @@ func TestExcelFormatter_Format(t *testing.T) {
 							{
 								StartTime: 0,
 								EndTime:   0,
-								Port:      []Port{},
+								Port: []Port{
+									{
+										PortID:   80,
+										Protocol: "tcp",
+										Service: PortService{
+											Name: "http",
+										},
+									},
+									{
+										PortID:   443,
+										Protocol: "tcp",
+										Service: PortService{
+											Name: "https",
+										},
+									},
+								},
 								HostAddress: []HostAddress{
 									{
 										Address: "192.168.1.1",
 									},
 								},
-								HostNames: HostNames{},
+								HostNames: HostNames{
+									HostName: []HostName{
+										{
+											Name: "example.com",
+											Type: "",
+										},
+										{
+											Name: "www.example.com",
+											Type: "",
+										},
+									},
+								},
 								Status: HostStatus{
 									State: "up",
 								},
