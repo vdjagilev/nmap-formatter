@@ -6,13 +6,15 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
-var EXCEL_COL_WIDTH float64 = 50
+// ExcelColWidth is the default width of the columns in the Excel file
+var ExcelColWidth float64 = 50
 
 // ExcelFormatter is struct defined for Excel Output use-case
 type ExcelFormatter struct {
 	config *Config
 }
 
+// CellData is a struct to hold the data for a cell to avoid code duplication
 type CellData struct {
 	sheetName string
 	style     int
@@ -147,7 +149,7 @@ func (f *ExcelFormatter) writeHeaders(cd *CellData) error {
 	}
 
 	// Setting the width of the columns in order not to cut the text
-	err = cd.file.SetColWidth(cd.sheetName, "A", "B", EXCEL_COL_WIDTH)
+	err = cd.file.SetColWidth(cd.sheetName, "A", "B", ExcelColWidth)
 	if err != nil {
 		return err
 	}
