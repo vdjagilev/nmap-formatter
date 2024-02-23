@@ -89,6 +89,27 @@ func Test_validate(t *testing.T) {
 			},
 		},
 		{
+			name: "Successful validation output file",
+			args: args{
+				config: formatter.Config{
+					OutputFormat: formatter.ExcelOutput,
+					InputFileConfig: formatter.InputFileConfig{
+						Path: path.Join(os.TempDir(), "formatter_cmd_valid_output"),
+					},
+					OutputFile: formatter.OutputFile("output.xlsx"),
+				},
+			},
+			wantErr: false,
+			before: func(t *testing.T) {
+				path := path.Join(os.TempDir(), "formatter_cmd_valid_output")
+				_, err := os.Create(path)
+				if err != nil {
+					t.Errorf("could not create input file: %s", path)
+				}
+			},
+			after: func(t *testing.T) {},
+		},
+		{
 			name: "Successful validation template",
 			args: args{
 				config: formatter.Config{
