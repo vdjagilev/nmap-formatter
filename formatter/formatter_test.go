@@ -79,6 +79,15 @@ func TestNew(t *testing.T) {
 			},
 			want: &SqliteFormatter{config: &Config{OutputFormat: SqliteOutput}},
 		},
+		{
+			name: "Excel output",
+			args: args{
+				config: &Config{
+					OutputFormat: ExcelOutput,
+				},
+			},
+			want: &ExcelFormatter{config: &Config{OutputFormat: ExcelOutput}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

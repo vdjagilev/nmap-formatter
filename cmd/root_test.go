@@ -88,6 +88,64 @@ func Test_validate(t *testing.T) {
 				}
 			},
 		},
+		{
+			name: "Successful validation output file",
+			args: args{
+				config: formatter.Config{
+					OutputFormat: formatter.ExcelOutput,
+					InputFileConfig: formatter.InputFileConfig{
+						Path: path.Join(os.TempDir(), "formatter_cmd_valid_output"),
+					},
+					OutputFile: formatter.OutputFile("output.xlsx"),
+				},
+			},
+			wantErr: false,
+			before: func(t *testing.T) {
+				path := path.Join(os.TempDir(), "formatter_cmd_valid_output")
+				_, err := os.Create(path)
+				if err != nil {
+					t.Errorf("could not create input file: %s", path)
+				}
+			},
+			after: func(t *testing.T) {},
+		},
+		{
+			name: "Successful validation template",
+			args: args{
+				config: formatter.Config{
+					OutputFormat: formatter.MarkdownOutput,
+					TemplatePath: path.Join(os.TempDir(), "formatter_template_valid"),
+					InputFileConfig: formatter.InputFileConfig{
+						Path: path.Join(os.TempDir(), "formatter_cmd_valid_template_3"),
+					},
+				},
+			},
+			wantErr: false,
+			before: func(t *testing.T) {
+				templatePath := path.Join(os.TempDir(), "formatter_template_valid")
+				filePath := path.Join(os.TempDir(), "formatter_cmd_valid_template_3")
+				_, err := os.Create(templatePath)
+				if err != nil {
+					t.Errorf("could not create temporary file: %s", templatePath)
+				}
+				_, err = os.Create(filePath)
+				if err != nil {
+					t.Errorf("could not create temporary file: %s", filePath)
+				}
+			},
+			after: func(t *testing.T) {
+				templatePath := path.Join(os.TempDir(), "formatter_template_valid")
+				filePath := path.Join(os.TempDir(), "formatter_cmd_valid_template_3")
+				err := os.Remove(templatePath)
+				if err != nil {
+					t.Logf("could not remove temporary file: %s", templatePath)
+				}
+				err = os.Remove(filePath)
+				if err != nil {
+					t.Logf("could not remove temporary file: %s", filePath)
+				}
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
