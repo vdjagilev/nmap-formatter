@@ -50,6 +50,11 @@ func (h *Host) JoinedHostNames(delimiter string) string {
 	return hostAddr
 }
 
+// IsUp returns true depending on the provided option and host status
+func (h *Host) IsUp(skipDownHostsOption bool) bool {
+	return skipDownHostsOption && !h.Status.IsUp()
+}
+
 // TCPTSSequence describes all information related to `<tcptssequence>` node
 type TCPTSSequence struct {
 	Class  string `xml:"class,attr"`
@@ -84,6 +89,11 @@ type Distance struct {
 type HostStatus struct {
 	State  string `xml:"state,attr"`
 	Reason string `xml:"reason,attr"`
+}
+
+// IsUp returns true if the host is up and accessible
+func (hs *HostStatus) IsUp() bool {
+	return hs.State == "up"
 }
 
 // HostAddress struct contains the host address (IP) and type of it.
