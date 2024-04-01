@@ -1,6 +1,6 @@
 NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ==========================================
-{{ $displayDownHosts := not .OutputOptions.MarkdownOptions.SkipDownHosts }}
+{{ $skipDownHosts := .OutputOptions.MarkdownOptions.SkipDownHosts }}
 {{ $skipSummary := .OutputOptions.MarkdownOptions.SkipSummary }}
 {{ $skipPortScripts := .OutputOptions.MarkdownOptions.SkipPortScripts }}
 {{ $skipMetrics := .OutputOptions.MarkdownOptions.SkipMetrics }}
@@ -12,9 +12,9 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 * [Scan Summary](#scan-summary)
 {{- end }}{{/* if $skipSummary */}}
 {{- range .NMAPRun.Host -}}
-{{- if or ($displayDownHosts) (eq .Status.State "up") }}
+{{- if .ShouldNotSkipHost $skipDownHosts }}
 * [{{ md_title . }}](#{{ md_link . }})
-{{- end -}}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
+{{- end -}}{{/* .ShouldNotSkipHost $skipDownHosts */}}
 {{- end -}}{{/* range .Host */}}
 
 {{- if not $skipSummary }}
@@ -60,11 +60,11 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ----
 
 {{ range .NMAPRun.Host -}}
-{{- if or ($displayDownHosts) (eq .Status.State "up") }}
+{{- if .ShouldNotSkipHost $skipDownHosts }}
 
 ## {{ md_title . }}
 
-{{- if eq .Status.State "up" }}
+{{- if .ShouldNotSkipHost $skipDownHosts }}
 ### Info:
 
 | Name | Value |
@@ -134,10 +134,10 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 {{- end -}}{{/* if .Script */}}
 {{ end -}}{{/* if not $skipPortScripts */}}
 {{ end -}}{{/* range .Port */}}
-{{- end -}}{{/* if eq .Status.State "up" */}}
+{{- end -}}{{/* if .ShouldNotSkipHost $skipDownHosts */}}
 
 ----
 
-{{- end -}}{{/* if or ($displayDownHosts) (eq .Status.State "up") */}}
+{{- end -}}{{/* if .ShouldNotSkipHost $skipDownHosts */}}
 
 {{- end -}}{{/* range .NMAPRun.Host */}}

@@ -50,6 +50,19 @@ func (h *Host) JoinedHostNames(delimiter string) string {
 	return hostAddr
 }
 
+// ShouldSkipHost returns true if host should be skipped in output
+// it's more convenient to use in loops, if we should skip the host
+// we use continue to the next host
+func (h *Host) ShouldSkipHost(skipDownHostsOption bool) bool {
+	return skipDownHostsOption && !h.Status.IsUp()
+}
+
+// ShouldNotSkipHost returns true if host should not be skipped in output
+// in some cases it's more convenient to write other way around (html, md templates)
+func (h *Host) ShouldNotSkipHost(skipDownHostsOption bool) bool {
+	return !h.ShouldSkipHost(skipDownHostsOption)
+}
+
 // TCPTSSequence describes all information related to `<tcptssequence>` node
 type TCPTSSequence struct {
 	Class  string `xml:"class,attr"`
@@ -84,6 +97,11 @@ type Distance struct {
 type HostStatus struct {
 	State  string `xml:"state,attr"`
 	Reason string `xml:"reason,attr"`
+}
+
+// IsUp returns true if the host is up and accessible
+func (hs *HostStatus) IsUp() bool {
+	return hs.State == "up"
 }
 
 // HostAddress struct contains the host address (IP) and type of it.
