@@ -75,22 +75,24 @@ func (f *ExcelFormatter) writeHostRows(h []Host, cd *CellData) error {
 	for i := range h {
 		host := h[i]
 
-		// Skipping hosts that are down
-		if f.config.OutputOptions.ExcelOptions.SkipDownHosts && host.Status.State != "up" {
+		if host.ShouldSkipHost(f.config.OutputOptions.ExcelOptions.SkipDownHosts) {
 			continue
 		}
 
 		joinedAddresses := host.JoinedAddresses("/")
 		joinedHostnames := host.JoinedHostNames("/")
+		addressFormat := "%s [%s]"
 		address := ""
 
 		if joinedHostnames == "" {
-			address = joinedAddresses
+			address = fmt.Sprintf(addressFormat, joinedAddresses, host.Status.State)
 		} else {
+			addressFormat = "%s (%s) [%s]"
 			address = fmt.Sprintf(
-				"%s (%s)",
+				addressFormat,
 				joinedAddresses,
 				joinedHostnames,
+				host.Status.State,
 			)
 		}
 
@@ -125,6 +127,19 @@ func (f *ExcelFormatter) writeHostRows(h []Host, cd *CellData) error {
 
 func (f *ExcelFormatter) writePorts(p []Port, cd *CellData, row *int) error {
 	var err error
+
+	// The case when there are no open ports
+	if len(p) == 0 {
+		err = cd.writeCell(
+			fmt.Sprintf("%c%d", 'B', *row),
+			"-",
+		)
+		if err != nil {
+			return err
+		}
+		*row++
+		return nil
+	}
 
 	for i := range p {
 		port := p[i]

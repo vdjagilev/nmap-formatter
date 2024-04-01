@@ -218,3 +218,43 @@ func TestHost_JoinedHostNames(t *testing.T) {
 		})
 	}
 }
+
+func TestHostStatus_IsUp(t *testing.T) {
+	type fields struct {
+		State  string
+		Reason string
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   bool
+	}{
+		{
+			name: "Host is down",
+			fields: fields{
+				State:  "down",
+				Reason: "ping",
+			},
+			want: false,
+		},
+		{
+			name: "Host is up",
+			fields: fields{
+				State:  "up",
+				Reason: "no reason",
+			},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			hs := &HostStatus{
+				State:  tt.fields.State,
+				Reason: tt.fields.Reason,
+			}
+			if got := hs.IsUp(); got != tt.want {
+				t.Errorf("HostStatus.IsUp() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
