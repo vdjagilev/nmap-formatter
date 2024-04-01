@@ -85,6 +85,7 @@ func init() {
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipDownHosts, "html-skip-down-hosts", true, "--html-skip-down-hosts=false, would print all hosts that are offline in HTML output")
 	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipDownHosts, "md-skip-down-hosts", true, "--md-skip-down-hosts=false, would print all hosts that are offline in Markdown output")
 	rootCmd.Flags().BoolVar(&config.OutputOptions.CSVOptions.SkipDownHosts, "csv-skip-down-hosts", true, "--csv-skip-down-hosts=false, would print all hosts that are offline in CSV output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.ExcelOptions.SkipDownHosts, "excel-skip-down-hosts", true, "--excel-skip-down-hosts=false, would print all hosts that are offline in Excel file")
 
 	// Skip summary (overall meta information from the scan)
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipSummary, "html-skip-summary", false, "--html-skip-summary=true, skips summary in HTML output")
