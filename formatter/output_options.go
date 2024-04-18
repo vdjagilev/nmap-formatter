@@ -8,6 +8,7 @@ type OutputOptions struct {
 	CSVOptions          CSVOutputOptions
 	SqliteOutputOptions SqliteOutputOptions
 	ExcelOptions        ExcelOutputOptions
+	D2LangOptions       D2LangOutputOptions
 }
 
 // HTMLOutputOptions stores options related only to HTML conversion/formatting
@@ -65,6 +66,12 @@ type SqliteOutputOptions struct {
 
 // ExcelOutputOptions store options related to Excel file formatting
 type ExcelOutputOptions struct {
+	// The hosts that are down won't be displayed
+	SkipDownHosts bool
+}
+
+// D2LangOutputOptions store options related to D2 language file formatting
+type D2LangOutputOptions struct {
 	// The hosts that are down won't be displayed
 	SkipDownHosts bool
 }
