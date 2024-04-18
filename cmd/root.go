@@ -52,9 +52,9 @@ var workflow formatter.Workflow
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "nmap-formatter [html|csv|md|json|dot|sqlite|excel] [path-to-nmap.xml]",
+	Use:   "nmap-formatter [html|csv|md|json|dot|sqlite|excel|d2] [path-to-nmap.xml]",
 	Short: "Utility that can help you to convert NMAP XML application output to various other formats",
-	Long:  `This utility allows you to convert NMAP XML output to various other formats like (html, csv, markdown (md), json, dot, excel, sqlite)`,
+	Long:  `This utility allows you to convert NMAP XML output to various other formats like (html, csv, markdown (md), json, dot, excel, sqlite, d2)`,
 	Args:  arguments,
 	RunE:  run,
 }
@@ -113,6 +113,9 @@ func init() {
 	// Configs related to SQLite
 	rootCmd.Flags().StringVar(&config.OutputOptions.SqliteOutputOptions.DSN, "sqlite-dsn", "nmap.sqlite", "--sqlite-dsn nmap.sqlite")
 	rootCmd.Flags().StringVar(&config.OutputOptions.SqliteOutputOptions.ScanIdentifier, "scan-id", "", "--scan-id abc123")
+
+	// Configs related to D2 language
+	rootCmd.Flags().BoolVar(&config.OutputOptions.D2LangOptions.SkipDownHosts, "d2-skip-down-hosts", true, "--d2-skip-down-hosts=false, would print all hosts that are offline in D2 language output")
 
 	workflow = &formatter.MainWorkflow{}
 }

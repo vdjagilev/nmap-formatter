@@ -37,6 +37,10 @@ func New(config *Config) Formatter {
 		return &SqliteFormatter{
 			config,
 		}
+	case D2LangOutput:
+		return &D2LangFormatter{
+			config,
+		}
 	}
 	return nil
 }

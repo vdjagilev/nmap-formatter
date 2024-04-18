@@ -18,13 +18,15 @@ const (
 	SqliteOutput OutputFormat = "sqlite"
 	// ExcelOutput constant defines OutputFormat for Excel file, which can be used to generate Excel files
 	ExcelOutput OutputFormat = "excel"
+	// D2LangOutput constant defines OutputFormat for D2 language, which can be used to generate D2 language files
+	D2LangOutput OutputFormat = "d2"
 )
 
 // IsValid checks whether requested output format is valid
 func (of OutputFormat) IsValid() bool {
 	// markdown & md is essentially the same thing
 	switch of {
-	case "markdown", "md", "html", "csv", "json", "dot", "sqlite", "excel":
+	case "markdown", "md", "html", "csv", "json", "dot", "sqlite", "excel", "d2":
 		return true
 	}
 	return false
