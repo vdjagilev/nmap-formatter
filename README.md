@@ -13,7 +13,7 @@ HTML:
 Graphviz:
 ![nmap-example-graphviz](docs/images/example-dot.png)
 
-A tool that allows you to convert NMAP XML output to excel/html/csv/json/markdown/dot/sqlite.
+A tool that allows you to convert NMAP XML output to excel/html/csv/json/markdown/dot/sqlite/d2.
 
 ## Installation
 
@@ -26,7 +26,7 @@ go build
 ## Usage
 
 ```bash
-nmap-formatter [html|csv|md|json|dot|sqlite|excel] [path-to-nmap.xml] [flags]
+nmap-formatter [html|csv|md|json|dot|sqlite|excel|d2] [path-to-nmap.xml] [flags]
 ```
 
 Or alternatively you can read file from `stdin` and parse it
@@ -73,6 +73,13 @@ or SQLite
 ```bash
 cat example.xml | nmap-formatter sqlite --sqlite-dsn nmap.sqlite
 # open nmap.sqlite with any database tool
+```
+
+or D2 lang
+
+```bash
+cat example.xml | nmap-formatter d2 | d2 - example.png
+# Converts nmap.xml to d2 language and then to png
 ```
 
 More examples can be found on [Usage Wiki page](https://github.com/vdjagilev/nmap-formatter/wiki/Usage)
