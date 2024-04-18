@@ -7,7 +7,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/spf13/cobra v1.8.0
 	golang.org/x/net v0.24.0
-	oss.terrastruct.com/d2 v0.6.3
+	oss.terrastruct.com/d2 v0.6.5
 )
 
 require (
