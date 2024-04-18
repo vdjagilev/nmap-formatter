@@ -15,10 +15,12 @@ import (
 	"oss.terrastruct.com/d2/lib/textmeasure"
 )
 
+// D2LangFormatter is struct defined for D2 Language Output use-case
 type D2LangFormatter struct {
 	config *Config
 }
 
+// Format the data to D2 Language and output it to a D2 Language file
 func (f *D2LangFormatter) Format(td *TemplateData, templateContent string) (err error) {
 	ruler, _ := textmeasure.NewRuler()
 	layoutResolver := func(engine string) (d2graph.LayoutGraph, error) {
@@ -50,22 +52,22 @@ func (f *D2LangFormatter) Format(td *TemplateData, templateContent string) (err 
 			return err
 		}
 
-		hostId := hex.EncodeToString(fnv.Sum(nil))
-		graph, _, _ = d2oracle.Create(graph, nil, hostId)
-		graph, _ = d2oracle.Set(graph, nil, hostId+".label", nil, &hostLabel)
-		graph, _ = d2oracle.Set(graph, nil, "nmap -> "+hostId, nil, nil)
+		hostID := hex.EncodeToString(fnv.Sum(nil))
+		graph, _, _ = d2oracle.Create(graph, nil, hostID)
+		graph, _ = d2oracle.Set(graph, nil, hostID+".label", nil, &hostLabel)
+		graph, _ = d2oracle.Set(graph, nil, "nmap -> "+hostID, nil, nil)
 
 		for j := range host.Port {
 			port := &host.Port[j]
-			portId := fmt.Sprintf("%s-port%d", hostId, port.PortID)
-			graph, _, _ = d2oracle.Create(graph, nil, portId)
+			portID := fmt.Sprintf("%s-port%d", hostID, port.PortID)
+			graph, _, _ = d2oracle.Create(graph, nil, portID)
 			portLabel := fmt.Sprintf("%d/%s\n%s\n%s", port.PortID, port.Protocol, port.State.State, port.Service.Name)
-			graph, _ = d2oracle.Set(graph, nil, portId+".label", nil, &portLabel)
+			graph, _ = d2oracle.Set(graph, nil, portID+".label", nil, &portLabel)
 			shape := "circle"
-			graph, _ = d2oracle.Set(graph, nil, portId+".shape", nil, &shape)
+			graph, _ = d2oracle.Set(graph, nil, portID+".shape", nil, &shape)
 			width := "25"
-			graph, _ = d2oracle.Set(graph, nil, portId+".width", nil, &width)
-			graph, _ = d2oracle.Move(graph, nil, portId, hostId+"."+portId, true)
+			graph, _ = d2oracle.Set(graph, nil, portID+".width", nil, &width)
+			graph, _ = d2oracle.Move(graph, nil, portID, hostID+"."+portID, true)
 		}
 	}
 	_, err = f.config.Writer.Write([]byte(d2format.Format(graph.AST)))
