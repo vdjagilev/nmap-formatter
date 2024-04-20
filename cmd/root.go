@@ -87,6 +87,14 @@ func init() {
 	rootCmd.Flags().BoolVar(&config.OutputOptions.CSVOptions.SkipDownHosts, "csv-skip-down-hosts", true, "--csv-skip-down-hosts=false, would print all hosts that are offline in CSV output")
 	rootCmd.Flags().BoolVar(&config.OutputOptions.ExcelOptions.SkipDownHosts, "excel-skip-down-hosts", true, "--excel-skip-down-hosts=false, would print all hosts that are offline in Excel file")
 
+	// Skip header information (overall meta information from the scan)
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipHeader, "html-skip-header", false, "--html-skip-header, skips header in HTML output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipHeader, "md-skip-header", false, "--md-skip-header, skips header in Markdown output")
+
+	// Skip table of contents (TOC) information
+	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipTOC, "html-skip-toc", false, "--html-skip-toc, skips table of contents in HTML output")
+	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipTOC, "md-skip-toc", false, "--md-skip-toc, skips table of contents in Markdown output")
+
 	// Skip summary (overall meta information from the scan)
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipSummary, "html-skip-summary", false, "--html-skip-summary=true, skips summary in HTML output")
 	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipSummary, "md-skip-summary", false, "--md-skip-summary=true, skips summary in Markdown output")
