@@ -104,13 +104,18 @@
 		</style>
 	</head>
 	<body>
+		{{ $skipTOC := .OutputOptions.HTMLOptions.SkipTOC }}
+		{{ $skipHeader := .OutputOptions.HTMLOptions.SkipHeader }}
 		{{ $skipDownHosts := .OutputOptions.HTMLOptions.SkipDownHosts }}
 		{{ $skipSummary := .OutputOptions.HTMLOptions.SkipSummary }}
 		{{ $skipTraceroute := .OutputOptions.HTMLOptions.SkipTraceroute }}
 		{{ $skipMetrics := .OutputOptions.HTMLOptions.SkipMetrics }}
 		{{ $skipPortScripts := .OutputOptions.HTMLOptions.SkipPortScripts }}
+		{{- if not $skipHeader }}
 		<h1>NMAP Scan Result: {{ .NMAPRun.StartStr }}</h1>
 		<hr>
+		{{- end }}{{/* if not $skipHeader */}}
+		{{ if not $skipTOC }}
 		<div id="toc">
 			<h2>Table of contents:</h2>
 			<ul>
@@ -123,6 +128,7 @@
 			</ul>
 			<hr>
 		</div>
+		{{ end }}{{/* if not $skipTOC */}}
 		{{ if not $skipSummary }}
 		<a id="scan-summary"></a>
 		<h2>Scan Summary:</h2>

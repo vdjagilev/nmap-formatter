@@ -1,11 +1,14 @@
+{{- if not .OutputOptions.MarkdownOptions.SkipHeader -}}
 NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ==========================================
-{{ $skipDownHosts := .OutputOptions.MarkdownOptions.SkipDownHosts }}
-{{ $skipSummary := .OutputOptions.MarkdownOptions.SkipSummary }}
-{{ $skipPortScripts := .OutputOptions.MarkdownOptions.SkipPortScripts }}
-{{ $skipMetrics := .OutputOptions.MarkdownOptions.SkipMetrics }}
-{{ $skipTraceroute := .OutputOptions.MarkdownOptions.SkipTraceroute }}
-
+{{ end }}
+{{- $skipTOC := .OutputOptions.MarkdownOptions.SkipTOC -}}
+{{- $skipDownHosts := .OutputOptions.MarkdownOptions.SkipDownHosts -}}
+{{- $skipSummary := .OutputOptions.MarkdownOptions.SkipSummary -}}
+{{- $skipPortScripts := .OutputOptions.MarkdownOptions.SkipPortScripts -}}
+{{- $skipMetrics := .OutputOptions.MarkdownOptions.SkipMetrics -}}
+{{- $skipTraceroute := .OutputOptions.MarkdownOptions.SkipTraceroute -}}
+{{ if not $skipTOC -}}
 ## TOC
 
 {{ if not $skipSummary }}
@@ -16,6 +19,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 * [{{ md_title . }}](#{{ md_link . }})
 {{- end -}}{{/* .ShouldNotSkipHost $skipDownHosts */}}
 {{- end -}}{{/* range .Host */}}
+{{- end -}}{{/* if not $skipTOC */}}
 
 {{- if not $skipSummary }}
 ----

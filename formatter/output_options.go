@@ -13,6 +13,10 @@ type OutputOptions struct {
 
 // HTMLOutputOptions stores options related only to HTML conversion/formatting
 type HTMLOutputOptions struct {
+	// SkipHeader skips the header of the HTML output
+	SkipHeader bool
+	// SkipTOC skips the table of contents in the HTML output
+	SkipTOC bool
 	// SkipDownHosts skips hosts that are down (including TOC)
 	SkipDownHosts bool
 	// SkipSummary skips general summary for HTML
@@ -31,6 +35,10 @@ type HTMLOutputOptions struct {
 
 // MarkdownOutputOptions stores options related only to Markdown conversion/formatting
 type MarkdownOutputOptions struct {
+	// SkipHeader skips the header
+	SkipHeader bool
+	// SkipTOC skips the table of contents
+	SkipTOC bool
 	// SkipDownHosts skips hosts that are down (including TOC)
 	SkipDownHosts bool
 	// SkipSummary skips general summary for Markdown
