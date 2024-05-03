@@ -41,8 +41,9 @@ var config = formatter.Config{
 		SqliteOutputOptions: formatter.SqliteOutputOptions{},
 		ExcelOptions:        formatter.ExcelOutputOptions{},
 	},
-	ShowVersion:    false,
-	CurrentVersion: VERSION,
+	ShowVersion:       false,
+	CurrentVersion:    VERSION,
+	FilterExpressions: []string{},
 }
 
 // VERSION is describing current version of the nmap-formatter
@@ -124,6 +125,9 @@ func init() {
 
 	// Configs related to D2 language
 	rootCmd.Flags().BoolVar(&config.OutputOptions.D2LangOptions.SkipDownHosts, "d2-skip-down-hosts", true, "--d2-skip-down-hosts=false, would print all hosts that are offline in D2 language output")
+
+	// Multiple filter expressions supported
+	rootCmd.Flags().StringArrayVar(&config.FilterExpressions, "filter", []string{}, "--filter '.Status.State == \"up\" && any(.Port, { .PortID in [80,443] })'")
 
 	workflow = &formatter.MainWorkflow{}
 }

@@ -3,6 +3,7 @@ package formatter
 import (
 	"encoding/xml"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -57,9 +58,18 @@ func (w *MainWorkflow) Execute() (err error) {
 		return
 	}
 
+	filteredRun := NMAPRun
+	for _, expr := range w.Config.FilterExpressions {
+		log.Printf("filtering with expression: %s", expr)
+		filteredRun, err = filterExpr(filteredRun, expr)
+		if err != nil {
+			return fmt.Errorf("error filtering: %v", err)
+		}
+	}
+
 	// Build template data with NMAPRun entry & various output options
 	templateData := TemplateData{
-		NMAPRun:       NMAPRun,
+		NMAPRun:       filteredRun,
 		OutputOptions: w.Config.OutputOptions,
 	}
 
