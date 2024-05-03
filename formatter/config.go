@@ -10,15 +10,16 @@ import (
 // where output will be delivered, desired output format, input file path, output file path
 // and different output options
 type Config struct {
-	Writer          io.WriteCloser
-	OutputFormat    OutputFormat
-	InputFileConfig InputFileConfig
-	OutputFile      OutputFile
-	OutputOptions   OutputOptions
-	ShowVersion     bool
-	TemplatePath    string
-	CustomOptions   []string
-	CurrentVersion  string
+	Writer            io.WriteCloser
+	OutputFormat      OutputFormat
+	InputFileConfig   InputFileConfig
+	OutputFile        OutputFile
+	OutputOptions     OutputOptions
+	ShowVersion       bool
+	TemplatePath      string
+	CustomOptions     []string
+	CurrentVersion    string
+	FilterExpressions []string
 }
 
 // CustomOptionsMap returns custom options provided in the CLI
