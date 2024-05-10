@@ -81,11 +81,6 @@ func (w *MainWorkflow) Execute() (err error) {
 	// Getting new instance of formatter based on provided config
 	formatter := New(w.Config)
 
-	// This part usually should not happen
-	if formatter == nil {
-		return fmt.Errorf("no formatter is defined")
-	}
-
 	// Trying to read template content (read a file, or get default in case where no option was used)
 	templateContent, err := TemplateContent(formatter, w.Config)
 	if err != nil {
