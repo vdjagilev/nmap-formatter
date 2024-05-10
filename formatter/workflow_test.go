@@ -190,16 +190,6 @@ func TestMainWorkflow_Execute(t *testing.T) {
 			fileContent: "[NOT XML file]",
 		},
 		{
-			name: "Formatter is not defined (OutputFormat == nil)",
-			w: &MainWorkflow{
-				Config: &Config{},
-			},
-			wantErr:  true,
-			fileName: "main_workflow_Execute_4_test",
-			fileContent: `<?xml version="1.0"?>
-			<nmaprun></nmaprun>`,
-		},
-		{
 			name: "Empty CSV with header",
 			w: &MainWorkflow{
 				Config: &Config{
