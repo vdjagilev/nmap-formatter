@@ -62,12 +62,12 @@ func (f *D2LangFormatter) Format(td *TemplateData, templateContent string) (err 
 			portID := fmt.Sprintf("%s-port%d", hostID, port.PortID)
 			graph, _, _ = d2oracle.Create(graph, nil, portID)
 			portLabel := fmt.Sprintf("%d/%s\n%s\n%s", port.PortID, port.Protocol, port.State.State, port.Service.Name)
-			graph, _ = d2oracle.Set(graph, nil, portID+".label", nil, &portLabel)
+			graph, _ = d2oracle.Set(graph, nil, fmt.Sprintf("%s.label", portID), nil, &portLabel)
 			shape := "circle"
-			graph, _ = d2oracle.Set(graph, nil, portID+".shape", nil, &shape)
+			graph, _ = d2oracle.Set(graph, nil, fmt.Sprintf("%s.shape", portID), nil, &shape)
 			width := "25"
-			graph, _ = d2oracle.Set(graph, nil, portID+".width", nil, &width)
-			graph, _ = d2oracle.Move(graph, nil, portID, hostID+"."+portID, true)
+			graph, _ = d2oracle.Set(graph, nil, fmt.Sprintf("%s.width", portID), nil, &width)
+			graph, _ = d2oracle.Set(graph, nil, hostID+" -> "+portID, nil, nil)
 		}
 	}
 	_, err = f.config.Writer.Write([]byte(d2format.Format(graph.AST)))
