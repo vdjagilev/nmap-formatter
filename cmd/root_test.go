@@ -30,7 +30,7 @@ import (
 	"testing"
 
 	"github.com/spf13/cobra"
-	"github.com/vdjagilev/nmap-formatter/v2/formatter"
+	"github.com/vdjagilev/nmap-formatter/v3/formatter"
 )
 
 func Test_validate(t *testing.T) {

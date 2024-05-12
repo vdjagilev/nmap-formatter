@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/vdjagilev/nmap-formatter/v2/cmd"
+import "github.com/vdjagilev/nmap-formatter/v3/cmd"
 
 func main() {
 	cmd.Execute()

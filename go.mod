@@ -1,4 +1,4 @@
-module github.com/vdjagilev/nmap-formatter/v2
+module github.com/vdjagilev/nmap-formatter/v3
 
 go 1.22.2
 

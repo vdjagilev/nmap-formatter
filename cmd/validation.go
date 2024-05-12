@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/vdjagilev/nmap-formatter/v2/formatter"
+	"github.com/vdjagilev/nmap-formatter/v3/formatter"
 )
 
 // validate is checking input from the command line
