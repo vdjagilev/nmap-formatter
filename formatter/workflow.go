@@ -49,6 +49,14 @@ func (w *MainWorkflow) SetInputFile() {
 	w.Config.InputFileConfig.Source = inputFile
 }
 
+// prependConfigFilters prepends default filters to the filter expressions
+func (w *MainWorkflow) prependConfigFilters() {
+	// A default filter for `skip-down-hosts` is applied
+	if w.Config.SkipDownHosts {
+		w.Config.FilterExpressions = append(w.Config.FilterExpressions, "Status.State == 'up'")
+	}
+}
+
 // Execute is the core of the application which executes required steps
 // one-by-one to achieve formatting from input -> output.
 func (w *MainWorkflow) Execute() (err error) {
@@ -59,6 +67,8 @@ func (w *MainWorkflow) Execute() (err error) {
 	}
 
 	filteredRun := NMAPRun
+	w.prependConfigFilters()
+
 	for _, expr := range w.Config.FilterExpressions {
 		log.Printf("filtering with expression: %s", expr)
 		filteredRun, err = filterExpr(filteredRun, expr)

@@ -11,8 +11,9 @@ type HTMLFormatter struct {
 	config *Config
 }
 
-//go:embed resources/templates/simple-html.gohtml
 // HTMLSimpleTemplate variable is used to store embedded HTML template content
+//
+//go:embed resources/templates/simple-html.gohtml
 var HTMLSimpleTemplate string
 
 // Format the data and output it to appropriate io.Writer

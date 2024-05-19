@@ -3,7 +3,6 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ==========================================
 {{ end }}
 {{- $skipTOC := .OutputOptions.MarkdownOptions.SkipTOC -}}
-{{- $skipDownHosts := .OutputOptions.MarkdownOptions.SkipDownHosts -}}
 {{- $skipSummary := .OutputOptions.MarkdownOptions.SkipSummary -}}
 {{- $skipPortScripts := .OutputOptions.MarkdownOptions.SkipPortScripts -}}
 {{- $skipMetrics := .OutputOptions.MarkdownOptions.SkipMetrics -}}
@@ -15,9 +14,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 * [Scan Summary](#scan-summary)
 {{- end }}{{/* if $skipSummary */}}
 {{- range .NMAPRun.Host -}}
-{{- if .ShouldNotSkipHost $skipDownHosts }}
 * [{{ md_title . }}](#{{ md_link . }})
-{{- end -}}{{/* .ShouldNotSkipHost $skipDownHosts */}}
 {{- end -}}{{/* range .Host */}}
 {{- end -}}{{/* if not $skipTOC */}}
 
@@ -64,11 +61,9 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 ----
 
 {{ range .NMAPRun.Host -}}
-{{- if .ShouldNotSkipHost $skipDownHosts }}
 
 ## {{ md_title . }}
 
-{{- if .ShouldNotSkipHost $skipDownHosts }}
 ### Info:
 
 | Name | Value |
@@ -138,10 +133,7 @@ NMAP Scan Result: {{ .NMAPRun.StartStr }}
 {{- end -}}{{/* if .Script */}}
 {{ end -}}{{/* if not $skipPortScripts */}}
 {{ end -}}{{/* range .Port */}}
-{{- end -}}{{/* if .ShouldNotSkipHost $skipDownHosts */}}
 
 ----
-
-{{- end -}}{{/* if .ShouldNotSkipHost $skipDownHosts */}}
 
 {{- end -}}{{/* range .NMAPRun.Host */}}

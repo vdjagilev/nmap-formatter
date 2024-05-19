@@ -19,6 +19,7 @@ type Config struct {
 	TemplatePath      string
 	CustomOptions     []string
 	CurrentVersion    string
+	SkipDownHosts     bool
 	FilterExpressions []string
 }
 

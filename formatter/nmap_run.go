@@ -1,6 +1,6 @@
 package formatter
 
-// NMAPRun represents main `<nmaprun>`` node which contains meta-information about the scan
+// NMAPRun represents main `<nmaprun>` node which contains meta-information about the scan
 // For example: scanner, what arguments used during scan, nmap version, verbosity level, et cetera
 // Main information about scanned hosts is in the `host` node
 type NMAPRun struct {

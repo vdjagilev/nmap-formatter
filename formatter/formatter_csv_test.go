@@ -366,7 +366,11 @@ func TestCSVFormatter_convert(t *testing.T) {
 		},
 		{
 			name: "1 host up 2 ports, 1 host down (skip-down-hosts=false)",
-			f:    &CSVFormatter{},
+			f: &CSVFormatter{
+				config: &Config{
+					SkipDownHosts: false,
+				},
+			},
 			args: args{
 				td: &TemplateData{
 					NMAPRun: NMAPRun{
@@ -461,7 +465,11 @@ func TestCSVFormatter_convert(t *testing.T) {
 		},
 		{
 			name: "2 host up (2+1 ports) (skip-down-hosts=true)",
-			f:    &CSVFormatter{},
+			f: &CSVFormatter{
+				config: &Config{
+					SkipDownHosts: true,
+				},
+			},
 			args: args{
 				td: &TemplateData{
 					NMAPRun: NMAPRun{
@@ -555,9 +563,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: false,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
@@ -596,7 +602,8 @@ func TestCSVFormatter_Format(t *testing.T) {
 			name: "Successful header write",
 			f: &CSVFormatter{
 				config: &Config{
-					Writer: writer,
+					Writer:        writer,
+					SkipDownHosts: true,
 				},
 			},
 			args: args{
@@ -605,9 +612,7 @@ func TestCSVFormatter_Format(t *testing.T) {
 						Host: []Host{},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: true,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
