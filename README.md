@@ -86,9 +86,10 @@ More examples can be found on [Usage Wiki page](https://github.com/vdjagilev/nma
 
 ### Flags
 
-* `-f, --file [filename]` outputs result to the file (by default output goes to STDOUT)
-* `--help` display help message
-* `--version` display version (also can be used: `./nmap-formatter version`)
+- `-f, --file [filename]` outputs result to the file (by default output goes to STDOUT)
+- `--help` display help message
+- `--version` display version (also can be used: `./nmap-formatter version`)
+- `--skip-down-hosts` skip hosts that are down (by default `true`)
 
 It's also possible to change various output options. More examples on [Usage Wiki Page - Flags](https://github.com/vdjagilev/nmap-formatter/wiki/Usage#flags-and-output-options).
 

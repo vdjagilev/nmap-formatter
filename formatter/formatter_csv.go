@@ -20,10 +20,6 @@ func (f *CSVFormatter) convert(td *TemplateData) (data [][]string) {
 	data = append(data, []string{"IP", "Port", "Protocol", "State", "Service", "Reason", "Product", "Version", "Extra info"})
 	for i := range td.NMAPRun.Host {
 		var host *Host = &td.NMAPRun.Host[i]
-		// shouldSkip := host.ShouldSkipHost(td.OutputOptions.CSVOptions.SkipDownHosts)
-		if host.ShouldSkipHost(td.OutputOptions.CSVOptions.SkipDownHosts) {
-			continue
-		}
 		address := fmt.Sprintf("%s (%s)", host.JoinedAddresses("/"), host.Status.State)
 		data = append(data, []string{address, "", "", "", "", "", "", "", ""})
 		for j := range host.Port {

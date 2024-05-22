@@ -17,8 +17,6 @@ type HTMLOutputOptions struct {
 	SkipHeader bool
 	// SkipTOC skips the table of contents in the HTML output
 	SkipTOC bool
-	// SkipDownHosts skips hosts that are down (including TOC)
-	SkipDownHosts bool
 	// SkipSummary skips general summary for HTML
 	SkipSummary bool
 	// SkipTraceroute skips traceroute information for HTML
@@ -39,8 +37,6 @@ type MarkdownOutputOptions struct {
 	SkipHeader bool
 	// SkipTOC skips the table of contents
 	SkipTOC bool
-	// SkipDownHosts skips hosts that are down (including TOC)
-	SkipDownHosts bool
 	// SkipSummary skips general summary for Markdown
 	SkipSummary bool
 	// SkipPortScripts skips port scripts information for Markdown
@@ -59,8 +55,6 @@ type JSONOutputOptions struct {
 
 // CSVOutputOptions store option related only to CSV conversion/formatting
 type CSVOutputOptions struct {
-	// The hosts that are down won't be displayed
-	SkipDownHosts bool
 }
 
 // SqliteOutputOptions store options related to SQLite database formatting
@@ -74,12 +68,8 @@ type SqliteOutputOptions struct {
 
 // ExcelOutputOptions store options related to Excel file formatting
 type ExcelOutputOptions struct {
-	// The hosts that are down won't be displayed
-	SkipDownHosts bool
 }
 
 // D2LangOutputOptions store options related to D2 language file formatting
 type D2LangOutputOptions struct {
-	// The hosts that are down won't be displayed
-	SkipDownHosts bool
 }
