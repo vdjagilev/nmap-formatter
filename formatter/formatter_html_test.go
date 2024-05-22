@@ -138,9 +138,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: true,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
@@ -206,9 +204,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: true,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
@@ -274,9 +270,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: false,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
@@ -453,9 +447,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: false,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
@@ -542,9 +534,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: true,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},

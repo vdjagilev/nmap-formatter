@@ -233,9 +233,7 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						MarkdownOptions: MarkdownOutputOptions{
-							SkipDownHosts: true,
-						},
+						MarkdownOptions: MarkdownOutputOptions{},
 					},
 				},
 			},
@@ -322,9 +320,7 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						MarkdownOptions: MarkdownOutputOptions{
-							SkipDownHosts: false,
-						},
+						MarkdownOptions: MarkdownOutputOptions{},
 					},
 				},
 			},
@@ -440,9 +436,7 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						MarkdownOptions: MarkdownOutputOptions{
-							SkipDownHosts: true,
-						},
+						MarkdownOptions: MarkdownOutputOptions{},
 					},
 				},
 			},

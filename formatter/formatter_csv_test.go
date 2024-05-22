@@ -57,9 +57,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: true,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
@@ -87,9 +85,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: true,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
@@ -128,9 +124,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: false,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
@@ -185,9 +179,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: true,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
@@ -257,9 +249,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: true,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
@@ -351,9 +341,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: true,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
@@ -449,9 +437,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{
-							SkipDownHosts: false,
-						},
+						CSVOptions: CSVOutputOptions{},
 					},
 				},
 			},
