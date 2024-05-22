@@ -18,10 +18,12 @@ A tool that allows you to convert NMAP XML output to excel/html/csv/json/markdow
 ## Installation
 
 ```
-git clone https://github.com/gorkavp/nmap-formatter.git
+go install github.com/vdjagilev/nmap-formatter/v3@latest
 cd nmap-formatter
 go build
 ```
+
+All other options can be found on [Installation Wiki page](https://github.com/vdjagilev/nmap-formatter/wiki/Installation).
 
 ## Usage
 
