@@ -106,7 +106,6 @@
 	<body>
 		{{ $skipTOC := .OutputOptions.HTMLOptions.SkipTOC }}
 		{{ $skipHeader := .OutputOptions.HTMLOptions.SkipHeader }}
-		{{ $skipDownHosts := .OutputOptions.HTMLOptions.SkipDownHosts }}
 		{{ $skipSummary := .OutputOptions.HTMLOptions.SkipSummary }}
 		{{ $skipTraceroute := .OutputOptions.HTMLOptions.SkipTraceroute }}
 		{{ $skipMetrics := .OutputOptions.HTMLOptions.SkipMetrics }}
@@ -121,9 +120,7 @@
 			<ul>
 				{{ if not $skipSummary }}<li><a href="#scan-summary">Scan Summary</a></li>{{ end }}
 				{{ range $index, $value := .NMAPRun.Host }}
-				{{ if .ShouldNotSkipHost $skipDownHosts }}
 				<li><a href="#{{ $index }}">{{ .JoinedAddresses "/" }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }}</a> ({{ .Status.State }})</li>
-				{{ end }}{{/* if .ShouldNotSkipHost $skipDownHosts */}}
 				{{ end }}{{/* range .Host */}}
 			</ul>
 			<hr>
@@ -221,7 +218,6 @@
 		{{ end }}{{/* if .CustomOptions */}}
 		<hr>
 		{{ range $index, $value := .NMAPRun.Host }}
-		{{ if .ShouldNotSkipHost $skipDownHosts }}
 		<a id="{{ $index }}"></a>
 		<h2 class="host-address-header{{ if .Status.IsUp }} host-up{{ else }} host-down{{ end }}">
 		{{ .JoinedAddresses "/" }}{{ range .HostNames.HostName }} / {{ .Name }}{{ end }} {{ if .Status.IsUp }}(up){{ else }}(down){{ end }}
@@ -382,7 +378,6 @@
 		{{ end }}{{/* if not $skipMetrics */}}
 		<hr>
 		{{ end }}{{/* if eq .Status.State "up" */}}
-		{{ end }}{{/* if .ShouldNotSkipHost $skipDownHosts */}}
 		{{ end }}{{/* range .Host */}}
 	</body>
 </html>

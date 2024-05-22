@@ -138,9 +138,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: true,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
@@ -206,15 +204,13 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: true,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
 			wantErr: false,
 			validate: func(f *HTMLFormatter, output string, t *testing.T) {
-				expect := 1
+				expect := 2
 				re := regexp.MustCompile(`<li><a href="#\d+">`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {
@@ -223,7 +219,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			},
 		},
 		{
-			name: "Check TOC 2 hosts, 1 down, not skipping down hosts",
+			name: "Check TOC 2 hosts, 1 down",
 			f:    &HTMLFormatter{},
 			args: args{
 				td: &TemplateData{
@@ -274,9 +270,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: false,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
@@ -453,9 +447,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: false,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
@@ -470,7 +462,7 @@ func TestHTMLFormatter_Format(t *testing.T) {
 			},
 		},
 		{
-			name: "3 hosts 1 down (skip down: true)",
+			name: "3 hosts 1 down",
 			f:    &HTMLFormatter{},
 			args: args{
 				td: &TemplateData{
@@ -542,15 +534,13 @@ func TestHTMLFormatter_Format(t *testing.T) {
 						},
 					},
 					OutputOptions: OutputOptions{
-						HTMLOptions: HTMLOutputOptions{
-							SkipDownHosts: true,
-						},
+						HTMLOptions: HTMLOutputOptions{},
 					},
 				},
 			},
 			wantErr: false,
 			validate: func(f *HTMLFormatter, output string, t *testing.T) {
-				expect := 2
+				expect := 3
 				re := regexp.MustCompile(`<h2 class="host-address-header (host-up|host-down)">(\s*)192\.168\.1\.[0-9]+`)
 				actual := len(re.FindAllString(output, -1))
 				if expect != actual {

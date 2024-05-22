@@ -37,10 +37,6 @@ func (f *D2LangFormatter) Format(td *TemplateData, templateContent string) (err 
 		host := &td.NMAPRun.Host[i]
 		fnv := fnv.New128()
 
-		if host.ShouldSkipHost(td.OutputOptions.D2LangOptions.SkipDownHosts) {
-			continue
-		}
-
 		address := host.JoinedAddresses("/")
 		hostnames := host.JoinedHostNames("/")
 		hostLabel := address

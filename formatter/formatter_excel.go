@@ -74,11 +74,6 @@ func (f *ExcelFormatter) writeHostRows(h []Host, cd *CellData) error {
 
 	for i := range h {
 		host := h[i]
-
-		if host.ShouldSkipHost(f.config.OutputOptions.ExcelOptions.SkipDownHosts) {
-			continue
-		}
-
 		joinedAddresses := host.JoinedAddresses("/")
 		joinedHostnames := host.JoinedHostNames("/")
 		addressFormat := "%s [%s]"

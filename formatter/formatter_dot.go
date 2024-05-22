@@ -13,8 +13,9 @@ type DotFormatter struct {
 	config *Config
 }
 
-//go:embed resources/templates/graphviz.tmpl
 // DotTemplate variable is used to store contents of graphviz template
+//
+//go:embed resources/templates/graphviz.tmpl
 var DotTemplate string
 
 const (
