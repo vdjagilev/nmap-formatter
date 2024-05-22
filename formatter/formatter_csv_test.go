@@ -31,18 +31,24 @@ func TestCSVFormatter_convert(t *testing.T) {
 			},
 		},
 		{
-			name: "1 Host is down (skip down hosts)",
+			name: "1 Host is down",
 			f:    &CSVFormatter{},
 			args: args{
 				td: &TemplateData{
 					NMAPRun: NMAPRun{
 						Host: []Host{
 							{
-								StartTime:   0,
-								EndTime:     0,
-								Port:        []Port{},
-								HostAddress: []HostAddress{},
-								HostNames:   HostNames{},
+								StartTime: 0,
+								EndTime:   0,
+								Port:      []Port{},
+								HostAddress: []HostAddress{
+									{
+										Address:     "127.0.0.1",
+										AddressType: "ipv4",
+										Vendor:      "",
+									},
+								},
+								HostNames: HostNames{},
 								Status: HostStatus{
 									State: "down",
 								},
@@ -63,38 +69,11 @@ func TestCSVFormatter_convert(t *testing.T) {
 			},
 			wantData: [][]string{
 				header,
+				{"127.0.0.1 (down)", "", "", "", "", "", "", "", ""},
 			},
 		},
 		{
-			name: "2 Hosts are down (skip down hosts)",
-			f:    &CSVFormatter{},
-			args: args{
-				td: &TemplateData{
-					NMAPRun: NMAPRun{
-						Host: []Host{
-							{
-								Status: HostStatus{
-									State: "down",
-								},
-							},
-							{
-								Status: HostStatus{
-									State: "down",
-								},
-							},
-						},
-					},
-					OutputOptions: OutputOptions{
-						CSVOptions: CSVOutputOptions{},
-					},
-				},
-			},
-			wantData: [][]string{
-				header,
-			},
-		},
-		{
-			name: "1 host is down (do not skip down hosts)",
+			name: "1 host is down",
 			f:    &CSVFormatter{},
 			args: args{
 				td: &TemplateData{
@@ -261,7 +240,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 			},
 		},
 		{
-			name: "1 host up 2 ports, 1 host down (skip-down-hosts=true)",
+			name: "1 host up 2 ports, 1 host down",
 			f:    &CSVFormatter{},
 			args: args{
 				td: &TemplateData{
@@ -350,14 +329,13 @@ func TestCSVFormatter_convert(t *testing.T) {
 				{"127.0.0.1 (up)", "", "", "", "", "", "", "", ""},
 				{"", "80", "tcp", "open", "http", "syn-ack", "nginx", "1.21.1", ""},
 				{"", "443", "tcp", "open", "http", "syn-ack", "nginx", "1.21.1", ""},
+				{"192.168.1.1 (down)", "", "", "", "", "", "", "", ""},
 			},
 		},
 		{
-			name: "1 host up 2 ports, 1 host down (skip-down-hosts=false)",
+			name: "1 host up 2 ports, 1 host down",
 			f: &CSVFormatter{
-				config: &Config{
-					SkipDownHosts: false,
-				},
+				config: &Config{},
 			},
 			args: args{
 				td: &TemplateData{
@@ -450,7 +428,7 @@ func TestCSVFormatter_convert(t *testing.T) {
 			},
 		},
 		{
-			name: "2 host up (2+1 ports) (skip-down-hosts=true)",
+			name: "2 hosts (2+1 ports)",
 			f: &CSVFormatter{
 				config: &Config{
 					SkipDownHosts: true,
