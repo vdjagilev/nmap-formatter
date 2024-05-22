@@ -161,94 +161,7 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "Have 3 hosts (1 is down, skip down: true)",
-			f:    &MarkdownFormatter{},
-			args: args{
-				td: &TemplateData{
-					NMAPRun: NMAPRun{
-						Host: []Host{
-							{
-								StartTime: 0,
-								EndTime:   0,
-								Port:      []Port{},
-								HostAddress: []HostAddress{
-									{
-										Address: "192.168.1.1",
-									},
-								},
-								HostNames: HostNames{},
-								Status: HostStatus{
-									State: "up",
-								},
-								OS:            OS{},
-								Trace:         Trace{},
-								Uptime:        Uptime{},
-								Distance:      Distance{},
-								TCPSequence:   TCPSequence{},
-								IPIDSequence:  IPIDSequence{},
-								TCPTSSequence: TCPTSSequence{},
-							},
-							{
-								StartTime: 0,
-								EndTime:   0,
-								Port:      []Port{},
-								HostAddress: []HostAddress{
-									{
-										Address: "192.168.1.2",
-									},
-								},
-								HostNames: HostNames{},
-								Status: HostStatus{
-									State: "down",
-								},
-								OS:            OS{},
-								Trace:         Trace{},
-								Uptime:        Uptime{},
-								Distance:      Distance{},
-								TCPSequence:   TCPSequence{},
-								IPIDSequence:  IPIDSequence{},
-								TCPTSSequence: TCPTSSequence{},
-							},
-							{
-								StartTime: 0,
-								EndTime:   0,
-								Port:      []Port{},
-								HostAddress: []HostAddress{
-									{
-										Address: "192.168.1.3",
-									},
-								},
-								HostNames: HostNames{},
-								Status: HostStatus{
-									State: "up",
-								},
-								OS:            OS{},
-								Trace:         Trace{},
-								Uptime:        Uptime{},
-								Distance:      Distance{},
-								TCPSequence:   TCPSequence{},
-								IPIDSequence:  IPIDSequence{},
-								TCPTSSequence: TCPTSSequence{},
-							},
-						},
-					},
-					OutputOptions: OutputOptions{
-						MarkdownOptions: MarkdownOutputOptions{},
-					},
-				},
-			},
-			wantErr: false,
-			validate: func(f *MarkdownFormatter, output string, t *testing.T) {
-				expect := 2
-				re := regexp.MustCompile(`## 192\.168\.1\.\d+`)
-				actual := len(re.FindAllString(output, -1))
-				if expect != actual {
-					t.Fatalf("Expected %d host headers, got %d", expect, actual)
-				}
-			},
-		},
-		{
-			name: "Have 3 hosts (1 is down, skip down: false)",
+			name: "Have 3 hosts (1 is down)",
 			f:    &MarkdownFormatter{},
 			args: args{
 				td: &TemplateData{
@@ -335,7 +248,94 @@ func TestMarkdownFormatter_Format(t *testing.T) {
 			},
 		},
 		{
-			name: "Have 3 ports (1 host is down, skip down: true)",
+			name: "Have 3 hosts",
+			f:    &MarkdownFormatter{},
+			args: args{
+				td: &TemplateData{
+					NMAPRun: NMAPRun{
+						Host: []Host{
+							{
+								StartTime: 0,
+								EndTime:   0,
+								Port:      []Port{},
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.1",
+									},
+								},
+								HostNames: HostNames{},
+								Status: HostStatus{
+									State: "up",
+								},
+								OS:            OS{},
+								Trace:         Trace{},
+								Uptime:        Uptime{},
+								Distance:      Distance{},
+								TCPSequence:   TCPSequence{},
+								IPIDSequence:  IPIDSequence{},
+								TCPTSSequence: TCPTSSequence{},
+							},
+							{
+								StartTime: 0,
+								EndTime:   0,
+								Port:      []Port{},
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.2",
+									},
+								},
+								HostNames: HostNames{},
+								Status: HostStatus{
+									State: "down",
+								},
+								OS:            OS{},
+								Trace:         Trace{},
+								Uptime:        Uptime{},
+								Distance:      Distance{},
+								TCPSequence:   TCPSequence{},
+								IPIDSequence:  IPIDSequence{},
+								TCPTSSequence: TCPTSSequence{},
+							},
+							{
+								StartTime: 0,
+								EndTime:   0,
+								Port:      []Port{},
+								HostAddress: []HostAddress{
+									{
+										Address: "192.168.1.3",
+									},
+								},
+								HostNames: HostNames{},
+								Status: HostStatus{
+									State: "up",
+								},
+								OS:            OS{},
+								Trace:         Trace{},
+								Uptime:        Uptime{},
+								Distance:      Distance{},
+								TCPSequence:   TCPSequence{},
+								IPIDSequence:  IPIDSequence{},
+								TCPTSSequence: TCPTSSequence{},
+							},
+						},
+					},
+					OutputOptions: OutputOptions{
+						MarkdownOptions: MarkdownOutputOptions{},
+					},
+				},
+			},
+			wantErr: false,
+			validate: func(f *MarkdownFormatter, output string, t *testing.T) {
+				expect := 3
+				re := regexp.MustCompile(`## 192\.168\.1\.\d+`)
+				actual := len(re.FindAllString(output, -1))
+				if expect != actual {
+					t.Fatalf("Expected %d host headers, got %d", expect, actual)
+				}
+			},
+		},
+		{
+			name: "Have 3 ports (1 host is down)",
 			f:    &MarkdownFormatter{},
 			args: args{
 				td: &TemplateData{
