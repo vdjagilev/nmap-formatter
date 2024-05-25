@@ -84,11 +84,6 @@ func init() {
 
 	// Some options related to the output
 	// Skip hosts that are down, so they won't be listed in the output
-	// rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipDownHosts, "html-skip-down-hosts", true, "--html-skip-down-hosts=false, would print all hosts that are offline in HTML output")
-	// rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipDownHosts, "md-skip-down-hosts", true, "--md-skip-down-hosts=false, would print all hosts that are offline in Markdown output")
-	// rootCmd.Flags().BoolVar(&config.OutputOptions.CSVOptions.SkipDownHosts, "csv-skip-down-hosts", true, "--csv-skip-down-hosts=false, would print all hosts that are offline in CSV output")
-	// rootCmd.Flags().BoolVar(&config.OutputOptions.ExcelOptions.SkipDownHosts, "excel-skip-down-hosts", true, "--excel-skip-down-hosts=false, would print all hosts that are offline in Excel file")
-
 	// Skip header information (overall meta information from the scan)
 	rootCmd.Flags().BoolVar(&config.OutputOptions.HTMLOptions.SkipHeader, "html-skip-header", false, "--html-skip-header, skips header in HTML output")
 	rootCmd.Flags().BoolVar(&config.OutputOptions.MarkdownOptions.SkipHeader, "md-skip-header", false, "--md-skip-header, skips header in Markdown output")
@@ -125,7 +120,6 @@ func init() {
 	rootCmd.Flags().StringVar(&config.OutputOptions.SqliteOutputOptions.ScanIdentifier, "scan-id", "", "--scan-id abc123")
 
 	// Configs related to D2 language
-	// rootCmd.Flags().BoolVar(&config.OutputOptions.D2LangOptions.SkipDownHosts, "d2-skip-down-hosts", true, "--d2-skip-down-hosts=false, would print all hosts that are offline in D2 language output")
 	rootCmd.Flags().BoolVar(&config.SkipDownHosts, "skip-down-hosts", false, "--skip-down-hosts=true, skips hosts that are offline")
 
 	// Multiple filter expressions supported
