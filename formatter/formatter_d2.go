@@ -31,7 +31,7 @@ func (f *D2LangFormatter) Format(td *TemplateData, templateContent string) (err 
 		Ruler:          ruler,
 	}
 
-	_, graph, _ := d2lib.Compile(log.Stderr(context.Background()), "nmap", compileOpts, nil)
+	_, graph, _ := d2lib.Compile(log.WithDefault(context.Background()), "nmap", compileOpts, nil)
 
 	for i := range td.NMAPRun.Host {
 		host := &td.NMAPRun.Host[i]
