@@ -1,14 +1,13 @@
 module github.com/vdjagilev/nmap-formatter/v3
 
 go 1.23
-
 require (
 	github.com/expr-lang/expr v1.16.9
 	github.com/google/uuid v1.6.0
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/spf13/cobra v1.8.1
 	github.com/xuri/excelize/v2 v2.9.0
-	golang.org/x/net v0.34.0
+	golang.org/x/net v0.36.0
 	oss.terrastruct.com/d2 v0.6.9
 )
 
@@ -32,7 +31,7 @@ require (
 	github.com/xuri/efp v0.0.0-20241211021726-c4e992084aa6 // indirect
 	github.com/xuri/nfp v0.0.0-20250111060730-82a408b9aa71 // indirect
 	github.com/yuin/goldmark v1.7.8 // indirect
-	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/crypto v0.35.0 // indirect
 	golang.org/x/exp v0.0.0-20250207012021-f9890c6ad9f3 // indirect
 	golang.org/x/image v0.24.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
