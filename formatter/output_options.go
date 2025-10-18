@@ -51,6 +51,8 @@ type MarkdownOutputOptions struct {
 type JSONOutputOptions struct {
 	// PrettyPrint defines if JSON output would be pretty-printed (human-readable) or not (machine readable)
 	PrettyPrint bool
+	// SnakeCase converts JSON keys from CamelCase to snake_case
+	SnakeCase bool
 }
 
 // CSVOutputOptions store option related only to CSV conversion/formatting

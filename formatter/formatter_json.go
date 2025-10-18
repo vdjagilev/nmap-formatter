@@ -12,6 +12,13 @@ type JSONFormatter struct {
 
 // Format the data and output it to appropriate io.Writer
 func (f *JSONFormatter) Format(td *TemplateData, templateContent string) (err error) {
+	// Use snake_case encoder if requested
+	if td.OutputOptions.JSONOptions.SnakeCase {
+		encoder := newSnakeCaseEncoder(f.config.Writer, td.OutputOptions.JSONOptions.PrettyPrint)
+		return encoder.Encode(td.NMAPRun)
+	}
+
+	// Default JSON encoding
 	jsonData := new(bytes.Buffer)
 	encoder := json.NewEncoder(jsonData)
 	if td.OutputOptions.JSONOptions.PrettyPrint {
