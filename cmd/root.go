@@ -115,6 +115,9 @@ func init() {
 	// Pretty-print json
 	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONOptions.PrettyPrint, "json-pretty", true, "--json-pretty=false (pretty prints JSON output)")
 
+	// Snake case json keys
+	rootCmd.Flags().BoolVar(&config.OutputOptions.JSONOptions.SnakeCase, "json-snake-case", false, "--json-snake-case=true (converts JSON keys to snake_case)")
+
 	// Configs related to SQLite
 	rootCmd.Flags().StringVar(&config.OutputOptions.SqliteOutputOptions.DSN, "sqlite-dsn", "nmap.sqlite", "--sqlite-dsn nmap.sqlite")
 	rootCmd.Flags().StringVar(&config.OutputOptions.SqliteOutputOptions.ScanIdentifier, "scan-id", "", "--scan-id abc123")
