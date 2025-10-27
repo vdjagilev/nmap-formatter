@@ -16,10 +16,12 @@ func TestInputFileConfig_ExistsOpen(t *testing.T) {
 		if err != nil {
 			t.Errorf("error creating temporary file: %s", err)
 		}
-		defer f.Close()
+		defer func() {
+			_ = f.Close()
+		}()
 	}
 	afterFunc := func(name string) {
-		os.Remove(name)
+		_ = os.Remove(name)
 	}
 	tests := []struct {
 		name      string

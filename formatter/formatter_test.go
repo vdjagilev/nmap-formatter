@@ -108,10 +108,12 @@ func TestTemplateContent(t *testing.T) {
 		if err != nil {
 			t.Errorf("failed to create a file: %v", err)
 		}
-		defer f.Close()
+		defer func() {
+			_ = f.Close()
+		}()
 	}
 	afterFunc := func(path string) {
-		os.Remove(path)
+		_ = os.Remove(path)
 	}
 	tests := []struct {
 		name      string

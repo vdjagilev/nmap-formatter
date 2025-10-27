@@ -37,8 +37,8 @@ func validateIOFiles(config formatter.Config) error {
 		if err != nil {
 			return fmt.Errorf("unable to create output file: %s", err)
 		}
-		outputFile.Close()
-		os.Remove(string(config.OutputFile))
+		_ = outputFile.Close()
+		_ = os.Remove(string(config.OutputFile))
 	}
 	return nil
 }
@@ -56,7 +56,9 @@ func validateTemplateConfig(config formatter.Config) error {
 		if err != nil {
 			return fmt.Errorf("could not read template file: %v", err)
 		}
-		defer file.Close()
+		defer func() {
+			_ = file.Close()
+		}()
 	}
 	return nil
 }

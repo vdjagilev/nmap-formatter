@@ -60,7 +60,9 @@ func TemplateContent(f Formatter, c *Config) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		defer file.Close()
+		defer func() {
+			_ = file.Close()
+		}()
 		content, err := io.ReadAll(file)
 		if err != nil {
 			return "", err

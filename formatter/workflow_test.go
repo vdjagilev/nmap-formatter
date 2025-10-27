@@ -148,12 +148,16 @@ func TestMainWorkflow_parse(t *testing.T) {
 					t.Errorf("Could not write file, error %v", err)
 				}
 				// deferring file removal after the test
-				defer os.Remove(name)
+				defer func() {
+					_ = os.Remove(name)
+				}()
 				f, err := os.Open(name)
 				if err != nil {
 					t.Errorf("could not read source file: %v", err)
 				}
-				defer f.Close()
+				defer func() {
+					_ = f.Close()
+				}()
 				tt.w.Config.InputFileConfig = InputFileConfig{
 					Path:   name,
 					Source: f,
@@ -213,8 +217,12 @@ func TestMainWorkflow_Execute(t *testing.T) {
 				if err != nil {
 					t.Errorf("Could not write file, error %v", err)
 				}
-				defer os.Remove(name)
-				defer os.Remove(name + "_output")
+				defer func() {
+					_ = os.Remove(name)
+				}()
+				defer func() {
+					_ = os.Remove(name + "_output")
+				}()
 				tt.w.Config.InputFileConfig = InputFileConfig{
 					Path: name,
 				}

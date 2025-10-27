@@ -21,6 +21,8 @@ type InputFileConfig struct {
 // ExistsOpen tries to open a file for reading, returning an error if it fails
 func (i *InputFileConfig) ExistsOpen() error {
 	f, err := os.Open(i.Path)
-	f.Close()
-	return err
+	if err != nil {
+		return err
+	}
+	return f.Close()
 }
