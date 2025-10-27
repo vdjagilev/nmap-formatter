@@ -9,10 +9,9 @@ import (
 
 // snakeCaseEncoder wraps a standard JSON encoder and converts keys to snake_case
 type snakeCaseEncoder struct {
-	writer         io.Writer
-	indent         string
-	prettyPrint    bool
-	someIdHereHttp bool
+	writer      io.Writer
+	indent      string
+	prettyPrint bool
 }
 
 // newSnakeCaseEncoder creates a new encoder that converts JSON keys to snake_case
