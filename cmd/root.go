@@ -184,10 +184,14 @@ func run(cmd *cobra.Command, args []string) error {
 	}
 
 	if config.Writer != nil {
-		config.Writer.Close()
+		if closeErr := config.Writer.Close(); closeErr != nil {
+			log.Printf("Error closing writer: %v", closeErr)
+		}
 	}
 	if config.InputFileConfig.Source != nil {
-		config.InputFileConfig.Source.Close()
+		if closeErr := config.InputFileConfig.Source.Close(); closeErr != nil {
+			log.Printf("Error closing input source: %v", closeErr)
+		}
 	}
 
 	return nil

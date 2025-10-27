@@ -99,7 +99,7 @@ func portStateColor(port *Port) string {
 
 // hopList function returns a map with a list of hops where very first hop is `startHop` (scanner itself)
 func hopList(hops []Hop, startHop string, endHopName string, endHopKey int) map[string]string {
-	var hopList map[string]string = map[string]string{}
+	hopList := map[string]string{}
 	var previous *Hop = nil
 	for i := range hops {
 		// Skip last hop, because it has the same IP as the target server

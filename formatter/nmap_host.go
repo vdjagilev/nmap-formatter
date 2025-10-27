@@ -25,7 +25,7 @@ type Host struct {
 
 // JoinedAddresses joins all possible host addresses with a delimiter string
 func (h *Host) JoinedAddresses(delimiter string) string {
-	var addr string = ""
+	addr := ""
 	for i := range h.HostAddress {
 		// First element does not require prepended delimiter
 		if i == 0 {
@@ -39,7 +39,7 @@ func (h *Host) JoinedAddresses(delimiter string) string {
 
 // JoinedHostNames returns a joined string of host names with a provided delimiter
 func (h *Host) JoinedHostNames(delimiter string) string {
-	var hostAddr string = ""
+	hostAddr := ""
 	for i := range h.HostNames.HostName {
 		// First element does not require prepended delimiter
 		if i != 0 {

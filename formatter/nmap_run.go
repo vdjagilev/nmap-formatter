@@ -59,7 +59,7 @@ type StatHosts struct {
 // AllHops is getting all possible hops that occurred during the scan and
 // merges them uniquely into one map
 func (n *NMAPRun) AllHops() map[string]Hop {
-	var hops map[string]Hop = map[string]Hop{}
+	hops := map[string]Hop{}
 	for i := range n.Host {
 		for j := range n.Host[i].Trace.Hops {
 			// Skip the last hop, because it has the same IP as the target server

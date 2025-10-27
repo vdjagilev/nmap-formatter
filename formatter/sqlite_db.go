@@ -67,7 +67,9 @@ func (s *SqliteDB) schemaExists() bool {
 	if err != nil {
 		return false
 	}
-	defer rows.Close()
+	defer func() {
+		_ = rows.Close()
+	}()
 	return true
 }
 
@@ -99,7 +101,9 @@ func (s *SqliteDB) populate(n *NMAPRun) error {
 
 // finish is a place where commit or rollback should happen and database connection is closed
 func (s *SqliteDB) finish(err error) error {
-	defer s.db.Close()
+	defer func() {
+		_ = s.db.Close()
+	}()
 	if err != nil {
 		rollbackErr := s.tx.Rollback()
 		if rollbackErr != nil {
@@ -122,7 +126,9 @@ func (s *SqliteDB) insertReturnID(sql string, args ...any) (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-	defer insert.Close()
+	defer func() {
+		_ = insert.Close()
+	}()
 	result, err := insert.Exec(args...)
 	if err != nil {
 		return 0, err
@@ -137,7 +143,9 @@ func (s *SqliteDB) insert(sql string, args ...any) error {
 	if err != nil {
 		return err
 	}
-	defer insert.Close()
+	defer func() {
+		_ = insert.Close()
+	}()
 	_, err = insert.Exec(args...)
 	return err
 }
