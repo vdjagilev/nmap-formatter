@@ -115,12 +115,12 @@ All major components have corresponding `_test.go` files. Tests typically:
 - Test filter expressions with various host/port conditions
 - Validate format-specific output structure
 
-The CI runs tests on Go 1.24.x across Linux, macOS, and Windows.
+The CI runs tests on Go 1.25.x across Linux, macOS, and Windows.
 
 ## Module Information
 
 - Module path: `github.com/vdjagilev/nmap-formatter/v3`
-- Go version: 1.24
+- Go version: 1.25
 - Uses go modules for dependency management
 
 ## Key Dependencies
