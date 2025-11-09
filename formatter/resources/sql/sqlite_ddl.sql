@@ -112,3 +112,20 @@ CREATE TABLE IF NOT EXISTS ports_scripts (
 CREATE TABLE IF NOT EXISTS nf_schema (
 	version text
 );
+
+-- Performance indexes for foreign key columns
+-- These significantly improve query performance and JOIN operations
+CREATE INDEX IF NOT EXISTS idx_hosts_scan_id ON hosts(scan_id);
+CREATE INDEX IF NOT EXISTS idx_ports_host_id ON ports(host_id);
+CREATE INDEX IF NOT EXISTS idx_host_addresses_host_id ON host_addresses(host_id);
+CREATE INDEX IF NOT EXISTS idx_host_names_host_id ON host_names(host_id);
+CREATE INDEX IF NOT EXISTS idx_host_traces_hops_host_id ON host_traces_hops(host_id);
+CREATE INDEX IF NOT EXISTS idx_host_os_class_host_id ON host_os_class(host_id);
+CREATE INDEX IF NOT EXISTS idx_host_os_port_used_host_id ON host_os_port_used(host_id);
+CREATE INDEX IF NOT EXISTS idx_host_os_match_host_id ON host_os_match(host_id);
+CREATE INDEX IF NOT EXISTS idx_ports_scripts_ports_id ON ports_scripts(ports_id);
+
+-- Additional useful indexes for common query patterns
+CREATE INDEX IF NOT EXISTS idx_ports_state ON ports(state_state);
+CREATE INDEX IF NOT EXISTS idx_ports_service ON ports(service_name);
+CREATE INDEX IF NOT EXISTS idx_hosts_status ON hosts(status_state);
