@@ -16,6 +16,7 @@ type SqliteDB struct {
 	tx             *sql.Tx
 	config         *Config
 	scanRepository *ScanRepository
+	stmtCache      map[string]*sql.Stmt // Cache for prepared statements
 }
 
 // SqliteDDL contains database schema definition
@@ -31,10 +32,29 @@ func NewSqliteDB(c *Config) (*SqliteDB, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Apply performance optimizations via PRAGMA settings
+	// These settings significantly improve write performance for bulk inserts
+	pragmas := []string{
+		"PRAGMA synchronous = NORMAL",    // Balance between safety and speed
+		"PRAGMA journal_mode = WAL",      // Write-Ahead Logging for better concurrency
+		"PRAGMA cache_size = -64000",     // Use 64MB cache (negative = KB)
+		"PRAGMA temp_store = MEMORY",     // Store temp tables/indices in memory
+		"PRAGMA busy_timeout = 5000",     // Wait up to 5s if database is locked
+	}
+
+	for _, pragma := range pragmas {
+		if _, err := db.Exec(pragma); err != nil {
+			_ = db.Close()
+			return nil, fmt.Errorf("failed to set %s: %v", pragma, err)
+		}
+	}
+
 	sqlite := &SqliteDB{
-		db:     db,
-		tx:     nil,
-		config: c,
+		db:        db,
+		tx:        nil,
+		config:    c,
+		stmtCache: make(map[string]*sql.Stmt),
 		scanRepository: &ScanRepository{
 			conn:   db,
 			config: c,
@@ -101,6 +121,8 @@ func (s *SqliteDB) populate(n *NMAPRun) error {
 
 // finish is a place where commit or rollback should happen and database connection is closed
 func (s *SqliteDB) finish(err error) error {
+	// Close all cached prepared statements before closing DB
+	defer s.closeAllStmts()
 	defer func() {
 		_ = s.db.Close()
 	}()
@@ -119,17 +141,38 @@ func (s *SqliteDB) finish(err error) error {
 	return err
 }
 
+// getOrPrepareStmt retrieves a prepared statement from cache or prepares it if not cached
+func (s *SqliteDB) getOrPrepareStmt(sql string) (*sql.Stmt, error) {
+	// Check if statement is already cached
+	if stmt, exists := s.stmtCache[sql]; exists {
+		return stmt, nil
+	}
+
+	// Prepare new statement and cache it
+	stmt, err := s.db.Prepare(sql)
+	if err != nil {
+		return nil, err
+	}
+	s.stmtCache[sql] = stmt
+	return stmt, nil
+}
+
+// closeAllStmts closes all cached prepared statements
+func (s *SqliteDB) closeAllStmts() {
+	for _, stmt := range s.stmtCache {
+		_ = stmt.Close()
+	}
+	s.stmtCache = make(map[string]*sql.Stmt)
+}
+
 // insertReturnID is a generic function to execute INSERT SQL statement with arguments and return
 // ID of the last element inserted and error in case it fails
 func (s *SqliteDB) insertReturnID(sql string, args ...any) (int64, error) {
-	insert, err := s.db.Prepare(sql)
+	stmt, err := s.getOrPrepareStmt(sql)
 	if err != nil {
 		return 0, err
 	}
-	defer func() {
-		_ = insert.Close()
-	}()
-	result, err := insert.Exec(args...)
+	result, err := stmt.Exec(args...)
 	if err != nil {
 		return 0, err
 	}
@@ -139,13 +182,10 @@ func (s *SqliteDB) insertReturnID(sql string, args ...any) (int64, error) {
 // insert is a generic function to execute INSERT SQL statement and return error
 // if it fails
 func (s *SqliteDB) insert(sql string, args ...any) error {
-	insert, err := s.db.Prepare(sql)
+	stmt, err := s.getOrPrepareStmt(sql)
 	if err != nil {
 		return err
 	}
-	defer func() {
-		_ = insert.Close()
-	}()
-	_, err = insert.Exec(args...)
+	_, err = stmt.Exec(args...)
 	return err
 }
