@@ -3,7 +3,7 @@ module github.com/vdjagilev/nmap-formatter/v3
 go 1.25
 
 require (
-	github.com/expr-lang/expr v1.17.6
+	github.com/expr-lang/expr v1.17.7
 	github.com/google/uuid v1.6.0
 	github.com/mattn/go-sqlite3 v1.14.32
 	github.com/spf13/cobra v1.10.1
