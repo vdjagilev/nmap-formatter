@@ -1,6 +1,6 @@
 module github.com/vdjagilev/nmap-formatter/v3
 
-go 1.25
+go 1.25.0
 
 require (
 	github.com/expr-lang/expr v1.17.7
@@ -35,8 +35,8 @@ require (
 	github.com/yuin/goldmark v1.7.13 // indirect
 	golang.org/x/crypto v0.45.0 // indirect
 	golang.org/x/exp v0.0.0-20251023183803-a4bb9ffd2546 // indirect
-	golang.org/x/image v0.32.0 // indirect
-	golang.org/x/text v0.31.0 // indirect
+	golang.org/x/image v0.38.0 // indirect
+	golang.org/x/text v0.35.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	oss.terrastruct.com/util-go v0.0.0-20250213174338-243d8661088a // indirect
 )
