@@ -4,8 +4,11 @@ import (
 	// Used to embed graphviz template file
 	_ "embed"
 	"fmt"
+	"hash/fnv"
+	"strconv"
 	"strings"
 	"text/template"
+	"unicode"
 )
 
 // DotFormatter is used to create Graphviz (dot) format
@@ -73,6 +76,9 @@ func (f *DotFormatter) defineTemplateFunctions(tmpl *template.Template) {
 	tmpl.Funcs(
 		template.FuncMap{
 			"clean_ip":         cleanIP,
+			"dot_id":           dotID,
+			"dot_quote":        dotQuote,
+			"port_node_id":     portNodeID,
 			"port_state_color": portStateColor,
 			"hop_list":         hopList,
 		},
@@ -82,6 +88,34 @@ func (f *DotFormatter) defineTemplateFunctions(tmpl *template.Template) {
 // cleanIP removes dots from IP address to make it possible to use in graphviz as an ID
 func cleanIP(ip string) string {
 	return strings.ReplaceAll(ip, ".", "")
+}
+
+func dotQuote(v string) string {
+	return strconv.Quote(v)
+}
+
+func dotID(v string) string {
+	return dotQuote(dotSafeIdentifier(v))
+}
+
+func portNodeID(hostKey int, port *Port) string {
+	return fmt.Sprintf("srv%d_port_%s_%d", hostKey, dotSafeIdentifier(port.Protocol), port.PortID)
+}
+
+func dotSafeIdentifier(v string) string {
+	var b strings.Builder
+	for _, r := range v {
+		if unicode.IsLetter(r) || unicode.IsDigit(r) || r == '_' {
+			b.WriteRune(r)
+		}
+	}
+	if b.Len() > 0 {
+		return b.String()
+	}
+
+	h := fnv.New64a()
+	_, _ = h.Write([]byte(v))
+	return fmt.Sprintf("x%x", h.Sum64())
 }
 
 // portStateColor returns hexademical color value for state port

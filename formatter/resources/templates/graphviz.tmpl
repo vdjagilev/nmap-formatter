@@ -1,25 +1,25 @@
 strict digraph "Scan" {
-    fontname="{{ index .Constants "default_font" }}"
-    node [fontname="{{ index .Constants "default_font" }}", width=.25, height=.375, fontsize=9]
-    edge [fontname="{{ index .Constants "default_font" }}"]
+    fontname={{ dot_quote (index .Constants "default_font") }}
+    node [fontname={{ dot_quote (index .Constants "default_font") }}, width=.25, height=.375, fontsize=9]
+    edge [fontname={{ dot_quote (index .Constants "default_font") }}]
     layout={{ index .Constants "layout" }}
 
-    scanner [label="{{ .NMAPRun.Scanner }}", shape=hexagon, style=filled];
+    {{ dot_id "scanner" }} [label={{ dot_quote .NMAPRun.Scanner }}, shape=hexagon, style=filled];
 
     {{- $hops := .NMAPRun.AllHops }}
     {{ range $key, $value := $hops -}}
-    hop{{ clean_ip $key }} [label="", tooltip="{{ $key }}", shape=circle, height=.12, width=.12, style=filled];
+    {{ dot_id (printf "hop%s" $key) }} [label="", tooltip={{ dot_quote $key }}, shape=circle, height=.12, width=.12, style=filled];
     {{ end }}
 
     {{ range $key, $value := .NMAPRun.Host -}}
-    srv{{ $key }} [label="{{ $value.JoinedAddresses "/" }}", tooltip="{{ $value.JoinedAddresses "/" }}", shape=hexagon, style=filled];
+    {{ dot_id (printf "srv%d" $key) }} [label={{ dot_quote ($value.JoinedAddresses "/") }}, tooltip={{ dot_quote ($value.JoinedAddresses "/") }}, shape=hexagon, style=filled];
     {{ range $portKey, $portValue := $value.Port }}
-    srv{{ $key }}_port_{{ $portValue.Protocol }}_{{ $portValue.PortID }} [label="{{ $portValue.Protocol }}/{{ $portValue.PortID }} ({{ $portValue.State.State }})", tooltip="{{ $portValue.Protocol }}/{{ $portValue.PortID }} ({{ $portValue.State.State }})", shape=underline, width=.12, height=.12, fontsize=8, color="{{ port_state_color $portValue }}"];
-    srv{{ $key }} -> srv{{ $key }}_port_{{ $portValue.Protocol }}_{{ $portValue.PortID }} [arrowhead=none];
+    {{ dot_id (port_node_id $key $portValue) }} [label={{ dot_quote (printf "%s/%d (%s)" $portValue.Protocol $portValue.PortID $portValue.State.State) }}, tooltip={{ dot_quote (printf "%s/%d (%s)" $portValue.Protocol $portValue.PortID $portValue.State.State) }}, shape=underline, width=.12, height=.12, fontsize=8, color={{ dot_quote (port_state_color $portValue) }}];
+    {{ dot_id (printf "srv%d" $key) }} -> {{ dot_id (port_node_id $key $portValue) }} [arrowhead=none];
     {{ end -}}
 
     {{ range $hopSource, $hopTarget := hop_list $value.Trace.Hops "scanner" "srv" $key }}
-    {{ clean_ip $hopSource }} -> {{ clean_ip $hopTarget }} [arrowhead=none];
+    {{ dot_id $hopSource }} -> {{ dot_id $hopTarget }} [arrowhead=none];
     {{- end }}
 
     {{ end }}
