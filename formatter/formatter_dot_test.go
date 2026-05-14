@@ -264,17 +264,76 @@ func TestDotFormatter_Format(t *testing.T) {
 			},
 			wantErr: false,
 			validate: func(f *DotFormatter, output string, t *testing.T) {
-				if !strings.Contains(output, "srv0 [label=\"10.10.10.12\", tooltip=\"10.10.10.12\", shape=hexagon, style=filled];") {
+				if !strings.Contains(output, "\"srv0\" [label=\"10.10.10.12\", tooltip=\"10.10.10.12\", shape=hexagon, style=filled];") {
 					t.Error("Does not contain correct sv0")
 				}
 				hops := []string{
-					"hop1921681001 [label=\"\", tooltip=\"192.168.100.1\", shape=circle, height=.12, width=.12, style=filled];",
-					"hop19216811 [label=\"\", tooltip=\"192.168.1.1\", shape=circle, height=.12, width=.12, style=filled];",
+					"\"hop1921681001\" [label=\"\", tooltip=\"192.168.100.1\", shape=circle, height=.12, width=.12, style=filled];",
+					"\"hop19216811\" [label=\"\", tooltip=\"192.168.1.1\", shape=circle, height=.12, width=.12, style=filled];",
 				}
 				for i := range hops {
 					if !strings.Contains(output, hops[i]) {
 						t.Errorf("Could not find hop: %s", hops[i])
 					}
+				}
+			},
+		},
+		{
+			name: "Escapes malicious scan-controlled values",
+			fields: fields{
+				&Config{
+					Writer: &dotMockedWriter{},
+				},
+			},
+			args: args{
+				td: &TemplateData{
+					NMAPRun: NMAPRun{
+						Scanner: `nmap"]; injected [URL="javascript:alert(1)`,
+						Host: []Host{
+							{
+								Port: []Port{
+									{
+										Protocol: `tcp"]; injected [URL="javascript:alert(1)`,
+										PortID:   80,
+										State: PortState{
+											State: `open"]; injected [URL="javascript:alert(1)`,
+										},
+									},
+								},
+								HostAddress: []HostAddress{
+									{
+										Address: `10.0.0.1"]; injected [URL="javascript:alert(1)`,
+									},
+								},
+								Status: HostStatus{
+									State: "up",
+								},
+								Trace: Trace{
+									Hops: []Hop{
+										{
+											IPAddr: `192.0.2.1"]; injected [URL="javascript:alert(1)`,
+										},
+										{
+											IPAddr: "10.0.0.1",
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				templateContent: DotTemplate,
+			},
+			wantErr: false,
+			validate: func(f *DotFormatter, output string, t *testing.T) {
+				if strings.Contains(output, `label="nmap"];`) {
+					t.Fatalf("DOT output contains unescaped injection payload: %s", output)
+				}
+				if strings.Contains(output, `URL="javascript:alert(1)"`) {
+					t.Fatalf("DOT output contains injected URL attribute: %s", output)
+				}
+				if !strings.Contains(output, `label="nmap\"]; injected [URL=\"javascript:alert(1)"`) {
+					t.Fatalf("DOT output does not contain escaped scanner label: %s", output)
 				}
 			},
 		},
